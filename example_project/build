@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+set -e
+dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
+
+# Include tparts2html
+dir_lib="$dir/../"
+PATH="$dir_lib/share/tparts2html:$PATH"
+
+# dist
+dir_dist="$dir/dist"
+
+# Make dist directory
+rm -rf "$dir_dist" && mkdir -p "$dir_dist"
+
+# Build each document specified in generic documents directory in dist
+for dir_src_document in $dir/documents/generic/*/; do
+  echo "Building document $(basename $dir_src_document)"
+
+  # Read document directory path from one of the document tparts value files
+  file_tparts_path="$dir_src_document/tparts/tparts_path"
+
+  if [ ! -f $file_tparts_path ]; then
+    echo "$file_tparts_path is missing. Exiting."
+    exit 1
+  fi
+
+  # Create document directory
+  document_path="$dir_dist/$(cat $file_tparts_path)"
+  mkdir -p "$document_path/tparts_tmp"
+
+  # Build document body content HTML partials for the index and the non-index (nested) pages
+  if [[ "$(basename $dir_src_document)" -eq "index" ]]; then
+    tparts2html \
+      --template "$dir/templates/layout_index" \
+      --parts "$dir/templates/layout_index/tparts:$dir_src_document/tparts" > "$document_path/tparts_tmp/tparts_body_children.html"
+  else
+    tparts2html \
+      --template "$dir/templates/layout_nested" \
+      --parts "$dir/templates/layout_nested/tparts:$dir_src_document/tparts" \
+      > "$document_path/tparts_tmp/tparts_body_children.html"
+  fi
+
+  # Generate document HTML file from given template and tparts
+  tparts2html \
+    --template "$dir/templates/document" \
+    --parts "$dir/tparts/generic:$dir_src_document/tparts:$document_path/tparts_tmp" \
+    > "$document_path/index.html"
+
+  rm -rf "$document_path/tparts_tmp"
+
+  # Copy document-related static files to the document directory
+  cp -r $dir_src_document/static/* "$document_path"
+
+  echo "Page $(basename $dir_src_document) has been built
+  "
+done
+
+echo "All documents have been built in
+$dir_dist"

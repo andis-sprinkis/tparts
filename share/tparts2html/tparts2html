@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+set -e
+
+usage() {
+cat << EOF
+usage: $0 -t|--template TEMPLATE -p|--parts PARTS [-n|--filename-template FILE] [-h|--help]
+
+This script takes template and it's parts to compose an HTML document.
+
+OPTIONS:
+  -t|--template TEMPLATE      The template directory.
+  -p|--parts PARTS            ":" delimeted list of template parts,
+                              ordered from generic to document specific.
+  -f|template-filename FILE   Custom filename for template.
+                              Defaults to "template.html" if not provided.
+  -h|--help                   Show this message.
+EOF
+}
+
+DIR_TEMPLATE="" TPARTS_DIR_LIST="" FILENAME_TEMPLATE=""
+
+if [ $# -eq 0 ]; then usage; exit 1; fi
+
+while [ ! $# -eq 0 ]; do
+	case "$1" in
+		-t|--template)
+      if [ "$2" ]; then DIR_TEMPLATE="$2"; shift
+      else echo '-t|--template requires a value'; exit 1; fi;;
+		-p|--parts)
+      if [ "$2" ]; then TPARTS_DIR_LIST="$2"; shift
+      else echo '-p|--parts requires a value'; exit 1; fi;;
+		-f|template-filename)
+      if [ "$2" ]; then FILENAME_TEMPLATE="$2"; shift
+      else echo '-f|template-filename requires a value'; exit 1; fi;;
+		-h|--help|?) usage; exit;;
+    *) usage; exit 1;;
+	esac; shift
+done
+
+if [ -z "$DIR_TEMPLATE" ]; then echo '-t|--template value is required'; exit 1; fi
+if [ -z "$TPARTS_DIR_LIST" ]; then echo '-p|--parts value is required'; exit 1; fi
+
+export AWKPATH=$DIR_TEMPLATE:$AWKPATH
+
+awk \
+  -f $(cd -P -- "$(dirname -- "$0")" && pwd -P)/tparts2html.awk \
+  -v dir_template="$DIR_TEMPLATE" -v tparts_dir_list="$TPARTS_DIR_LIST" -v filename_template="$FILENAME_TEMPLATE"
