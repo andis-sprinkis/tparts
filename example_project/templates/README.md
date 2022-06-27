@@ -1,4 +1,4 @@
-This directory contains the example project `tparts` templates.
+This directory contains the example project tparts templates.
 
 # Template directory
 
