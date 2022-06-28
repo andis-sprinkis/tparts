@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
+
+$dir/../share/tparts2html/tparts2html "$@"

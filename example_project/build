@@ -2,11 +2,10 @@
 set -e
 dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 
-# Include tparts2html
-dir_lib="$dir/../"
-PATH="$dir_lib/share/tparts2html:$PATH"
+# Include library scripts
+PATH="$dir/../bin:$PATH"
 
-# dist
+# Set output directory
 dir_dist="$dir/dist"
 
 # Make dist directory
