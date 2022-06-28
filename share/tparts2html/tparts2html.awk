@@ -44,15 +44,24 @@ function tparts_to_html(dir_template, tparts, filename_template) {
   path_file_template = dir_template "/" filename_template
 
   while((getline line < path_file_template) > 0) {
+    empty_line = 0
+
     for (i in tparts) {
       tpart_tag = "<!-- " i " -->"
 
       if (tparts[i]["block"] && match(line, tpart_tag)) {
+        if (tparts[i]["value"] == "") {
+          empty_line = (empty_line || 1)
+          break
+        }
+
         substitution = indent_lines(tparts[i]["value"], match(line, /^\s*/, indent_match) ? indent_match[0] : "")
       } else substitution = tparts[i]["value"]
 
       sub(tpart_tag, substitution, line)
     }
+
+    if (empty_line) continue
 
     fragment_html = fragment_html line "\n"
   }
