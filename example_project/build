@@ -16,7 +16,7 @@ rm -rf "$dir_dist" && mkdir -p "$dir_dist"
 for dir_src_document in $dir/documents/generic/*/; do
   echo "Building document $(basename $dir_src_document)"
 
-  # Read document directory path from one of the document tparts value files
+  # Read document directory path from the document tparts_path value file
   file_tparts_path="$dir_src_document/tparts/tparts_path"
 
   if [ ! -f $file_tparts_path ]; then
@@ -26,9 +26,11 @@ for dir_src_document in $dir/documents/generic/*/; do
 
   # Create document directory
   document_path="$dir_dist/$(cat $file_tparts_path)"
+  
+  # Create temporary value files directory
   mkdir -p "$document_path/tparts_tmp"
 
-  # Build document body content HTML partials for the index and the non-index (nested) pages
+  # Build document body content HTML partials for the index and the non-index pages, storing them as value files in the temporary value files directory
   if [[ "$(basename $dir_src_document)" -eq "index" ]]; then
     tparts2html \
       --template "$dir/templates/layout_index" \
@@ -40,12 +42,13 @@ for dir_src_document in $dir/documents/generic/*/; do
       > "$document_path/tparts_tmp/tparts_body_children.html"
   fi
 
-  # Generate document HTML file from given template and tparts
+  # Generate document HTML file from the document template and predefined and built value files
   tparts2html \
     --template "$dir/templates/document" \
     --parts "$dir/tparts/generic:$dir_src_document/tparts:$document_path/tparts_tmp" \
     > "$document_path/index.html"
 
+  # Remove temporary value files directory
   rm -rf "$document_path/tparts_tmp"
 
   # Copy document-related static files to the document directory
