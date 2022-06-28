@@ -1,16 +1,16 @@
 #!/usr/bin/awk
 
-function get_tpart_path_from_list(tparts_dir_list, tpart_name) {
-  for (i = split(tparts_dir_list, tparts_dir_list_array, ":"); i > 0; i--) {
-    file_tpart_test = tparts_dir_list_array[i] "/" tpart_name
+function get_tpart_path_from_list(tparts_values_dir_list, tpart_name) {
+  for (i = split(tparts_values_dir_list, tparts_values_dir_list_array, ":"); i > 0; i--) {
+    file_tpart_test = tparts_values_dir_list_array[i] "/" tpart_name
 
     if (!system("test -f " file_tpart_test)) return file_tpart_test
   }
 }
 
-function read_tparts(tparts, tparts_dir_list) {
+function read_tparts(tparts, tparts_values_dir_list) {
   for (tpart_name in tparts) {
-    file_tpart = get_tpart_path_from_list(tparts_dir_list, tpart_name)
+    file_tpart = get_tpart_path_from_list(tparts_values_dir_list, tpart_name)
 
     if (file_tpart != "") {
       while((getline line < file_tpart) > 0) tparts[tpart_name]["value"] = tparts[tpart_name]["value"] line "\n"
@@ -76,7 +76,7 @@ function tparts_to_html(dir_template, tparts, filename_template) {
 BEGIN {
   filename_template = filename_template ? filename_template : "template.html"
 
-  read_tparts(tparts, tparts_dir_list)
+  read_tparts(tparts, tparts_values_dir_list)
   print tparts_to_html(dir_template, tparts, filename_template)
 
   exit

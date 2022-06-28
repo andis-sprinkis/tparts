@@ -34,18 +34,18 @@ for dir_src_document in $dir/documents/generic/*/; do
   if [[ "$(basename $dir_src_document)" -eq "index" ]]; then
     tparts_build \
       --template "$dir/templates/layout_index" \
-      --parts "$dir/templates/layout_index/tparts:$dir_src_document/tparts" > "$path_document/tparts_tmp/tparts_body_children.html"
+      --values "$dir/templates/layout_index/tparts:$dir_src_document/tparts" > "$path_document/tparts_tmp/tparts_body_children.html"
   else
     tparts_build \
       --template "$dir/templates/layout_nested" \
-      --parts "$dir/templates/layout_nested/tparts:$dir_src_document/tparts" \
+      --values "$dir/templates/layout_nested/tparts:$dir_src_document/tparts" \
       > "$path_document/tparts_tmp/tparts_body_children.html"
   fi
 
   # Generate document HTML file from the document template and predefined and built value files
   tparts_build \
     --template "$dir/templates/document" \
-    --parts "$dir/tparts/generic:$dir_src_document/tparts:$path_document/tparts_tmp" \
+    --values "$dir/tparts/generic:$dir_src_document/tparts:$path_document/tparts_tmp" \
     > "$path_document/index.html"
 
   # Remove temporary value files directory
