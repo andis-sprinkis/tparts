@@ -36,7 +36,6 @@ function indent_lines(value, indent) {
   }
 
   indented_value = substr(indented_value, 1, length(indented_value) - 1)
-
   return indented_value
 }
 
@@ -47,9 +46,9 @@ function build_markup(dir_template, tparts_values, filename_template) {
     empty_line = 0
 
     for (i in tparts_values) {
-      tpart_tag = "<!-- " i " -->"
+      value_placeholder = "<!-- " i " -->"
 
-      if (tparts_values[i]["block"] && match(line, tpart_tag)) {
+      if (tparts_values[i]["block"] && match(line, value_placeholder)) {
         if (tparts_values[i]["value"] == "") {
           empty_line = (empty_line || 1)
           break
@@ -58,7 +57,7 @@ function build_markup(dir_template, tparts_values, filename_template) {
         substitution = indent_lines(tparts_values[i]["value"], match(line, /^\s*/, indent_match) ? indent_match[0] : "")
       } else substitution = tparts_values[i]["value"]
 
-      sub(tpart_tag, substitution, line)
+      sub(value_placeholder, substitution, line)
     }
 
     if (empty_line) continue
@@ -67,7 +66,6 @@ function build_markup(dir_template, tparts_values, filename_template) {
   }
 
   fragment_html = substr(fragment_html, 1, length(fragment_html) - 1)
-
   return fragment_html
 }
 
