@@ -17,7 +17,7 @@ OPTIONS:
 EOF
 }
 
-DIR_TEMPLATE="" VALUES_DIR_LIST="" FILENAME_TEMPLATE=""
+DIR_TEMPLATE="" TPARTS_VALUES_DIR_LIST="" FILENAME_TEMPLATE=""
 
 if [ $# -eq 0 ]; then usage; exit 1; fi
 
@@ -27,7 +27,7 @@ while [ ! $# -eq 0 ]; do
       if [ "$2" ]; then DIR_TEMPLATE="$2"; shift
       else echo '-t|--template requires a value'; exit 1; fi;;
 		-e|--values)
-      if [ "$2" ]; then VALUES_DIR_LIST="$2"; shift
+      if [ "$2" ]; then TPARTS_VALUES_DIR_LIST="$2"; shift
       else echo '-p|--values requires a value'; exit 1; fi;;
 		-f|template-filename)
       if [ "$2" ]; then FILENAME_TEMPLATE="$2"; shift
@@ -38,10 +38,10 @@ while [ ! $# -eq 0 ]; do
 done
 
 if [ -z "$DIR_TEMPLATE" ]; then echo '-t|--template value is required'; exit 1; fi
-if [ -z "$VALUES_DIR_LIST" ]; then echo '-p|--values value is required'; exit 1; fi
+if [ -z "$TPARTS_VALUES_DIR_LIST" ]; then echo '-p|--values value is required'; exit 1; fi
 
 export AWKPATH=$DIR_TEMPLATE:$AWKPATH
 
 awk \
   -f $(cd -P -- "$(dirname -- "$0")" && pwd -P)/tparts_build.awk \
-  -v dir_template="$DIR_TEMPLATE" -v tparts_values_dir_list="$VALUES_DIR_LIST" -v filename_template="$FILENAME_TEMPLATE"
+  -v dir_template="$DIR_TEMPLATE" -v tparts_values_dir_list="$TPARTS_VALUES_DIR_LIST" -v filename_template="$FILENAME_TEMPLATE"

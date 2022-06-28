@@ -16,7 +16,7 @@ for dir_src_document in $dir/documents/generic/*/; do
   echo "Building document $(basename $dir_src_document)"
 
   # Read document directory path from the document tparts_path value file
-  file_tparts_path="$dir_src_document/tparts/tparts_path"
+  file_tparts_path="$dir_src_document/values/tparts_path"
 
   if [ ! -f $file_tparts_path ]; then
     echo "$file_tparts_path is missing. Exiting."
@@ -27,29 +27,29 @@ for dir_src_document in $dir/documents/generic/*/; do
   path_document="$dir_dist/$(cat $file_tparts_path)"
   
   # Create temporary value files directory
-  mkdir -p "$path_document/tparts_tmp"
+  mkdir -p "$path_document/values_tmp"
 
   # Build document body content HTML partials,
   # storing them as value files in the temporary directory
   if [[ "$(basename $dir_src_document)" -eq "index" ]]; then
     tparts_build \
       --template "$dir/templates/layout_index" \
-      --values "$dir/templates/layout_index/tparts:$dir_src_document/tparts" > "$path_document/tparts_tmp/tparts_body_children.html"
+      --values "$dir_src_document/values" > "$path_document/values_tmp/tparts_body_children.html"
   else
     tparts_build \
       --template "$dir/templates/layout_nested" \
-      --values "$dir/templates/layout_nested/tparts:$dir_src_document/tparts" \
-      > "$path_document/tparts_tmp/tparts_body_children.html"
+      --values "$dir_src_document/values" \
+      > "$path_document/values_tmp/tparts_body_children.html"
   fi
 
   # Generate document HTML file from the document template and predefined and built value files
   tparts_build \
     --template "$dir/templates/document" \
-    --values "$dir/tparts/generic:$dir_src_document/tparts:$path_document/tparts_tmp" \
+    --values "$dir/values/generic:$dir_src_document/values:$path_document/values_tmp" \
     > "$path_document/index.html"
 
   # Remove temporary value files directory
-  rm -rf "$path_document/tparts_tmp"
+  rm -rf "$path_document/values_tmp"
 
   # Copy document-related static files to the document directory
   cp -r $dir_src_document/static/* "$path_document"

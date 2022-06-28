@@ -1,21 +1,21 @@
 #!/usr/bin/awk
 
-function get_tpart_path_from_list(tparts_values_dir_list, tpart_name) {
-  for (i = split(tparts_values_dir_list, tparts_values_dir_list_array, ":"); i > 0; i--) {
-    file_tpart_test = tparts_values_dir_list_array[i] "/" tpart_name
+function get_value_path_from_dirs_list(tparts_values_dir_list, value_name) {
+  for (k = split(tparts_values_dir_list, tparts_values_dir_list_array, ":"); k > 0; k--) {
+    file_value_test = tparts_values_dir_list_array[k] "/" value_name
 
-    if (!system("test -f " file_tpart_test)) return file_tpart_test
+    if (!system("test -f " file_value_test)) return file_value_test
   }
 }
 
-function read_tparts(tparts, tparts_values_dir_list) {
-  for (tpart_name in tparts) {
-    file_tpart = get_tpart_path_from_list(tparts_values_dir_list, tpart_name)
+function read_tparts_values(tparts_values, tparts_values_dir_list) {
+  for (j in tparts_values) {
+    file_value = get_value_path_from_dirs_list(tparts_values_dir_list, j)
 
-    if (file_tpart != "") {
-      while((getline line < file_tpart) > 0) tparts[tpart_name]["value"] = tparts[tpart_name]["value"] line "\n"
+    if (file_value != "") {
+      while((getline line < file_value) > 0) tparts_values[j]["value"] = tparts_values[j]["value"] line "\n"
 
-      tparts[tpart_name]["value"] = substr(tparts[tpart_name]["value"], 1, length(tparts[tpart_name]["value"]) - 1)
+      tparts_values[j]["value"] = substr(tparts_values[j]["value"], 1, length(tparts_values[j]["value"]) - 1)
     }
   }
 }
@@ -40,23 +40,23 @@ function indent_lines(value, indent) {
   return indented_value
 }
 
-function tparts_to_html(dir_template, tparts, filename_template) {
+function build_markup(dir_template, tparts_values, filename_template) {
   path_file_template = dir_template "/" filename_template
 
   while((getline line < path_file_template) > 0) {
     empty_line = 0
 
-    for (i in tparts) {
+    for (i in tparts_values) {
       tpart_tag = "<!-- " i " -->"
 
-      if (tparts[i]["block"] && match(line, tpart_tag)) {
-        if (tparts[i]["value"] == "") {
+      if (tparts_values[i]["block"] && match(line, tpart_tag)) {
+        if (tparts_values[i]["value"] == "") {
           empty_line = (empty_line || 1)
           break
         }
 
-        substitution = indent_lines(tparts[i]["value"], match(line, /^\s*/, indent_match) ? indent_match[0] : "")
-      } else substitution = tparts[i]["value"]
+        substitution = indent_lines(tparts_values[i]["value"], match(line, /^\s*/, indent_match) ? indent_match[0] : "")
+      } else substitution = tparts_values[i]["value"]
 
       sub(tpart_tag, substitution, line)
     }
@@ -76,8 +76,8 @@ function tparts_to_html(dir_template, tparts, filename_template) {
 BEGIN {
   filename_template = filename_template ? filename_template : "template.html"
 
-  read_tparts(tparts, tparts_values_dir_list)
-  print tparts_to_html(dir_template, tparts, filename_template)
+  read_tparts_values(tparts_values, tparts_values_dir_list)
+  print build_markup(dir_template, tparts_values, filename_template)
 
   exit
 }
