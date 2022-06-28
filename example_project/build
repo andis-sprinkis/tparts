@@ -24,35 +24,35 @@ for dir_src_document in $dir/documents/generic/*/; do
   fi
 
   # Create document directory
-  document_path="$dir_dist/$(cat $file_tparts_path)"
+  path_document="$dir_dist/$(cat $file_tparts_path)"
   
   # Create temporary value files directory
-  mkdir -p "$document_path/tparts_tmp"
+  mkdir -p "$path_document/tparts_tmp"
 
   # Build document body content HTML partials,
   # storing them as value files in the temporary directory
   if [[ "$(basename $dir_src_document)" -eq "index" ]]; then
-    tparts2html \
+    tparts_build \
       --template "$dir/templates/layout_index" \
-      --parts "$dir/templates/layout_index/tparts:$dir_src_document/tparts" > "$document_path/tparts_tmp/tparts_body_children.html"
+      --parts "$dir/templates/layout_index/tparts:$dir_src_document/tparts" > "$path_document/tparts_tmp/tparts_body_children.html"
   else
-    tparts2html \
+    tparts_build \
       --template "$dir/templates/layout_nested" \
       --parts "$dir/templates/layout_nested/tparts:$dir_src_document/tparts" \
-      > "$document_path/tparts_tmp/tparts_body_children.html"
+      > "$path_document/tparts_tmp/tparts_body_children.html"
   fi
 
   # Generate document HTML file from the document template and predefined and built value files
-  tparts2html \
+  tparts_build \
     --template "$dir/templates/document" \
-    --parts "$dir/tparts/generic:$dir_src_document/tparts:$document_path/tparts_tmp" \
-    > "$document_path/index.html"
+    --parts "$dir/tparts/generic:$dir_src_document/tparts:$path_document/tparts_tmp" \
+    > "$path_document/index.html"
 
   # Remove temporary value files directory
-  rm -rf "$document_path/tparts_tmp"
+  rm -rf "$path_document/tparts_tmp"
 
   # Copy document-related static files to the document directory
-  cp -r $dir_src_document/static/* "$document_path"
+  cp -r $dir_src_document/static/* "$path_document"
 
   echo "Page $(basename $dir_src_document) has been built
   "

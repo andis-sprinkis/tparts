@@ -43,5 +43,5 @@ if [ -z "$TPARTS_DIR_LIST" ]; then echo '-p|--parts value is required'; exit 1; 
 export AWKPATH=$DIR_TEMPLATE:$AWKPATH
 
 awk \
-  -f $(cd -P -- "$(dirname -- "$0")" && pwd -P)/tparts2html.awk \
+  -f $(cd -P -- "$(dirname -- "$0")" && pwd -P)/tparts_build.awk \
   -v dir_template="$DIR_TEMPLATE" -v tparts_dir_list="$TPARTS_DIR_LIST" -v filename_template="$FILENAME_TEMPLATE"
