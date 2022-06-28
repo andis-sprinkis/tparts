@@ -29,7 +29,8 @@ for dir_src_document in $dir/documents/generic/*/; do
   # Create temporary value files directory
   mkdir -p "$document_path/tparts_tmp"
 
-  # Build document body content HTML partials for the index and the non-index pages, storing them as value files in the temporary value files directory
+  # Build document body content HTML partials,
+  # storing them as value files in the temporary directory
   if [[ "$(basename $dir_src_document)" -eq "index" ]]; then
     tparts2html \
       --template "$dir/templates/layout_index" \
