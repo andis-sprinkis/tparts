@@ -1,10 +1,11 @@
 function escapeHtml(t) {
-  gsub(/&/,  "\\&amp;", t);
-  gsub(/</,  "\\&lt;", t);
-  gsub(/>/,  "\\&gt;", t);
-  gsub(/"/,  "\\&quot;", t);
-  gsub(/'/,  "\\&x27;", t);
-  return t;
+  gsub(/&/,  "\\&amp;", t)
+  gsub(/</,  "\\&lt;", t)
+  gsub(/>/,  "\\&gt;", t)
+  gsub(/"/,  "\\&quot;", t)
+  gsub(/'/,  "\\&x27;", t)
+
+  return t
 }
 
 function escapeHtmlFile(path_file) {
