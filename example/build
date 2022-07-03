@@ -10,7 +10,7 @@ for path_dir_src_document in $dir/documents/generic/*/; do
 
   path_file_document_url_path="$path_dir_src_document/values/tparts_inline_path"
   if [ ! -f $path_file_document_url_path ]; then echo "$path_file_document_url_path is missing. Exiting."; exit 1; fi
-  document_url_path=$(cat $path_file_document_url_path)
+  document_url_path=$(cat "$path_file_document_url_path")
 
   path_dir_dist_document="$dir_dist/$document_url_path"
   path_file_values_index="$dir_dist/$document_url_path/values_paths"
