@@ -1,9 +1,9 @@
 function escapeHtml(s) {
-  gsub(/&/,  "\\&amp;", s)
-  gsub(/</,  "\\&lt;", s)
-  gsub(/>/,  "\\&gt;", s)
-  gsub(/"/,  "\\&quot;", s)
-  gsub(/'/,  "\\&x27;", s)
+  gsub(/&/, "\\\\\\&amp;", s)
+  gsub(/</, "\\\\\\&lt;", s)
+  gsub(/>/, "\\\\\\&gt;", s)
+  gsub(/"/, "\\\\\\&quot;", s)
+  gsub(/'/, "\\\\\\&apos;", s)
 
   return s
 }

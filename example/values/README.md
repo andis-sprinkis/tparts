@@ -1,1 +1,1 @@
-This directory contains project global scope tparts values.
+This directory contains example project global scope web document values.

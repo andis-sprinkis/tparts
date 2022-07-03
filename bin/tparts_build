@@ -1,4 +1,14 @@
 #!/usr/bin/env bash
+set -e
 dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 
-$dir/../share/tparts_build/tparts_build "$@"
+usage() {
+cat << EOF
+test
+EOF
+}
+
+awk \
+  -f $dir/../share/tparts_build/tparts_build.awk \
+  -v filename_value_entrypoint="$1" \
+  -v path_values_index="$2"
