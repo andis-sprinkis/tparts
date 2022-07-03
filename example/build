@@ -1,35 +1,33 @@
 #!/usr/bin/env bash
 set -e
 dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
+PATH="$dir/../:$PATH"; . util
 
-PATH="$dir/../:$PATH"
-. util
-
-dir_dist="$dir/dist"
-rm -rf "$dir_dist" && mkdir -p "$dir_dist"
+dir_dist="$dir/dist"; rm -rf "$dir_dist" && mkdir -p "$dir_dist"
 
 for path_dir_src_document in $dir/documents/generic/*/; do
   echo "Building document $(basename $path_dir_src_document)"
 
-  path_file_document_path="$path_dir_src_document/values/tparts_inline_path"
-  if [ ! -f $path_file_document_path ]; then echo "$path_file_document_path is missing. Exiting."; exit 1; fi
+  path_file_document_url_path="$path_dir_src_document/values/tparts_inline_path"
+  if [ ! -f $path_file_document_url_path ]; then echo "$path_file_document_url_path is missing. Exiting."; exit 1; fi
+  document_url_path=$(cat $path_file_document_url_path)
 
-  path_dir_dist_document="$dir_dist/$(cat $path_file_document_path)"
+  path_dir_dist_document="$dir_dist/$document_url_path"
+  path_file_values_index="$dir_dist/$document_url_path/values_paths"
+
   mkdir -p "$path_dir_dist_document"
 
   cp -r $path_dir_src_document/static/* "$path_dir_dist_document"
 
-  path_file_values_paths="$dir_dist/$(cat $path_file_document_path)/values_paths"
-
-  resolve_values_paths "$dir/values/generic" "$path_dir_src_document/values" >> "$path_file_values_paths"
+  resolve_values_paths "$dir/values/generic" "$path_dir_src_document/values" >> "$path_file_values_index"
 
   awk \
     -f "$dir/../build_document.awk" \
     -v filename_value_entrypoint="tparts_block_document.html" \
-    -v path_values_index="$path_file_values_paths" \
+    -v path_values_index="$path_file_values_index" \
     > "$path_dir_dist_document/index.html"
 
-  rm "$dir_dist/$(cat $path_file_document_path)/values_paths"
+  rm "$path_file_values_index"
 
   echo "Document $(basename $path_dir_src_document) has been built
   "
