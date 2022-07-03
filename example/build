@@ -2,22 +2,9 @@
 set -e
 dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 
-function resolve_tparts_values_paths() {
-  # $@ - dir list
-
-  declare -A tparts_values
-
-  for path in "$@"; do
-    for file_path in $(find "$path" -name "tparts_*"); do
-      tparts_values[$(basename $file_path)]="$file_path"
-    done
-  done
-
-  for index in "${!tparts_values[@]}"; do echo "$index:${tparts_values[$index]}"; done
-}
-
 # Include library scripts
 PATH="$dir/../:$PATH"
+. util
 
 # Set output directory
 dir_dist="$dir/dist"
@@ -44,19 +31,15 @@ for dir_src_document in $dir/documents/generic/*/; do
   # Copy document-related static files to the document directory
   cp -r $dir_src_document/static/* "$path_document"
 
-  mkdir -p "$dir_dist/tmp/$(cat $file_tparts_path)"
+  resolve_values_paths "$dir/values/generic" "$dir_src_document/values" >> "$dir_dist/$(cat $file_tparts_path)/values_paths"
 
-  resolve_tparts_values_paths "$dir/values/generic" "$dir_src_document/values" >> "$dir_dist/tmp/$(cat $file_tparts_path)/values_paths"
+  tparts_build "tparts_block_document.html" "$dir_dist/$(cat $file_tparts_path)/values_paths" > "$path_document/index.html"
 
-  tparts_build "tparts_block_document.html" "$dir_dist/tmp/$(cat $file_tparts_path)/values_paths" > "$path_document/index.html"
-
-  # rm $dir_dist/tmp/values_paths
+  rm "$dir_dist/$(cat $file_tparts_path)/values_paths"
 
   echo "Document $(basename $dir_src_document) has been built
   "
 done
-
-rm -rf $dir_dist/tmp/
 
 echo "All documents have been built in
 $dir_dist"
