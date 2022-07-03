@@ -2,42 +2,36 @@
 set -e
 dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 
-# Include library scripts
 PATH="$dir/../:$PATH"
 . util
 
-# Set output directory
 dir_dist="$dir/dist"
-
-# Make dist directory
 rm -rf "$dir_dist" && mkdir -p "$dir_dist"
 
-# Build each document specified in generic documents directory in dist
-for dir_src_document in $dir/documents/generic/*/; do
-  echo "Building document $(basename $dir_src_document)"
+for path_dir_src_document in $dir/documents/generic/*/; do
+  echo "Building document $(basename $path_dir_src_document)"
 
-  # Read document directory path from the document tparts_path value file
-  file_tparts_path="$dir_src_document/values/tparts_inline_path"
+  path_file_document_path="$path_dir_src_document/values/tparts_inline_path"
 
-  if [ ! -f $file_tparts_path ]; then
-    echo "$file_tparts_path is missing. Exiting."
+  if [ ! -f $path_file_document_path ]; then
+    echo "$path_file_document_path is missing. Exiting."
     exit 1
   fi
 
-  # Create document directory
-  path_document="$dir_dist/$(cat $file_tparts_path)"
-  mkdir -p "$path_document"
+  path_dir_dist_document="$dir_dist/$(cat $path_file_document_path)"
+  mkdir -p "$path_dir_dist_document"
 
-  # Copy document-related static files to the document directory
-  cp -r $dir_src_document/static/* "$path_document"
+  cp -r $path_dir_src_document/static/* "$path_dir_dist_document"
 
-  resolve_values_paths "$dir/values/generic" "$dir_src_document/values" >> "$dir_dist/$(cat $file_tparts_path)/values_paths"
+  path_file_values_paths="$dir_dist/$(cat $path_file_document_path)/values_paths"
 
-  tparts_build "tparts_block_document.html" "$dir_dist/$(cat $file_tparts_path)/values_paths" > "$path_document/index.html"
+  resolve_values_paths "$dir/values/generic" "$path_dir_src_document/values" >> "$path_file_values_paths"
 
-  rm "$dir_dist/$(cat $file_tparts_path)/values_paths"
+  tparts_build "tparts_block_document.html" "$path_file_values_paths" > "$path_dir_dist_document/index.html"
 
-  echo "Document $(basename $dir_src_document) has been built
+  rm "$dir_dist/$(cat $path_file_document_path)/values_paths"
+
+  echo "Document $(basename $path_dir_src_document) has been built
   "
 done
 
