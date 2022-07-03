@@ -9,6 +9,6 @@ EOF
 }
 
 awk \
-  -f $dir/../share/tparts_build/tparts_build.awk \
+  -f $dir/tparts_build.awk \
   -v filename_value_entrypoint="$1" \
   -v path_values_index="$2"

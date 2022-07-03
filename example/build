@@ -17,7 +17,7 @@ function resolve_tparts_values_paths() {
 }
 
 # Include library scripts
-PATH="$dir/../bin:$PATH"
+PATH="$dir/../:$PATH"
 
 # Set output directory
 dir_dist="$dir/dist"
