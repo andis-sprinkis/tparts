@@ -12,11 +12,7 @@ for path_dir_src_document in $dir/documents/generic/*/; do
   echo "Building document $(basename $path_dir_src_document)"
 
   path_file_document_path="$path_dir_src_document/values/tparts_inline_path"
-
-  if [ ! -f $path_file_document_path ]; then
-    echo "$path_file_document_path is missing. Exiting."
-    exit 1
-  fi
+  if [ ! -f $path_file_document_path ]; then echo "$path_file_document_path is missing. Exiting."; exit 1; fi
 
   path_dir_dist_document="$dir_dist/$(cat $path_file_document_path)"
   mkdir -p "$path_dir_dist_document"
