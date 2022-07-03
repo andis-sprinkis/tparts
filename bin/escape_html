@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
-
-$dir/../share/escape_html/escape_html "$@"

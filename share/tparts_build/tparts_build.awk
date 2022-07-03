@@ -1,26 +1,51 @@
-#!/usr/bin/awk
+function escapeHtml(s) {
+  gsub(/&/,  "\\&amp;", s)
+  gsub(/</,  "\\&lt;", s)
+  gsub(/>/,  "\\&gt;", s)
+  gsub(/"/,  "\\&quot;", s)
+  gsub(/'/,  "\\&x27;", s)
 
-function get_value_path_from_dirs_list(tparts_values_dir_list, value_name) {
-  for (k = split(tparts_values_dir_list, tparts_values_dir_list_array, ":"); k > 0; k--) {
-    file_value_test = tparts_values_dir_list_array[k] "/" value_name
-
-    if (!system("test -f " file_value_test)) return file_value_test
-  }
+  return s
 }
 
-function read_tparts_values(tparts_values, tparts_values_dir_list) {
-  for (j in tparts_values) {
-    file_value = get_value_path_from_dirs_list(tparts_values_dir_list, j)
+function trim_last_char(s) {
+  return substr(s, 1, length(s) - 1)
+}
 
-    if (file_value != "") {
-      while((getline line < file_value) > 0) tparts_values[j]["value"] = tparts_values[j]["value"] line "\n"
+function read_values_index_file(path_values_index, result) {
+  count = 0
 
-      tparts_values[j]["value"] = substr(tparts_values[j]["value"], 1, length(tparts_values[j]["value"]) - 1)
+  while((getline line < path_values_index) > 0) {
+    count ++
+    split(line, basename_path, ":")
+    result[basename_path[1]]["path"] = basename_path[2]
+
+    if (match(basename_path[1], /tparts_block_.*/)) result[basename_path[1]]["type"] = "block"
+    else if (match(basename_path[1], /tparts_pre_.*/)) result[basename_path[1]]["type"] = "pre"
+    else if (match(basename_path[1], /tparts_inline_.*/)) result[basename_path[1]]["type"] = "inline"
+  }
+
+  return count
+}
+
+function recognise_values_in_string(string, values_index, result) {
+  split(string, string_array, "\n")
+  count = 0
+
+  for (line_index in string_array) {
+    for (value_index in values_index) {
+      if (match(string_array[line_index], "<!-- " value_index " -->")) {
+        result[value_index] = 1
+        count++
+      }
     }
   }
+
+  return count
 }
 
 function indent_lines(value, indent) {
+  indented_value = ""
   split(value, value_lines, "\n")
 
   in_preformatted = 0
@@ -39,43 +64,69 @@ function indent_lines(value, indent) {
   return indented_value
 }
 
-function build_markup(dir_template, tparts_values, filename_template) {
-  path_file_template = dir_template "/" filename_template
+function substitute_with_recognized_values(recognised_values, values_index, fragment_html) {
+  for (recognised_value in recognised_values) {
+    if (recognised_values[recognised_value] == 1) {
+      recognised_value_lines = ""
+      while((getline line < (values_index[recognised_value]["path"])) > 0) {
+        if (values_index[recognised_value]["type"] == "inline") recognised_value_lines = recognised_value_lines line
+        else if (values_index[recognised_value]["type"] == "pre") recognised_value_lines = recognised_value_lines escapeHtml(line) "\n"
+        else if (values_index[recognised_value]["type"] == "block") recognised_value_lines = recognised_value_lines line "\n"
+        else continue
+      }
 
-  while((getline line < path_file_template) > 0) {
-    empty_line = 0
+      if (values_index[recognised_value]["type"] == "pre") recognised_value_lines = trim_last_char(recognised_value_lines)
 
-    for (i in tparts_values) {
-      value_placeholder = "<!-- " i " -->"
+      split(fragment_html, fragment_html_array, "\n")
+      fragment_html = ""
+      recognised_value_placeholder = "<!-- " recognised_value " -->"
 
-      if (tparts_values[i]["block"] && match(line, value_placeholder)) {
-        if (tparts_values[i]["value"] == "") {
-          empty_line = (empty_line || 1)
-          break
+      for (line_index in fragment_html_array) {
+        empty_line = 0
+        if (match(fragment_html_array[line_index], recognised_value_placeholder)) {
+          if (values_index[recognised_value]["type"] == "block") {
+            if (fragment_html_array[line_index] == "") {
+              empty_line = (empty_line || 1)
+              break
+            }
+
+            indent = match(fragment_html_array[line_index], /^\s+/, indent_match) ? indent_match[0] : ""
+
+            sub(recognised_value_placeholder, indent_lines(trim_last_char(recognised_value_lines), indent), fragment_html_array[line_index])
+          } else {
+            sub(recognised_value_placeholder, recognised_value_lines, fragment_html_array[line_index])
+          }
         }
 
-        substitution = indent_lines(tparts_values[i]["value"], match(line, /^\s*/, indent_match) ? indent_match[0] : "")
-      } else substitution = tparts_values[i]["value"]
+        fragment_html = fragment_html fragment_html_array[line_index] "\n"
+      }
 
-      sub(value_placeholder, substitution, line)
+      fragment_html = trim_last_char(fragment_html)
     }
-
-    if (empty_line) continue
-
-    fragment_html = fragment_html line "\n"
   }
 
-  fragment_html = substr(fragment_html, 1, length(fragment_html) - 1)
   return fragment_html
 }
 
-@include "init.awk"
+function remove_block_value_placeholder_lines(s) {
+  gsub(/\s+<!-- tparts_block_.*-->/, "", s)
+  return s
+}
 
 BEGIN {
-  filename_template = filename_template ? filename_template : "template.html"
+  read_values_index_file(path_values_index, values_index)
 
-  read_tparts_values(tparts_values, tparts_values_dir_list)
-  print build_markup(dir_template, tparts_values, filename_template)
+  while((getline line < values_index[filename_value_entrypoint]["path"]) > 0) fragment_html = fragment_html line "\n"
+
+  while (recognise_values_in_string(fragment_html, values_index, recognised_values) > 0) {
+    fragment_html = substitute_with_recognized_values(recognised_values, values_index, fragment_html)
+    delete recognised_values
+  }
+
+  fragment_html = remove_block_value_placeholder_lines(fragment_html)
+  fragment_html = trim_last_char(fragment_html)
+
+  print fragment_html
 
   exit
 }

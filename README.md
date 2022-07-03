@@ -1,3 +1,3 @@
 # tparts
 
-tparts - Bash and gAWK scripts toolset for generating static sites.
+tparts - Bash and GAWK scripts based static web document generator.
