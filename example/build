@@ -23,7 +23,11 @@ for path_dir_src_document in $dir/documents/generic/*/; do
 
   resolve_values_paths "$dir/values/generic" "$path_dir_src_document/values" >> "$path_file_values_paths"
 
-  build_document "tparts_block_document.html" "$path_file_values_paths" > "$path_dir_dist_document/index.html"
+  awk \
+    -f "$dir/../build_document.awk" \
+    -v filename_value_entrypoint="tparts_block_document.html" \
+    -v path_values_index="$path_file_values_paths" \
+    > "$path_dir_dist_document/index.html"
 
   rm "$dir_dist/$(cat $path_file_document_path)/values_paths"
 
