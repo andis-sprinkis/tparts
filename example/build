@@ -17,7 +17,7 @@ for path_dir_src_document in $dir/documents/generic/*/; do
 
   mkdir -p "$path_dir_dist_document"
 
-  cp -r $path_dir_src_document/static/* "$path_dir_dist_document"
+  if [ -d $path_dir_src_document/static/ ]; then cp -r $path_dir_src_document/static/* "$path_dir_dist_document"; fi 
 
   resolve_values_paths "$dir/values/generic" "$path_dir_src_document/values" >> "$path_file_values_index"
 
