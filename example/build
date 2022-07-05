@@ -8,7 +8,7 @@ dir_dist="$dir/dist"; rm -rf "$dir_dist" && mkdir -p "$dir_dist"
 for path_dir_src_document in $dir/documents/generic/*/; do
   echo "Building document $(basename $path_dir_src_document)"
 
-  path_file_document_url_path="$path_dir_src_document/values/_inline_path"
+  path_file_document_url_path="$path_dir_src_document/_inline_path"
   if [ ! -f $path_file_document_url_path ]; then echo "$path_file_document_url_path is missing. Exiting."; exit 1; fi
   document_url_path=$(cat "$path_file_document_url_path")
 
@@ -19,7 +19,7 @@ for path_dir_src_document in $dir/documents/generic/*/; do
 
   if [ -d $path_dir_src_document/static/ ]; then cp -r $path_dir_src_document/static/* "$path_dir_dist_document"; fi 
 
-  resolve_values_paths "$dir/values/generic" "$path_dir_src_document/values" >> "$path_file_values_index"
+  resolve_values_paths "$dir/values/generic" "$path_dir_src_document" >> "$path_file_values_index"
 
   awk \
     -f "$dir/../build_document.awk" \
