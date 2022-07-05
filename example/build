@@ -6,11 +6,17 @@ PATH="$dir/../:$PATH"; . util
 dir_dist="$dir/dist"; rm -rf "$dir_dist" && mkdir -p "$dir_dist"
 
 for path_dir_src_document in $dir/documents/generic/*/; do
-  echo "Building document $(basename $path_dir_src_document)"
+  echo "Building document $path_dir_src_document"
 
-  path_file_document_url_path="$path_dir_src_document/_inline_path"
-  if [ ! -f $path_file_document_url_path ]; then echo "$path_file_document_url_path is missing. Exiting."; exit 1; fi
+  path_file_document_url_path="$dir/values/_inline_path"
+  if [[ -f "$path_dir_src_document/_inline_path" ]]; then path_file_document_url_path="$path_dir_src_document/_inline_path"; fi
   document_url_path=$(cat "$path_file_document_url_path")
+
+  path_file_document_filename="$dir/values/_inline_filename"
+  if [[ -f "$path_dir_src_document/_inline_filename" ]]; then path_file_document_filename="$path_dir_src_document/_inline_filename"; fi
+  document_filename=$(cat "$path_file_document_filename")
+
+  echo "Server path: $document_url_path/$document_filename"
 
   path_dir_dist_document="$dir_dist/$document_url_path"
   path_file_values_index="$dir_dist/$document_url_path/values_paths"
@@ -25,7 +31,7 @@ for path_dir_src_document in $dir/documents/generic/*/; do
     -f "$dir/../build_document.awk" \
     -v filename_value_entrypoint="_block_document.html" \
     -v path_values_index="$path_file_values_index" \
-    > "$path_dir_dist_document/index.html"
+    > "$path_dir_dist_document/$document_filename"
 
   rm "$path_file_values_index"
 
