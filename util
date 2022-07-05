@@ -3,13 +3,13 @@
 function resolve_values_paths() {
   # $@ - dir list
 
-  declare -A _values
+  declare -A values_paths
 
   for path in "$@"; do
     for file_path in $(find "$path" -name "_*"); do
-      _values[$(basename $file_path)]="$file_path"
+      values_paths[$(basename $file_path)]="$file_path"
     done
   done
 
-  for index in "${!_values[@]}"; do echo "$index:${_values[$index]}"; done
+  for index in "${!values_paths[@]}"; do echo "$index:${values_paths[$index]}"; done
 }
