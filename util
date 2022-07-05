@@ -3,13 +3,13 @@
 function resolve_values_paths() {
   # $@ - dir list
 
-  declare -A tparts_values
+  declare -A _values
 
   for path in "$@"; do
-    for file_path in $(find "$path" -name "tparts_*"); do
-      tparts_values[$(basename $file_path)]="$file_path"
+    for file_path in $(find "$path" -name "_*"); do
+      _values[$(basename $file_path)]="$file_path"
     done
   done
 
-  for index in "${!tparts_values[@]}"; do echo "$index:${tparts_values[$index]}"; done
+  for index in "${!_values[@]}"; do echo "$index:${_values[$index]}"; done
 }

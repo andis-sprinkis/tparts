@@ -20,9 +20,9 @@ function read_values_index_file(path_values_index, result) {
     split(line, basename_path, ":")
     result[basename_path[1]]["path"] = basename_path[2]
 
-    if (match(basename_path[1], /tparts_block_.*/)) result[basename_path[1]]["type"] = "block"
-    else if (match(basename_path[1], /tparts_pre_.*/)) result[basename_path[1]]["type"] = "pre"
-    else if (match(basename_path[1], /tparts_inline_.*/)) result[basename_path[1]]["type"] = "inline"
+    if (match(basename_path[1], /_block_.*/)) result[basename_path[1]]["type"] = "block"
+    else if (match(basename_path[1], /_pre_.*/)) result[basename_path[1]]["type"] = "pre"
+    else if (match(basename_path[1], /_inline_.*/)) result[basename_path[1]]["type"] = "inline"
   }
 
   return count
@@ -109,7 +109,7 @@ function substitute_with_recognized_values(recognised_values, values_index, frag
 }
 
 function remove_block_value_placeholder_lines(s) {
-  gsub(/\s+<!-- tparts_block_.*-->/, "", s)
+  gsub(/\s+<!-- _block_.*-->/, "", s)
   return s
 }
 
