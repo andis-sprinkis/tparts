@@ -2,7 +2,9 @@
 set -e
 dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 PATH="$dir/../:$PATH"; . util
-dir_dist="$dir/dist"; rm -rf "$dir_dist" && mkdir -p "$dir_dist"
+path_dir_dist="$dir/dist"; rm -rf "$path_dir_dist" && mkdir -p "$path_dir_dist"
+
+sitemap_entries=()
 
 function build_sitemap() {
   echo "Building sitemap
@@ -21,26 +23,31 @@ function build_generic_documents() {
     echo "Building document $path_dir_src_document"
 
     path_file_document_url_path="$dir/values/_inline_path"
-    if [[ -f "$path_dir_src_document/_inline_path" ]]; then path_file_document_url_path="$path_dir_src_document/_inline_path"; fi
+    if [[ -f "$path_dir_src_document/_inline_path" ]]; then 
+      path_file_document_url_path="$path_dir_src_document/_inline_path"; fi
 
     path_file_document_filename="$dir/values/_inline_filename"
-    if [[ -f "$path_dir_src_document/_inline_filename" ]]; then path_file_document_filename="$path_dir_src_document/_inline_filename"; fi
+    if [[ -f "$path_dir_src_document/_inline_filename" ]]; then 
+      path_file_document_filename="$path_dir_src_document/_inline_filename"; fi
 
     document_url_path=$(cat "$path_file_document_url_path")
     document_filename=$(cat "$path_file_document_filename")
 
     echo "Server path: $document_url_path/$document_filename"
 
-    path_dir_dist_document="$dir_dist/$document_url_path"
-    path_file_values_index="$dir_dist/$document_url_path/values_paths"
+    path_path_dir_dist_document="$path_dir_dist/$document_url_path"
+    path_file_values_index="$path_dir_dist/$document_url_path/values_paths"
 
-    mkdir -p "$path_dir_dist_document"
+    mkdir -p "$path_path_dir_dist_document"
 
-    if [ -d $path_dir_src_document/static/ ]; then cp -r $path_dir_src_document/static/* "$path_dir_dist_document"; fi 
+    if [ -d $path_dir_src_document/static/ ]; then 
+      cp -r $path_dir_src_document/static/* "$path_path_dir_dist_document"; fi 
 
-    resolve_values_paths "$dir/values/" "$path_dir_src_document" >> "$path_file_values_index"
+    resolve_values_paths "$dir/values/" "$path_dir_src_document" \
+      > "$path_file_values_index"
 
-    awk -f "$dir/../build_document.awk" -v path_values_index="$path_file_values_index" > "$path_dir_dist_document/$document_filename"
+    awk -f "$dir/../build_document.awk" -v path_values_index="$path_file_values_index" \
+      > "$path_path_dir_dist_document/$document_filename"
 
     rm "$path_file_values_index"
 
@@ -56,4 +63,4 @@ build_generic_documents
 build_sitemap
 
 echo "All documents have been built in
-$dir_dist"
+$path_dir_dist"
