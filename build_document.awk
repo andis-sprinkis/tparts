@@ -67,7 +67,7 @@ function indent_lines(value, indent) {
 function substitute_with_recognized_values(recognised_values, values_index, fragment_out) {
   for (recognised_value in recognised_values) {
     if (recognised_values[recognised_value] == 1) {
-      recognised_value_lines = "" # TODO: use array
+      recognised_value_lines = ""
       while((getline line < (values_index[recognised_value]["path"])) > 0) {
         if (values_index[recognised_value]["type"] == "inline") recognised_value_lines = recognised_value_lines line
         else if (values_index[recognised_value]["type"] == "pre") recognised_value_lines = recognised_value_lines escape_ml(line) "\n"
@@ -116,7 +116,10 @@ function remove_block_value_placeholder_lines(s) {
 BEGIN {
   read_values_index_file(path_values_index, values_index)
 
-  while((getline line < values_index[filename_value_entrypoint]["path"]) > 0) fragment_out = fragment_out line "\n"
+  # TODO: populate and process in int indexed array
+  while((getline line < values_index["_inline_build_entrypoint"]["path"]) > 0) {
+    fragment_out = fragment_out line "\n"
+  }
 
   while (recognise_values_in_string(fragment_out, values_index, recognised_values) > 0) {
     fragment_out = substitute_with_recognized_values(recognised_values, values_index, fragment_out)

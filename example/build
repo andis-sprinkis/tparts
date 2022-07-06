@@ -5,16 +5,19 @@ PATH="$dir/../:$PATH"; . util
 
 dir_dist="$dir/dist"; rm -rf "$dir_dist" && mkdir -p "$dir_dist"
 
+# Generic documents
 for path_dir_src_document in $dir/documents/generic/*/; do
   echo "Building document $path_dir_src_document"
 
   path_file_document_url_path="$dir/values/_inline_path"
   if [[ -f "$path_dir_src_document/_inline_path" ]]; then path_file_document_url_path="$path_dir_src_document/_inline_path"; fi
   document_url_path=$(cat "$path_file_document_url_path")
+  # TODO: read from values_paths
 
   path_file_document_filename="$dir/values/_inline_filename"
   if [[ -f "$path_dir_src_document/_inline_filename" ]]; then path_file_document_filename="$path_dir_src_document/_inline_filename"; fi
   document_filename=$(cat "$path_file_document_filename")
+  # TODO: read from values_paths
 
   echo "Server path: $document_url_path/$document_filename"
 
@@ -27,11 +30,7 @@ for path_dir_src_document in $dir/documents/generic/*/; do
 
   resolve_values_paths "$dir/values/" "$path_dir_src_document" >> "$path_file_values_index"
 
-  awk \
-    -f "$dir/../build_document.awk" \
-    -v filename_value_entrypoint="_block_document.html" \
-    -v path_values_index="$path_file_values_index" \
-    > "$path_dir_dist_document/$document_filename"
+  awk -f "$dir/../build_document.awk" -v path_values_index="$path_file_values_index" > "$path_dir_dist_document/$document_filename"
 
   rm "$path_file_values_index"
 
