@@ -13,10 +13,10 @@ function trim_last_char(s) {
 }
 
 function read_values_index_file(path_values_index, result) {
-  count = 0
+  i = 0
 
   while((getline line < path_values_index) > 0) {
-    count ++
+    i++
     split(line, basename_path, ":")
     result[basename_path[1]]["path"] = basename_path[2]
 
@@ -25,23 +25,23 @@ function read_values_index_file(path_values_index, result) {
     else if (match(basename_path[1], /_inline_.*/)) result[basename_path[1]]["type"] = "inline"
   }
 
-  return count
+  return i
 }
 
 function recognise_values_in_string(string, values_index, result) {
   split(string, string_array, "\n")
-  count = 0
+  i = 0
 
   for (line_index in string_array) {
     for (value_index in values_index) {
       if (match(string_array[line_index], "<!-- " value_index " -->")) {
         result[value_index] = 1
-        count++
+        i++
       }
     }
   }
 
-  return count
+  return i
 }
 
 function indent_lines(value, indent) {
@@ -66,7 +66,7 @@ function indent_lines(value, indent) {
 
 function substitute_with_recognized_values(recognised_values, values_index, fragment_out) {
   for (recognised_value in recognised_values) {
-    if (recognised_values[recognised_value] == 1) {
+    if (recognised_values[recognised_value]) {
       recognised_value_lines = ""
       while((getline line < (values_index[recognised_value]["path"])) > 0) {
         if (values_index[recognised_value]["type"] == "inline") recognised_value_lines = recognised_value_lines line
@@ -116,7 +116,6 @@ function remove_block_value_placeholder_lines(s) {
 BEGIN {
   read_values_index_file(path_values_index, values_index)
 
-  # TODO: populate and process in int indexed array
   while((getline line < values_index["_inline_build_entrypoint"]["path"]) > 0) {
     fragment_out = fragment_out line "\n"
   }
