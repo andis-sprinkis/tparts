@@ -50,7 +50,6 @@ function indent_lines(value, indent) {
 
   in_preformatted = 0
   for (i in value_lines) {
-    # For HTML code formatting and rendering consistency, the <pre> tags and children are being not indented.
     match(value_lines[i], /(<pre>)|(<pre( .*))/, preformatted_begin_match)
     match(value_lines[i], /<\/pre>/, preformatted_end_match)
 
@@ -64,45 +63,50 @@ function indent_lines(value, indent) {
   return indented_value
 }
 
+function read_recognised_value_lines(recognised_value) {
+  recognised_value_lines = ""
+
+  while((getline line < (recognised_value["path"])) > 0) {
+    if (recognised_value["type"] == "inline") recognised_value_lines = recognised_value_lines line
+    else if (recognised_value["type"] == "pre") recognised_value_lines = recognised_value_lines escape_ml(line) "\n"
+    else if (recognised_value["type"] == "block") recognised_value_lines = recognised_value_lines line "\n"
+    else continue
+  }
+
+  if (recognised_value["type"] == "pre") recognised_value_lines = trim_last_char(recognised_value_lines)
+
+  return recognised_value_lines
+}
+
 function substitute_with_recognized_values(recognised_values, values_index, fragment_out) {
   for (recognised_value in recognised_values) {
-    if (recognised_values[recognised_value]) {
-      recognised_value_lines = ""
-      while((getline line < (values_index[recognised_value]["path"])) > 0) {
-        if (values_index[recognised_value]["type"] == "inline") recognised_value_lines = recognised_value_lines line
-        else if (values_index[recognised_value]["type"] == "pre") recognised_value_lines = recognised_value_lines escape_ml(line) "\n"
-        else if (values_index[recognised_value]["type"] == "block") recognised_value_lines = recognised_value_lines line "\n"
-        else continue
-      }
+    recognised_value_lines = read_recognised_value_lines(values_index[recognised_value])
 
-      if (values_index[recognised_value]["type"] == "pre") recognised_value_lines = trim_last_char(recognised_value_lines)
+    split(fragment_out, fragment_out_array, "\n")
+    fragment_out = ""
+    recognised_value_placeholder = "<!-- " recognised_value " -->"
 
-      split(fragment_out, fragment_out_array, "\n")
-      fragment_out = ""
-      recognised_value_placeholder = "<!-- " recognised_value " -->"
-
-      for (line_index in fragment_out_array) {
-        empty_line = 0
-        if (match(fragment_out_array[line_index], recognised_value_placeholder)) {
-          if (values_index[recognised_value]["type"] == "block") {
-            if (fragment_out_array[line_index] == "") {
-              empty_line = (empty_line || 1)
-              break
-            }
-
-            indent = match(fragment_out_array[line_index], /^\s+/, indent_match) ? indent_match[0] : ""
-
-            sub(recognised_value_placeholder, indent_lines(trim_last_char(recognised_value_lines), indent), fragment_out_array[line_index])
-          } else {
-            sub(recognised_value_placeholder, recognised_value_lines, fragment_out_array[line_index])
+    for (line_index in fragment_out_array) {
+      empty_line = 0
+      if (match(fragment_out_array[line_index], recognised_value_placeholder)) {
+        if (values_index[recognised_value]["type"] == "block") {
+          if (fragment_out_array[line_index] == "") {
+            empty_line = (empty_line || 1)
+            break
           }
-        }
 
-        fragment_out = fragment_out fragment_out_array[line_index] "\n"
+          indent = match(fragment_out_array[line_index], /^\s+/, indent_match) ? indent_match[0] : ""
+
+          sub(recognised_value_placeholder, indent_lines(trim_last_char(recognised_value_lines), indent), fragment_out_array[line_index])
+        } else {
+          sub(recognised_value_placeholder, recognised_value_lines, fragment_out_array[line_index])
+        }
       }
 
-      fragment_out = trim_last_char(fragment_out)
+      fragment_out = fragment_out fragment_out_array[line_index] "\n"
     }
+
+    fragment_out = trim_last_char(fragment_out)
   }
 
   return fragment_out
@@ -125,8 +129,7 @@ BEGIN {
     delete recognised_values
   }
 
-  fragment_out = remove_block_value_placeholder_lines(fragment_out)
-  fragment_out = trim_last_char(fragment_out)
+  fragment_out = trim_last_char(remove_block_value_placeholder_lines(fragment_out))
 
   print fragment_out >> path_output
 
