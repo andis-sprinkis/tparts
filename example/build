@@ -34,8 +34,21 @@ function build_sitemap() {
 }
 
 function build_sitemap_entry() {
-  echo "Building sitemap entry"
-  echo "Sitemap entry has been built"
+  echo "Building sitemap entry
+  "
+
+  path_dir_src_sitemap_url="$dir/sitemap/url"
+  path_file_values_index_sitemap_url="$path_dir_dist/$1/values_paths_sitemap_url"
+
+  resolve_values_paths "$dir/values/" "$2" "$path_dir_src_sitemap_url" \
+    > "$path_file_values_index_sitemap_url"
+
+  awk -f "$dir/../build_document.awk" -v path_values_index="$path_file_values_index_sitemap_url" >> "$path_dir_dist_tmp/sitemap/_block_sitemap_children.xml"
+
+  rm "$path_file_values_index_sitemap_url"
+
+  echo "Sitemap entry has been built
+  "
 }
 
 function build_generic_documents() {
@@ -79,20 +92,7 @@ function build_generic_documents() {
     case "$basename_path_dir_src_document" in
       "robots.txt" | "404" | "403")
         ;;
-      *)
-        echo "Building sitemap entry"
-
-        path_dir_src_sitemap_url="$dir/sitemap/url"
-        path_file_values_index_sitemap_url="$path_dir_dist/$document_url_path/values_paths_sitemap_url"
-
-        resolve_values_paths "$dir/values/" "$path_dir_src_document" "$path_dir_src_sitemap_url" \
-          > "$path_file_values_index_sitemap_url"
-
-        awk -f "$dir/../build_document.awk" -v path_values_index="$path_file_values_index_sitemap_url" >> "$path_dir_dist_tmp/sitemap/_block_sitemap_children.xml"
-
-        rm "$path_file_values_index_sitemap_url"
-
-        echo "Sitemap entry has been built"
+      *) build_sitemap_entry "$document_url_path" "$path_dir_src_document"
         ;;
     esac
 
