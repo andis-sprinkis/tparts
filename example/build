@@ -13,9 +13,7 @@ function resolve_values_paths() {
   declare -A values_paths
 
   for path in "$@"; do
-    for file_path in $(find "$path" -name "_*"); do
-      values_paths[$(basename $file_path)]="$file_path"
-    done
+    for file_path in $(find "$path" -name "_*"); do values_paths[$(basename $file_path)]="$file_path"; done
   done
 
   for index in "${!values_paths[@]}"; do echo "$index:${values_paths[$index]}"; done
@@ -26,16 +24,15 @@ function build_generic_document() {
 
   echo "Building document $path_dir_src_document"
 
-  local path_file_document_url_path="$dir/values/_inline_path"
-  if [[ -f "$path_dir_src_document/_inline_path" ]]; then 
-    local path_file_document_url_path="$path_dir_src_document/_inline_path"; fi
+  local document_url_path=$(cat $(
+    if [[ -f "$path_dir_src_document/_inline_path" ]]; then echo "$path_dir_src_document/_inline_path"; 
+    else echo "$dir/values/_inline_path"; fi
+  ))
 
-  local path_file_document_filename="$dir/values/_inline_filename"
-  if [[ -f "$path_dir_src_document/_inline_filename" ]]; then 
-    local path_file_document_filename="$path_dir_src_document/_inline_filename"; fi
-
-  local document_url_path=$(cat "$path_file_document_url_path")
-  local document_filename=$(cat "$path_file_document_filename")
+  local document_filename=$(cat $(
+    if [[ -f "$path_dir_src_document/_inline_filename" ]]; then echo "$path_dir_src_document/_inline_filename";
+    else echo "$dir/values/_inline_filename"; fi
+  ))
 
   echo "Server path: $document_url_path/$document_filename"
 
@@ -75,16 +72,15 @@ function build_sitemap() {
   echo "Building sitemap"
   local path_dir_src_document="$dir/sitemap/document"
 
-  local path_file_document_url_path="$dir/values/_inline_path"
-  if [[ -f "$path_dir_src_document/_inline_path" ]]; then 
-    local path_file_document_url_path="$path_dir_src_document/_inline_path"; fi
+  local document_url_path=$(cat $(
+    if [[ -f "$path_dir_src_document/_inline_path" ]]; then echo "$path_dir_src_document/_inline_path"; 
+    else echo "$dir/values/_inline_path"; fi
+  ))
 
-  local path_file_document_filename="$dir/values/_inline_filename"
-  if [[ -f "$path_dir_src_document/_inline_filename" ]]; then 
-    local path_file_document_filename="$path_dir_src_document/_inline_filename"; fi
-
-  local document_url_path=$(cat "$path_file_document_url_path")
-  local document_filename=$(cat "$path_file_document_filename")
+  local document_filename=$(cat $(
+    if [[ -f "$path_dir_src_document/_inline_filename" ]]; then echo "$path_dir_src_document/_inline_filename";
+    else echo "$dir/values/_inline_filename"; fi
+  ))
 
   resolve_values_paths "$dir/values/" "$dir/sitemap/document" "$path_dir_dist_tmp/sitemap/" > "$path_dir_dist_tmp/sitemap/values_paths"
 
