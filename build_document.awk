@@ -129,7 +129,7 @@ BEGIN {
   fragment_out = remove_block_value_placeholder_lines(fragment_out)
   fragment_out = trim_last_char(fragment_out)
 
-  print fragment_out
+  print fragment_out >> path_output
 
   exit
 }
