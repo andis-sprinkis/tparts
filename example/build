@@ -9,19 +9,47 @@ mkdir -p "$path_dir_dist_tmp/documents"
 mkdir -p "$path_dir_dist_tmp/sitemap"
 
 function build_generic_document() {
-  echo "Building document $path_dir_src_document
-  "
+  local path_dir_src_document="$1"
 
-  echo "Document $basename_path_dir_src_document has been built
-  "
+  echo "Building document $path_dir_src_document"
+
+  local path_file_document_url_path="$dir/values/_inline_path"
+  if [[ -f "$path_dir_src_document/_inline_path" ]]; then 
+    local path_file_document_url_path="$path_dir_src_document/_inline_path"; fi
+
+  local path_file_document_filename="$dir/values/_inline_filename"
+  if [[ -f "$path_dir_src_document/_inline_filename" ]]; then 
+    local path_file_document_filename="$path_dir_src_document/_inline_filename"; fi
+
+  local document_url_path=$(cat "$path_file_document_url_path")
+  local document_filename=$(cat "$path_file_document_filename")
+
+  echo "Server path: $document_url_path/$document_filename"
+
+  local path_path_dir_dist_document="$path_dir_dist/$document_url_path"
+  local path_file_values_index="$path_dir_dist/$document_url_path/values_paths"
+
+  mkdir -p "$path_path_dir_dist_document"
+
+  if [ -d $path_dir_src_document/static/ ]; then 
+    cp -r $path_dir_src_document/static/* "$path_path_dir_dist_document"; fi 
+
+  resolve_values_paths "$dir/values/" "$path_dir_src_document" \
+    > "$path_file_values_index"
+
+  awk -f "$dir/../build_document.awk" -v path_values_index="$path_file_values_index" \
+    > "$path_path_dir_dist_document/$document_filename"
+
+  rm "$path_file_values_index"
+
+  echo "Document $path_dir_src_document has been built"
 }
 
 function build_sitemap_entry() {
-  echo "Building sitemap entry
-  "
+  echo "Building sitemap entry"
 
-  path_dir_src_sitemap_url="$dir/sitemap/url"
-  path_file_values_index_sitemap_url="$path_dir_dist/$1/values_paths_sitemap_url"
+  local path_dir_src_sitemap_url="$dir/sitemap/url"
+  local path_file_values_index_sitemap_url="$path_dir_dist/$1/values_paths_sitemap_url"
 
   resolve_values_paths "$dir/values/" "$2" "$path_dir_src_sitemap_url" \
     > "$path_file_values_index_sitemap_url"
@@ -30,72 +58,41 @@ function build_sitemap_entry() {
 
   rm "$path_file_values_index_sitemap_url"
 
-  echo "Sitemap entry has been built
-  "
+  echo "Sitemap entry has been built"
 }
 
 function build_sitemap() {
-  echo "Building sitemap
-  "
+  echo "Building sitemap"
+  local path_dir_src_document="$dir/sitemap/document"
 
-  path_dir_src_document="$dir/sitemap/document"
-
-  path_file_document_url_path="$dir/values/_inline_path"
+  local path_file_document_url_path="$dir/values/_inline_path"
   if [[ -f "$path_dir_src_document/_inline_path" ]]; then 
-    path_file_document_url_path="$path_dir_src_document/_inline_path"; fi
+    local path_file_document_url_path="$path_dir_src_document/_inline_path"; fi
 
-  path_file_document_filename="$dir/values/_inline_filename"
+  local path_file_document_filename="$dir/values/_inline_filename"
   if [[ -f "$path_dir_src_document/_inline_filename" ]]; then 
-    path_file_document_filename="$path_dir_src_document/_inline_filename"; fi
+    local path_file_document_filename="$path_dir_src_document/_inline_filename"; fi
 
-  document_url_path=$(cat "$path_file_document_url_path")
-  document_filename=$(cat "$path_file_document_filename")
+  local document_url_path=$(cat "$path_file_document_url_path")
+  local document_filename=$(cat "$path_file_document_filename")
+
+  local path_path_dir_dist_document="$path_dir_dist/$document_url_path"
 
   resolve_values_paths "$dir/values/" "$dir/sitemap/document" "$path_dir_dist_tmp/sitemap/" > "$path_dir_dist_tmp/sitemap/values_paths"
 
   awk -f "$dir/../build_document.awk" -v path_values_index="$path_dir_dist_tmp/sitemap/values_paths" > "$path_path_dir_dist_document/$document_filename"
 
-  echo "Sitemap has been built
-  "
+  echo "Sitemap has been built"
 }
 
 function build_generic_documents() {
-  path_dir_src_documents=$dir/documents/
-  echo "Building generic documents from $path_dir_src_documents
-  "
+  local path_dir_src_documents=$dir/documents/
+  echo "Building generic documents from $path_dir_src_documents"
 
   for path_dir_src_document in $path_dir_src_documents/*/; do
-    echo "Building document $path_dir_src_document"
-    basename_path_dir_src_document=$(basename $path_dir_src_document)
+    build_generic_document "$path_dir_src_document"
 
-    path_file_document_url_path="$dir/values/_inline_path"
-    if [[ -f "$path_dir_src_document/_inline_path" ]]; then 
-      path_file_document_url_path="$path_dir_src_document/_inline_path"; fi
-
-    path_file_document_filename="$dir/values/_inline_filename"
-    if [[ -f "$path_dir_src_document/_inline_filename" ]]; then 
-      path_file_document_filename="$path_dir_src_document/_inline_filename"; fi
-
-    document_url_path=$(cat "$path_file_document_url_path")
-    document_filename=$(cat "$path_file_document_filename")
-
-    echo "Server path: $document_url_path/$document_filename"
-
-    path_path_dir_dist_document="$path_dir_dist/$document_url_path"
-    path_file_values_index="$path_dir_dist/$document_url_path/values_paths"
-
-    mkdir -p "$path_path_dir_dist_document"
-
-    if [ -d $path_dir_src_document/static/ ]; then 
-      cp -r $path_dir_src_document/static/* "$path_path_dir_dist_document"; fi 
-
-    resolve_values_paths "$dir/values/" "$path_dir_src_document" \
-      > "$path_file_values_index"
-
-    awk -f "$dir/../build_document.awk" -v path_values_index="$path_file_values_index" \
-      > "$path_path_dir_dist_document/$document_filename"
-
-    rm "$path_file_values_index"
+    local basename_path_dir_src_document=$(basename $path_dir_src_document)
 
     case "$basename_path_dir_src_document" in
       "robots.txt" | "404" | "403")
@@ -103,19 +100,13 @@ function build_generic_documents() {
       *) build_sitemap_entry "$document_url_path" "$path_dir_src_document"
         ;;
     esac
-
-    echo "Document $basename_path_dir_src_document has been built
-    "
   done
 
-  echo "Generic documents have been built
-  "
+  echo "Generic documents have been built"
 }
 
 build_generic_documents
 build_sitemap
 
 rm -rf "$path_dir_dist_tmp"
-
-echo "All documents have been built in
-$path_dir_dist"
+echo "All documents have been built in $path_dir_dist"
