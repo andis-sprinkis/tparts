@@ -8,6 +8,32 @@ path_dir_dist_tmp="$dir/dist/tmp" && mkdir -p "$path_dir_dist_tmp"
 mkdir -p "$path_dir_dist_tmp/documents"
 mkdir -p "$path_dir_dist_tmp/sitemap"
 
+function build_generic_document() {
+  echo "Building document $path_dir_src_document
+  "
+
+  echo "Document $basename_path_dir_src_document has been built
+  "
+}
+
+function build_sitemap_entry() {
+  echo "Building sitemap entry
+  "
+
+  path_dir_src_sitemap_url="$dir/sitemap/url"
+  path_file_values_index_sitemap_url="$path_dir_dist/$1/values_paths_sitemap_url"
+
+  resolve_values_paths "$dir/values/" "$2" "$path_dir_src_sitemap_url" \
+    > "$path_file_values_index_sitemap_url"
+
+  awk -f "$dir/../build_document.awk" -v path_values_index="$path_file_values_index_sitemap_url" >> "$path_dir_dist_tmp/sitemap/_block_sitemap_children.xml"
+
+  rm "$path_file_values_index_sitemap_url"
+
+  echo "Sitemap entry has been built
+  "
+}
+
 function build_sitemap() {
   echo "Building sitemap
   "
@@ -30,24 +56,6 @@ function build_sitemap() {
   awk -f "$dir/../build_document.awk" -v path_values_index="$path_dir_dist_tmp/sitemap/values_paths" > "$path_path_dir_dist_document/$document_filename"
 
   echo "Sitemap has been built
-  "
-}
-
-function build_sitemap_entry() {
-  echo "Building sitemap entry
-  "
-
-  path_dir_src_sitemap_url="$dir/sitemap/url"
-  path_file_values_index_sitemap_url="$path_dir_dist/$1/values_paths_sitemap_url"
-
-  resolve_values_paths "$dir/values/" "$2" "$path_dir_src_sitemap_url" \
-    > "$path_file_values_index_sitemap_url"
-
-  awk -f "$dir/../build_document.awk" -v path_values_index="$path_file_values_index_sitemap_url" >> "$path_dir_dist_tmp/sitemap/_block_sitemap_children.xml"
-
-  rm "$path_file_values_index_sitemap_url"
-
-  echo "Sitemap entry has been built
   "
 }
 
