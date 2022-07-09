@@ -20,24 +20,20 @@ function build_generic_document() {
     else echo "$dir/values/_inline_filename"; fi
   ))
 
-  echo "Server path: $document_url_path/$document_filename"
-
   local path_path_dir_dist_document="$path_dir_dist/$document_url_path"
 
-  mkdir -p "$path_path_dir_dist_document"
+  awk -f "$dir/../build_document.awk" -v path_root="$path_dir_dist/$document_url_path" -v list_dir_values_paths="$dir/values/:$path_dir_src_document"
 
   if [ -d $path_dir_src_document/static/ ]; then 
-    cp -r $path_dir_src_document/static/* "$path_path_dir_dist_document"; fi 
-
-  awk -f "$dir/../build_document.awk" -v path_root="$path_path_dir_dist_document" -v list_dir_values_paths="$dir/values/:$path_dir_src_document"
+    cp -r $path_dir_src_document/static/* "$path_dir_dist/$document_url_path"; fi 
 
   echo "Document $path_dir_src_document has been built"
 }
 
 function build_sitemap() {
-  echo "Building sitemap"
-  mkdir -p "$path_dir_dist_tmp/sitemap"
   local path_dir_src_document="$dir/sitemap/document"
+
+  echo "Building sitemap"
 
   local document_url_path=$(cat $(
     if [[ -f "$path_dir_src_document/_inline_path" ]]; then echo "$path_dir_src_document/_inline_path"; 
@@ -48,6 +44,8 @@ function build_sitemap() {
     if [[ -f "$path_dir_src_document/_inline_filename" ]]; then echo "$path_dir_src_document/_inline_filename";
     else echo "$dir/values/_inline_filename"; fi
   ))
+
+  mkdir -p "$path_dir_dist_tmp/sitemap"
 
   awk -f "$dir/../build_document.awk" -v path_root="$path_dir_dist" -v list_dir_values_paths="$dir/values/:$dir/sitemap/document:$path_dir_dist_tmp/sitemap/"
 
