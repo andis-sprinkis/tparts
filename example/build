@@ -25,8 +25,6 @@ function build_sitemap() {
 
   echo "Building sitemap"
 
-  mkdir -p "$path_dir_dist_tmp/sitemap"
-
   awk -f "$dir/../build_document.awk" -v path_root="$path_dir_dist" -v list_dir_values_paths="$dir/values/:$dir/sitemap/document:$path_dir_dist_tmp/sitemap/"
 
   echo "Sitemap has been built"
