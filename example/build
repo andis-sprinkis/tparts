@@ -2,10 +2,7 @@
 set -e
 dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 path_dir_dist="$dir/dist"; rm -rf "$path_dir_dist" && mkdir -p "$path_dir_dist"
-
 path_dir_dist_tmp="$dir/dist/tmp" && mkdir -p "$path_dir_dist_tmp"
-mkdir -p "$path_dir_dist_tmp/documents"
-mkdir -p "$path_dir_dist_tmp/sitemap"
 
 function build_generic_document() {
   local path_dir_src_document="$1"
@@ -36,18 +33,9 @@ function build_generic_document() {
   echo "Document $path_dir_src_document has been built"
 }
 
-function build_sitemap_entry() {
-  echo "Building sitemap entry"
-
-  local path_dir_src_sitemap_url="$dir/sitemap/url"
-
-  awk -f "$dir/../build_document.awk" -v path_output="$path_dir_dist_tmp/sitemap/_block_sitemap_children.xml" -v list_dir_values_paths="$dir/values/:$2:$path_dir_src_sitemap_url"
-
-  echo "Sitemap entry has been built"
-}
-
 function build_sitemap() {
   echo "Building sitemap"
+  mkdir -p "$path_dir_dist_tmp/sitemap"
   local path_dir_src_document="$dir/sitemap/document"
 
   local document_url_path=$(cat $(
@@ -77,7 +65,7 @@ function build_generic_documents() {
     case "$basename_path_dir_src_document" in
       "robots.txt" | "404" | "403")
         ;;
-      *) build_sitemap_entry "$document_url_path" "$path_dir_src_document"
+      *) awk -f "$dir/../build_document.awk" -v path_output="$path_dir_dist_tmp/sitemap/_block_sitemap_children.xml" -v list_dir_values_paths="$dir/values/:$path_dir_src_document:$path_dir_src_sitemap_url"
         ;;
     esac
   done
