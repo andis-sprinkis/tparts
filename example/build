@@ -5,49 +5,33 @@ path_dir_dist="$dir/dist"; rm -rf "$path_dir_dist" && mkdir -p "$path_dir_dist"
 path_dir_dist_tmp="$path_dir_dist/tmp"
 mkdir -p "$path_dir_dist_tmp"
 
-function build_generic_document() {
-  local path_dir_src_document="$1"
+path_dir_src_documents=$dir/documents/
 
+echo "Building generic documents from $path_dir_src_documents"
+
+for path_dir_src_document in $path_dir_src_documents/*/; do
   echo "Building document $path_dir_src_document"
-
-  local document_url_path=$(cat $(
-    if [[ -f "$path_dir_src_document/_inline_path" ]]; then echo "$path_dir_src_document/_inline_path"; 
-    else echo "$dir/values/_inline_path"; fi
-  ))
 
   awk -f "$dir/../build_document.awk" -v path_root="$path_dir_dist" -v list_dir_values_paths="$dir/values/:$path_dir_src_document"
 
   echo "Document $path_dir_src_document has been built"
-}
 
-function build_sitemap() {
-  echo "Building sitemap"
+  case "$(basename $path_dir_src_document)" in
+    "robots.txt" | "404" | "403")
+      ;;
+    *) awk -f "$dir/../build_document.awk" -v path_root="$path_dir_dist/tmp/sitemap" -v list_dir_values_paths="$dir/values/:$path_dir_src_document:$dir/sitemap/url"
+      ;;
+  esac
+done
 
-  awk -f "$dir/../build_document.awk" -v path_root="$path_dir_dist" -v list_dir_values_paths="$dir/values/:$dir/sitemap/document:$path_dir_dist_tmp/sitemap/"
+echo "Generic documents have been built"
 
-  echo "Sitemap has been built"
-}
+echo "Building sitemap"
 
-function build_generic_documents() {
-  local path_dir_src_documents=$dir/documents/
-  echo "Building generic documents from $path_dir_src_documents"
+awk -f "$dir/../build_document.awk" -v path_root="$path_dir_dist" -v list_dir_values_paths="$dir/values/:$dir/sitemap/document:$path_dir_dist_tmp/sitemap/"
 
-  for path_dir_src_document in $path_dir_src_documents/*/; do
-    build_generic_document "$path_dir_src_document"
-
-    case "$(basename $path_dir_src_document)" in
-      "robots.txt" | "404" | "403")
-        ;;
-      *) awk -f "$dir/../build_document.awk" -v path_root="$path_dir_dist/tmp/sitemap" -v list_dir_values_paths="$dir/values/:$path_dir_src_document:$dir/sitemap/url"
-        ;;
-    esac
-  done
-
-  echo "Generic documents have been built"
-}
-
-build_generic_documents
-build_sitemap
+echo "Sitemap has been built"
 
 rm -rf "$path_dir_dist_tmp"
+
 echo "All documents have been built in $path_dir_dist"
