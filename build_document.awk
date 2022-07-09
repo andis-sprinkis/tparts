@@ -132,7 +132,7 @@ BEGIN {
 
   fragment_out = trim_last_char(remove_block_value_placeholder_lines(fragment_out))
 
-  while((getline line < values_index["_inline_path_canonical"]["path"]) > 0) url_path = url_path line
+  while((getline line < values_index["_inline_path"]["path"]) > 0) url_path = url_path line
   close(values_index["_inline_path"]["path"])
   while((getline line < values_index["_inline_filename"]["path"]) > 0) document_filename = document_filename line
   close(values_index["_inline_build_filename"]["path"])
