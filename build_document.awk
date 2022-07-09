@@ -1,3 +1,21 @@
+function resolve_values_paths(list_dir_values_paths, result) {
+  split(list_dir_values_paths, list_dir_values_paths_array, ":")
+
+  for (i in list_dir_values_paths_array) {
+    cmd = "find " list_dir_values_paths_array[i] " -name \"_*\""
+    while ((cmd | getline line ) > 0) {
+      cmd2 = "basename " line
+      cmd2 | getline result_index
+      close(cmd2)
+      result[result_index]["path"] = line
+
+      if (match(line, /_block_.*/)) result[result_index]["type"] = "block"
+      else if (match(line, /_pre_.*/)) result[result_index]["type"] = "pre"
+      else if (match(line, /_inline_.*/)) result[result_index]["type"] = "inline"
+    }
+  }
+}
+
 function escape_ml(s) {
   gsub(/&/, "\\\\\\&amp;", s)
   gsub(/</, "\\\\\\&lt;", s)
@@ -10,22 +28,6 @@ function escape_ml(s) {
 
 function trim_last_char(s) {
   return substr(s, 1, length(s) - 1)
-}
-
-function read_values_index_file(path_values_index, result) {
-  i = 0
-
-  while((getline line < path_values_index) > 0) {
-    i++
-    split(line, basename_path, ":")
-    result[basename_path[1]]["path"] = basename_path[2]
-
-    if (match(basename_path[1], /_block_.*/)) result[basename_path[1]]["type"] = "block"
-    else if (match(basename_path[1], /_pre_.*/)) result[basename_path[1]]["type"] = "pre"
-    else if (match(basename_path[1], /_inline_.*/)) result[basename_path[1]]["type"] = "inline"
-  }
-
-  return i
 }
 
 function recognise_values_in_string(string, values_index, result) {
@@ -118,7 +120,7 @@ function remove_block_value_placeholder_lines(s) {
 }
 
 BEGIN {
-  read_values_index_file(path_values_index, values_index)
+  resolve_values_paths(list_dir_values_paths, values_index)
 
   while((getline line < values_index["_inline_build_entrypoint"]["path"]) > 0) {
     fragment_out = fragment_out line "\n"
