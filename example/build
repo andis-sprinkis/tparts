@@ -15,14 +15,12 @@ function build_generic_document() {
     else echo "$dir/values/_inline_path"; fi
   ))
 
-  awk -f "$dir/../build_document.awk" -v path_root="$path_dir_dist/$document_url_path" -v list_dir_values_paths="$dir/values/:$path_dir_src_document"
+  awk -f "$dir/../build_document.awk" -v path_root="$path_dir_dist" -v list_dir_values_paths="$dir/values/:$path_dir_src_document"
 
   echo "Document $path_dir_src_document has been built"
 }
 
 function build_sitemap() {
-  local path_dir_src_document="$dir/sitemap/document"
-
   echo "Building sitemap"
 
   awk -f "$dir/../build_document.awk" -v path_root="$path_dir_dist" -v list_dir_values_paths="$dir/values/:$dir/sitemap/document:$path_dir_dist_tmp/sitemap/"

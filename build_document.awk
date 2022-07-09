@@ -72,6 +72,7 @@ function read_recognised_value_lines(recognised_value) {
     else if (recognised_value["type"] == "block") recognised_value_lines = recognised_value_lines line "\n"
     else continue
   }
+  close(recognised_value["path"])
 
   if (recognised_value["type"] == "pre") recognised_value_lines = trim_last_char(recognised_value_lines)
 
@@ -121,9 +122,8 @@ BEGIN {
   split(list_dir_values_paths, list_dir_values_paths_array, ":")
   resolve_values_paths(list_dir_values_paths_array, values_index)
 
-  while((getline line < values_index["_inline_build_entrypoint"]["path"]) > 0) {
-    fragment_out = fragment_out line "\n"
-  }
+  while((getline line < values_index["_inline_build_entrypoint"]["path"]) > 0) fragment_out = fragment_out line "\n"
+  close(values_index["_inline_build_entrypoint"]["path"])
 
   while (recognise_values_in_string(fragment_out, values_index, recognised_values) > 0) {
     fragment_out = substitute_with_recognized_values(recognised_values, values_index, fragment_out)
@@ -132,19 +132,15 @@ BEGIN {
 
   fragment_out = trim_last_char(remove_block_value_placeholder_lines(fragment_out))
 
-  url_path = ""
-  while((getline line < values_index["_inline_path"]["path"]) > 0) {
-    url_path = url_path line
-  }
-
-  while((getline line < values_index["_inline_filename"]["path"]) > 0) {
-    document_filename = document_filename line
-  }
+  while((getline line < values_index["_inline_path_canonical"]["path"]) > 0) url_path = url_path line
+  close(values_index["_inline_path"]["path"])
+  while((getline line < values_index["_inline_filename"]["path"]) > 0) document_filename = document_filename line
+  close(values_index["_inline_build_filename"]["path"])
 
   if (! system("mkdir -p " path_root "/" url_path)) {
     print fragment_out >> path_root "/" url_path "/" document_filename
   }
-
+  
   if (! system("test -d " list_dir_values_paths_array[length(list_dir_values_paths_array)] "/static")) {
     system("cp -r " list_dir_values_paths_array[length(list_dir_values_paths_array)] "/static/* " path_root "/" url_path "/")
   }
