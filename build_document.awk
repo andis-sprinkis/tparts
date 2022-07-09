@@ -1,6 +1,4 @@
-function resolve_values_paths(list_dir_values_paths, result) {
-  split(list_dir_values_paths, list_dir_values_paths_array, ":")
-
+function resolve_values_paths(list_dir_values_paths_array, result) {
   for (i in list_dir_values_paths_array) {
     cmd = "find " list_dir_values_paths_array[i] " -name \"_*\""
     while ((cmd | getline line ) > 0) {
@@ -120,7 +118,8 @@ function remove_block_value_placeholder_lines(s) {
 }
 
 BEGIN {
-  resolve_values_paths(list_dir_values_paths, values_index)
+  split(list_dir_values_paths, list_dir_values_paths_array, ":")
+  resolve_values_paths(list_dir_values_paths_array, values_index)
 
   while((getline line < values_index["_inline_build_entrypoint"]["path"]) > 0) {
     fragment_out = fragment_out line "\n"
@@ -144,6 +143,10 @@ BEGIN {
 
   if (! system("mkdir -p " path_root "/" url_path)) {
     print fragment_out >> path_root "/" url_path "/" document_filename
+  }
+
+  if (! system("test -d " list_dir_values_paths_array[length(list_dir_values_paths_array)] "/static")) {
+    system("cp -r " list_dir_values_paths_array[length(list_dir_values_paths_array)] "/static/* " path_root "/" url_path "/")
   }
 
   exit
