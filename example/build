@@ -2,7 +2,8 @@
 set -e
 dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 path_dir_dist="$dir/dist"; rm -rf "$path_dir_dist" && mkdir -p "$path_dir_dist"
-path_dir_dist_tmp="$dir/dist/tmp" && mkdir -p "$path_dir_dist_tmp"
+path_dir_dist_tmp="$path_dir_dist/tmp"
+mkdir -p "$path_dir_dist_tmp"
 
 function build_generic_document() {
   local path_dir_src_document="$1"
@@ -28,7 +29,7 @@ function build_generic_document() {
   if [ -d $path_dir_src_document/static/ ]; then 
     cp -r $path_dir_src_document/static/* "$path_path_dir_dist_document"; fi 
 
-  awk -f "$dir/../build_document.awk" -v path_output="$path_path_dir_dist_document/$document_filename" -v list_dir_values_paths="$dir/values/:$path_dir_src_document"
+  awk -f "$dir/../build_document.awk" -v path_root="$path_path_dir_dist_document" -v list_dir_values_paths="$dir/values/:$path_dir_src_document"
 
   echo "Document $path_dir_src_document has been built"
 }
@@ -48,7 +49,7 @@ function build_sitemap() {
     else echo "$dir/values/_inline_filename"; fi
   ))
 
-  awk -f "$dir/../build_document.awk" -v path_output="$path_dir_dist/$document_url_path/$document_filename" -v list_dir_values_paths="$dir/values/:$dir/sitemap/document:$path_dir_dist_tmp/sitemap/"
+  awk -f "$dir/../build_document.awk" -v path_root="$path_dir_dist" -v list_dir_values_paths="$dir/values/:$dir/sitemap/document:$path_dir_dist_tmp/sitemap/"
 
   echo "Sitemap has been built"
 }
@@ -60,12 +61,10 @@ function build_generic_documents() {
   for path_dir_src_document in $path_dir_src_documents/*/; do
     build_generic_document "$path_dir_src_document"
 
-    local basename_path_dir_src_document=$(basename $path_dir_src_document)
-
-    case "$basename_path_dir_src_document" in
+    case "$(basename $path_dir_src_document)" in
       "robots.txt" | "404" | "403")
         ;;
-      *) awk -f "$dir/../build_document.awk" -v path_output="$path_dir_dist_tmp/sitemap/_block_sitemap_children.xml" -v list_dir_values_paths="$dir/values/:$path_dir_src_document:$path_dir_src_sitemap_url"
+      *) awk -f "$dir/../build_document.awk" -v path_root="$path_dir_dist/tmp/sitemap" -v list_dir_values_paths="$dir/values/:$path_dir_src_document:$dir/sitemap/url"
         ;;
     esac
   done

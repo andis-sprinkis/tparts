@@ -133,7 +133,18 @@ BEGIN {
 
   fragment_out = trim_last_char(remove_block_value_placeholder_lines(fragment_out))
 
-  print fragment_out >> path_output
+  url_path = ""
+  while((getline line < values_index["_inline_path"]["path"]) > 0) {
+    url_path = url_path line
+  }
+
+  while((getline line < values_index["_inline_filename"]["path"]) > 0) {
+    document_filename = document_filename line
+  }
+
+  if (! system("mkdir -p " path_root "/" url_path)) {
+    print fragment_out >> path_root "/" url_path "/" document_filename
+  }
 
   exit
 }
