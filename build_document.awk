@@ -122,15 +122,14 @@ BEGIN {
   split(list_dir_values_paths, list_dir_values_paths_array, ":")
   resolve_values_paths(list_dir_values_paths_array, values_index)
 
-  while((getline line < values_index["_inline_build_entrypoint"]["path"]) > 0) fragment_out = fragment_out line "\n"
-  close(values_index["_inline_build_entrypoint"]["path"])
+  fragment_out = read_recognised_value_lines(values_index["_inline_build_entrypoint"])
 
   while (recognise_values_in_string(fragment_out, values_index, recognised_values) > 0) {
     fragment_out = substitute_with_recognized_values(recognised_values, values_index, fragment_out)
     delete recognised_values
   }
 
-  fragment_out = trim_last_char(remove_block_value_placeholder_lines(fragment_out))
+  fragment_out = remove_block_value_placeholder_lines(fragment_out)
 
   if (!url_path) url_path = read_recognised_value_lines(values_index["_inline_path"])
   document_filename = read_recognised_value_lines(values_index["_inline_filename"])
