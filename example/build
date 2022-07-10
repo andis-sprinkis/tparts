@@ -8,14 +8,14 @@ echo "Building generic documents from $dir/documents"
 for path_dir_src_document in $dir/documents/*/; do
   echo "Building document $path_dir_src_document"
 
-  awk -f "$dir/../build_document.awk" -v path_root="$path_dir_dist" -v list_dir_values_paths="$dir/values/:$path_dir_src_document"
+  awk -f "$dir/../build_document.awk" -v path_dir_root="$path_dir_dist" -v paths_values_dirs="$dir/values/:$path_dir_src_document"
 
   echo "Document $path_dir_src_document has been built"
 
   case "$(basename $path_dir_src_document)" in
     "robots.txt" | "404" | "403")
       ;;
-    *) awk -f "$dir/../build_document.awk" -v path_root="$path_dir_dist/tmp/sitemap" -v url_path="/" -v list_dir_values_paths="$dir/values/:$path_dir_src_document:$dir/sitemap/url"
+    *) awk -f "$dir/../build_document.awk" -v path_dir_root="$path_dir_dist/tmp/sitemap" -v url_path="/" -v paths_values_dirs="$dir/values/:$path_dir_src_document:$dir/sitemap/url"
       ;;
   esac
 done
@@ -24,7 +24,7 @@ echo "Generic documents have been built"
 
 echo "Building sitemap"
 
-awk -f "$dir/../build_document.awk" -v path_root="$path_dir_dist" -v list_dir_values_paths="$dir/values/:$dir/sitemap/document:$path_dir_dist/tmp/sitemap/"
+awk -f "$dir/../build_document.awk" -v path_dir_root="$path_dir_dist" -v paths_values_dirs="$dir/values/:$dir/sitemap/document:$path_dir_dist/tmp/sitemap/"
 
 echo "Sitemap has been built"
 
