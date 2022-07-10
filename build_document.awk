@@ -1,13 +1,13 @@
 function make_values_index( \
-  list_paths_values_dir, result, \
-  _cmd, _cmd2, _value_name, _i \
+  paths_values_dirs_arr, result, \
+  _cmd_find, _cmd_basename, _value_name, _i \
 ) {
-  for (_i in list_paths_values_dir) {
-    _cmd = "find " list_paths_values_dir[_i] " -name \"_*\""
-    while ((_cmd | getline _line ) > 0) {
-      _cmd2 = "basename " _line
-      _cmd2 | getline _value_name
-      close(_cmd2)
+  for (_i in paths_values_dirs_arr) {
+    _cmd_find = "find " paths_values_dirs_arr[_i] " -name \"_*\""
+    while ((_cmd_find | getline _line ) > 0) {
+      _cmd_basename = "basename " _line
+      _cmd_basename | getline _value_name
+      close(_cmd_basename)
       result[_value_name]["path"] = _line
 
       if (match(_line, /_block_.*/)) result[_value_name]["type"] = "block"
@@ -31,16 +31,16 @@ function trim_last_char(str) {
   return substr(str, 1, length(str) - 1)
 }
 
-function recognise_values_in_string( \
-  string, values_index, result, \
+function find_values_in_str( \
+  str, values_index, result, \
   _line_index, _value_index, _count \
 ) {
-  split(string, _string_array, "\n")
+  split(str, _str_arr, "\n")
   _count = 0
 
-  for (_line_index in _string_array) {
+  for (_line_index in _str_arr) {
     for (_value_index in values_index) {
-      if (match(_string_array[_line_index], "<!-- " _value_index " -->")) {
+      if (match(_str_arr[_line_index], "<!-- " _value_index " -->")) {
         result[_value_index] = 1
         _count++
       }
@@ -87,41 +87,41 @@ function read_value_file( \
   return _value_lines
 }
 
-function substitute_with_recognized_values( \
-  recognised_values, values_index, fragment, \
+function sub_placeholders_values( \
+  found_values, values_index, fragment, \
   _value_lines, _fragment_out, _indent, _indent_match, _value_placeholder, _value, _empty_line, _i \
 ) {
-  for (_value in recognised_values) {
+  for (_value in found_values) {
     _value_lines = ""
     _read = 0
 
-    split(fragment, _fragment_out_array, "\n")
+    split(fragment, _fragment_out_arr, "\n")
     _fragment_out = ""
     _value_placeholder = "<!-- " _value " -->"
 
-    for (_i in _fragment_out_array) {
+    for (_i in _fragment_out_arr) {
       _empty_line = 0
-      if (match(_fragment_out_array[_i], _value_placeholder)) {
+      if (match(_fragment_out_arr[_i], _value_placeholder)) {
         if (! _read) {
           _value_lines = read_value_file(values_index[_value])
           _read = 1
         }
 
         if (values_index[_value]["type"] == "block") {
-          if (_fragment_out_array[_i] == "") {
+          if (_fragment_out_arr[_i] == "") {
             _empty_line = (_empty_line || 1)
             break
           }
 
-          _indent = match(_fragment_out_array[_i], /^\s+/, _indent_match) ? _indent_match[0] : ""
+          _indent = match(_fragment_out_arr[_i], /^\s+/, _indent_match) ? _indent_match[0] : ""
 
-          sub(_value_placeholder, indent_lines(trim_last_char(_value_lines), _indent), _fragment_out_array[_i])
+          sub(_value_placeholder, indent_lines(trim_last_char(_value_lines), _indent), _fragment_out_arr[_i])
         } else {
-          sub(_value_placeholder, _value_lines, _fragment_out_array[_i])
+          sub(_value_placeholder, _value_lines, _fragment_out_arr[_i])
         }
       }
 
-      _fragment_out = _fragment_out _fragment_out_array[_i] "\n"
+      _fragment_out = _fragment_out _fragment_out_arr[_i] "\n"
     }
 
     _fragment_out = trim_last_char(_fragment_out)
@@ -130,35 +130,35 @@ function substitute_with_recognized_values( \
   return _fragment_out
 }
 
-function rm_unresolved_block_value_placeholder_lines(s) {
+function rm_block_placholder_lines(s) {
   gsub(/\s+<!-- _block_.*-->/, "", s)
   return s
 }
 
 function build_document( \
   paths_values_dirs, path_dir_root, url_path, \
-  _fragment_out, _paths_values_dirs_array, _values_index, _document_filename, _recognised_values \
+  _fragment_out, _paths_values_dirs_arr, _values_index, _document_filename, _found_values \
 ) {
-  split(paths_values_dirs, _paths_values_dirs_array, ":")
+  split(paths_values_dirs, _paths_values_dirs_arr, ":")
 
-  make_values_index(_paths_values_dirs_array, _values_index)
+  make_values_index(_paths_values_dirs_arr, _values_index)
 
   _fragment_out = read_value_file(_values_index["_inline_build_entrypoint"])
 
-  while (recognise_values_in_string(_fragment_out, _values_index, _recognised_values) > 0) {
-    _fragment_out = substitute_with_recognized_values(_recognised_values, _values_index, _fragment_out)
-    delete _recognised_values
+  while (find_values_in_str(_fragment_out, _values_index, _found_values) > 0) {
+    _fragment_out = sub_placeholders_values(_found_values, _values_index, _fragment_out)
+    delete _found_values
   }
 
-  _fragment_out = rm_unresolved_block_value_placeholder_lines(_fragment_out)
+  _fragment_out = rm_block_placholder_lines(_fragment_out)
 
   if (!url_path) url_path = read_value_file(_values_index["_inline_path"])
   _document_filename = read_value_file(_values_index["_inline_filename"])
 
   if (! system("mkdir -p " path_dir_root "/" url_path)) print _fragment_out >> path_dir_root "/" url_path "/" _document_filename
   
-  if (! system("test -d " _paths_values_dirs_array[length(_paths_values_dirs_array)] "/static")) {
-    system("cp -r " _paths_values_dirs_array[length(_paths_values_dirs_array)] "/static/* " path_dir_root "/" url_path "/")
+  if (! system("test -d " _paths_values_dirs_arr[length(_paths_values_dirs_arr)] "/static")) {
+    system("cp -r " _paths_values_dirs_arr[length(_paths_values_dirs_arr)] "/static/* " path_dir_root "/" url_path "/")
   }
 }
 
