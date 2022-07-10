@@ -19,7 +19,7 @@ for path_dir_src_document in $path_dir_src_documents/*/; do
   case "$(basename $path_dir_src_document)" in
     "robots.txt" | "404" | "403")
       ;;
-    *) awk -f "$dir/../build_document.awk" -v path_root="$path_dir_dist/tmp/sitemap" -v list_dir_values_paths="$dir/values/:$path_dir_src_document:$dir/sitemap/url"
+    *) awk -f "$dir/../build_document.awk" -v path_root="$path_dir_dist/tmp/sitemap" -v url_path="/" -v list_dir_values_paths="$dir/values/:$path_dir_src_document:$dir/sitemap/url"
       ;;
   esac
 done

@@ -132,14 +132,10 @@ BEGIN {
 
   fragment_out = trim_last_char(remove_block_value_placeholder_lines(fragment_out))
 
-  while((getline line < values_index["_inline_path"]["path"]) > 0) url_path = url_path line
-  close(values_index["_inline_path"]["path"])
-  while((getline line < values_index["_inline_filename"]["path"]) > 0) document_filename = document_filename line
-  close(values_index["_inline_build_filename"]["path"])
+  if (!url_path) url_path = read_recognised_value_lines(values_index["_inline_path"])
+  document_filename = read_recognised_value_lines(values_index["_inline_filename"])
 
-  if (! system("mkdir -p " path_root "/" url_path)) {
-    print fragment_out >> path_root "/" url_path "/" document_filename
-  }
+  if (! system("mkdir -p " path_root "/" url_path)) print fragment_out >> path_root "/" url_path "/" document_filename
   
   if (! system("test -d " list_dir_values_paths_array[length(list_dir_values_paths_array)] "/static")) {
     system("cp -r " list_dir_values_paths_array[length(list_dir_values_paths_array)] "/static/* " path_root "/" url_path "/")
