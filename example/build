@@ -2,14 +2,10 @@
 set -e
 dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 path_dir_dist="$dir/dist"; rm -rf "$path_dir_dist" && mkdir -p "$path_dir_dist"
-path_dir_dist_tmp="$path_dir_dist/tmp"
-mkdir -p "$path_dir_dist_tmp"
 
-path_dir_src_documents=$dir/documents/
+echo "Building generic documents from $dir/documents"
 
-echo "Building generic documents from $path_dir_src_documents"
-
-for path_dir_src_document in $path_dir_src_documents/*/; do
+for path_dir_src_document in $dir/documents/*/; do
   echo "Building document $path_dir_src_document"
 
   awk -f "$dir/../build_document.awk" -v path_root="$path_dir_dist" -v list_dir_values_paths="$dir/values/:$path_dir_src_document"
@@ -28,10 +24,10 @@ echo "Generic documents have been built"
 
 echo "Building sitemap"
 
-awk -f "$dir/../build_document.awk" -v path_root="$path_dir_dist" -v list_dir_values_paths="$dir/values/:$dir/sitemap/document:$path_dir_dist_tmp/sitemap/"
+awk -f "$dir/../build_document.awk" -v path_root="$path_dir_dist" -v list_dir_values_paths="$dir/values/:$dir/sitemap/document:$path_dir_dist/tmp/sitemap/"
 
 echo "Sitemap has been built"
 
-rm -rf "$path_dir_dist_tmp"
+rm -rf "$path_dir_dist/tmp"
 
 echo "All documents have been built in $path_dir_dist"
