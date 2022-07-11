@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -e
+dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
+
+awk -f "$dir/build.awk" -v dir="$dir"
