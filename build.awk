@@ -40,11 +40,21 @@ function make_values_index( \
       _cmd_basename = "basename " _line
       _cmd_basename | getline _value_name
       close(_cmd_basename)
+
       result[_value_name]["path"] = _line
 
-      if (match(_line, /_block_.*/)) result[_value_name]["type"] = "block"
-      else if (match(_line, /_pre_.*/)) result[_value_name]["type"] = "pre"
-      else if (match(_line, /_inline_.*/)) result[_value_name]["type"] = "inline"
+      if (match(_line, /_block_.*/)) {
+        result[_value_name]["type"] = "block"
+        continue
+      }
+      if (match(_line, /_pre_.*/)) {
+        result[_value_name]["type"] = "pre"
+        continue
+      }
+      if (match(_line, /_inline_.*/)) {
+        result[_value_name]["type"] = "inline"
+        continue
+      }
     }
     close(_cmd_find)
   }
