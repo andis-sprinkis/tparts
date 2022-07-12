@@ -3,7 +3,7 @@ function make_values_index( \
   _cmd_find, _cmd_basename, _value_name, _i \
 ) {
   for (_i in paths_values_dirs_arr) {
-    _cmd_find = "find " paths_values_dirs_arr[_i] " -name \"_*\""
+    _cmd_find = "find " paths_values_dirs_arr[_i] "/_* -maxdepth 0 -type f"
     while ((_cmd_find | getline _line ) > 0) {
       _cmd_basename = "basename " _line
       _cmd_basename | getline _value_name
@@ -52,20 +52,18 @@ function find_values_in_str( \
 }
 
 function indent_lines( \
-  value, indent, \
-  _value_lines, _indented_value_lines, _in_preformatted, _preformatted_begin_match, _preformatted_end_match, _i \
+  value_lines_arr, indent, \
+  _indented_value_lines, _in_preformatted, _preformatted_begin_match, _preformatted_end_match, _i \
 ) {
-  split(value, _value_lines, "\n")
-
   _in_preformatted = 0
-  for (_i in _value_lines) {
-    match(_value_lines[_i], /(<pre>)|(<pre( .*))/, _preformatted_begin_match)
-    match(_value_lines[_i], /<\/pre>/, _preformatted_end_match)
+  for (_i in value_lines_arr) {
+    match(value_lines_arr[_i], /(<pre>)|(<pre( .*))/, _preformatted_begin_match)
+    match(value_lines_arr[_i], /<\/pre>/, _preformatted_end_match)
 
     if (_preformatted_end_match[0] != "") _in_preformatted = 0
     else if (_preformatted_begin_match[0] != "") _in_preformatted = 1
 
-    _indented_value_lines = _indented_value_lines ((_i == 1 || _in_preformatted || _preformatted_end_match[0]) ? "" : indent) _value_lines[_i] "\n"
+    _indented_value_lines = _indented_value_lines ((_i == 1 || _in_preformatted || _preformatted_end_match[0]) ? "" : indent) value_lines_arr[_i] "\n"
   }
 
   return trim_last_char(_indented_value_lines)
@@ -90,7 +88,7 @@ function read_value_file( \
 
 function sub_placeholders_values( \
   found_values, values_index, fragment, \
-  _value_lines, _fragment_out, _indent, _indent_match, _value_placeholder, _value, _empty_line, _i \
+  _value_lines, _value_lines_array, _fragment_out, _indent, _indent_match, _value_placeholder, _value, _empty_line, _i \
 ) {
   for (_value in found_values) {
     _value_lines = ""
@@ -116,7 +114,8 @@ function sub_placeholders_values( \
 
           _indent = match(_fragment_out_arr[_i], /^\s+/, _indent_match) ? _indent_match[0] : ""
 
-          sub(_value_placeholder, indent_lines(trim_last_char(_value_lines), _indent), _fragment_out_arr[_i])
+          split(trim_last_char(_value_lines), _value_lines_array, "\n")
+          sub(_value_placeholder, indent_lines(_value_lines_array, _indent), _fragment_out_arr[_i])
         } else {
           sub(_value_placeholder, _value_lines, _fragment_out_arr[_i])
         }
@@ -173,11 +172,15 @@ BEGIN {
     print "No root directory provided"
     exit 1
   }
+  
+  print "Root directory " dir
 
+  print "Finding generic documents"
   _cmd_ls_documents = "find " dir "/documents/* -maxdepth 0 -type d"
   _i = 1
   while ((_cmd_ls_documents | getline _line ) > 0) {
     _paths_documents[_i] = _line
+    print "Found " _line
     _i++
   }
   close(_cmd_ls_documents)
@@ -186,10 +189,11 @@ BEGIN {
 
   children_sitemap = ""
 
+  print "Building generic documents"
   for (_i in _paths_documents) {
     print "Building document " _paths_documents[_i]
 
-    _paths_values_dirs_arr_document[1] = dir "/values"
+    _paths_values_dirs_arr_document[1] = dir
     _paths_values_dirs_arr_document[2] = _paths_documents[_i]
 
     build_document(_paths_values_dirs_arr_document, dir "/dist")
@@ -200,28 +204,29 @@ BEGIN {
 
     if (_basename != "404" && _basename != "403" && _basename != "robots.txt") {
       print "Building sitemap fragment"
-      _paths_values_dirs_arr_sitemap_entry[1] = dir "/values"
+      _paths_values_dirs_arr_sitemap_entry[1] = dir
       _paths_values_dirs_arr_sitemap_entry[2] = _paths_documents[_i]
       _paths_values_dirs_arr_sitemap_entry[3] = dir "/sitemap/url"
       children_sitemap = children_sitemap build_document(_paths_values_dirs_arr_sitemap_entry)
-      print "Sitemap fragment built"
-    } else {
-      print "Skipping building sitemap fragment"
-    }
+      print "Built sitemap fragment"
+    } else print "Skipping building sitemap fragment"
 
-    print "Finished building document " _paths_documents[_i]
+    print "Built document " _paths_documents[_i]
   }
+  print "Built generic documents"
 
   print "Building sitemap"
   print children_sitemap >> dir "/dist/tmp/sitemap/_block_sitemap_children.xml"
   close(dir "/dist/tmp/sitemap/_block_sitemap_children.xml")
-  _paths_values_dirs_arr_sitemap[1] = dir "/values"
+  _paths_values_dirs_arr_sitemap[1] = dir
   _paths_values_dirs_arr_sitemap[2] = dir "/sitemap/document"
   _paths_values_dirs_arr_sitemap[3] = dir "/dist/tmp/sitemap"
   build_document(_paths_values_dirs_arr_sitemap, dir "/dist")
-  print "Sitemap built"
+  print "Built sitemap"
 
   system("rm -rf " dir "/dist/tmp")
+
+  print "Finished"
 
   exit
 }
