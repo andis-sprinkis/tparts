@@ -86,7 +86,6 @@ function read_value_file( \
       _value_lines = _value_lines _line "\n"
       continue
     }
-    else continue
   }
   close(value["path"])
 
