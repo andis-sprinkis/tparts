@@ -2,4 +2,9 @@
 set -e
 dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 
-awk -f "$dir/build.awk" -v dir="$dir/site"
+if [[ ! -z "$1" ]]; then
+  awk -f "$dir/build.awk" -v dir_site="$(readlink -f "$1")"
+  exit
+fi
+
+awk -f "$dir/build.awk" -v dir_site="$dir/site"
