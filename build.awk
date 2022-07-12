@@ -74,9 +74,18 @@ function read_value_file( \
   _value_lines, _line \
 ) {
   while((getline _line < (value["path"])) > 0) {
-    if (value["type"] == "inline") _value_lines = _value_lines _line
-    else if (value["type"] == "pre") _value_lines = _value_lines escape_ml(_line) "\n"
-    else if (value["type"] == "block") _value_lines = _value_lines _line "\n"
+    if (value["type"] == "inline") {
+      _value_lines = _value_lines _line
+      continue
+    }
+    if (value["type"] == "pre") {
+      _value_lines = _value_lines escape_ml(_line) "\n"
+      continue
+    }
+    if (value["type"] == "block") {
+      _value_lines = _value_lines _line "\n"
+      continue
+    }
     else continue
   }
   close(value["path"])
@@ -137,7 +146,7 @@ function rm_block_placholder_lines(s) {
 
 function document_build( \
   paths_values_dirs_arr, result, \
-  _fragment_out, _values_index, _document_filename, _found_values, _url_path \
+  _fragment_out, _found_values \
 ) {
   make_values_index(paths_values_dirs_arr, result["values_index"])
 
