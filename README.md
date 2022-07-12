@@ -1,3 +1,3 @@
 # tparts
 
-tparts - Bash and GAWK scripts based static site generator.
+tparts - AWK script based static site generation bootstrap.
