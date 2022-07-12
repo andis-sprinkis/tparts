@@ -185,7 +185,7 @@ BEGIN {
   }
   close(_cmd_ls_documents)
 
-  system("rm -rf " dir "/dist && mkdir -p " dir "/dist/tmp/sitemap")
+  system("rm -rf " dir "/../dist && mkdir -p " dir "/../dist/tmp/sitemap")
 
   children_sitemap = ""
 
@@ -196,7 +196,7 @@ BEGIN {
     _paths_values_dirs_arr_document[1] = dir
     _paths_values_dirs_arr_document[2] = _paths_documents[_i]
 
-    build_document(_paths_values_dirs_arr_document, dir "/dist")
+    build_document(_paths_values_dirs_arr_document, dir "/../dist")
 
     _cmd_basename = "basename " _paths_documents[_i]
     _cmd_basename | getline _basename
@@ -216,15 +216,15 @@ BEGIN {
   print "Built generic documents"
 
   print "Building sitemap"
-  print children_sitemap >> dir "/dist/tmp/sitemap/_block_sitemap_children.xml"
-  close(dir "/dist/tmp/sitemap/_block_sitemap_children.xml")
+  print children_sitemap >> dir "/../dist/tmp/sitemap/_block_sitemap_children.xml"
+  close(dir "/../dist/tmp/sitemap/_block_sitemap_children.xml")
   _paths_values_dirs_arr_sitemap[1] = dir
   _paths_values_dirs_arr_sitemap[2] = dir "/sitemap/document"
-  _paths_values_dirs_arr_sitemap[3] = dir "/dist/tmp/sitemap"
-  build_document(_paths_values_dirs_arr_sitemap, dir "/dist")
+  _paths_values_dirs_arr_sitemap[3] = dir "/../dist/tmp/sitemap"
+  build_document(_paths_values_dirs_arr_sitemap, dir "/../dist")
   print "Built sitemap"
 
-  system("rm -rf " dir "/dist/tmp")
+  system("rm -rf " dir "/../dist/tmp")
 
   print "Finished"
 
