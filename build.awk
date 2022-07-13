@@ -153,23 +153,20 @@ function sub_values_placeholders_in_str( \
   return _fragment_out
 }
 
-function rm_block_placholder_lines(s) {
-  gsub(/\s+<!-- _block_.*-->/, "", s)
-  return s
-}
-
 function document_sub_placeholders_values( \
   paths_values_dirs_arr, result, \
   _fragment_out, _found_values \
 ) {
-  _fragment_out = read_value_file(result["values_index"]["_inline_build_entrypoint"])
+  _fragment_out = result["values_index"]["_inline_build_entrypoint"]["value"]
 
   while (find_values_placeholders_in_str(_fragment_out, result["values_index"], _found_values) > 0) {
     _fragment_out = sub_values_placeholders_in_str(_found_values, result["values_index"], _fragment_out)
     delete _found_values
   }
 
-  result["fragment"] = rm_block_placholder_lines(_fragment_out)
+  gsub(/\s+<!-- _block_.*-->/, "", _fragment_out)
+
+  result["fragment"] = _fragment_out
 }
 
 function document_write( \
