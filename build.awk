@@ -192,46 +192,39 @@ BEGIN {
     print "No root directory provided"
     exit 1
   }
-  
-  print "Root directory " dir_site
 
-  print "Finding generic documents"
-  _cmd_find_documents = "find " dir_site "/documents/* -maxdepth 0 -type d"
-  _i = 1
-  while ((_cmd_find_documents | getline _line ) > 0) {
-    _paths_documents[_i] = _line
-    print "Found " _line
-    _i++
-  }
-  close(_cmd_find_documents)
+  print "Root directory " dir_site
 
   system("rm -rf " dir_site "/../dist && mkdir -p " dir_site "/../dist/tmp/sitemap")
 
   _children_sitemap = ""
 
   print "Building generic documents"
-  for (_i in _paths_documents) {
-    print "Building document " _paths_documents[_i]
+
+  _cmd_find_documents = "find " dir_site "/documents/* -maxdepth 0 -type d"
+
+  while ((_cmd_find_documents | getline _path_dir_src_document ) > 0) {
+    print "Building document " _path_dir_src_document
 
     _paths_values_dirs_arr_document[1] = dir_site
-    _paths_values_dirs_arr_document[2] = _paths_documents[_i]
+    _paths_values_dirs_arr_document[2] = _path_dir_src_document
     _document["values_index"][0] = ""
 
     document_build(_paths_values_dirs_arr_document, _document)
     _document_url_path = read_value_file(_document["values_index"]["_inline_path"])
     _document_filename = read_value_file(_document["values_index"]["_inline_filename"])
     document_write(_document, dir_site, _document_url_path, _document_filename)
-    document_copy_static(_paths_documents[_i], dir_site, _document_url_path)
+    document_copy_static(_path_dir_src_document, dir_site, _document_url_path)
     delete _document
 
-    _cmd_basename = "basename " _paths_documents[_i]
+    _cmd_basename = "basename " _path_dir_src_document
     _cmd_basename | getline _basename
     close(_cmd_basename)
 
     if (_basename != "404" && _basename != "403" && _basename != "robots.txt") {
       print "Building sitemap fragment"
       _paths_values_dirs_arr_sitemap_entry[1] = dir_site
-      _paths_values_dirs_arr_sitemap_entry[2] = _paths_documents[_i]
+      _paths_values_dirs_arr_sitemap_entry[2] = _path_dir_src_document
       _paths_values_dirs_arr_sitemap_entry[3] = dir_site "/sitemap/url"
       _sitemap_fragment["values_index"][0] = ""
 
@@ -242,8 +235,10 @@ BEGIN {
       print "Built sitemap fragment"
     } else print "Skipping building sitemap fragment"
 
-    print "Built document " _paths_documents[_i]
+    print "Built document " _path_dir_src_document
   }
+  close(_cmd_find_documents)
+
   print "Built generic documents"
 
   print "Building sitemap"
