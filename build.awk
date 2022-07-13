@@ -158,7 +158,7 @@ function rm_block_placholder_lines(s) {
   return s
 }
 
-function document_build( \
+function document_sub_placeholders_values( \
   paths_values_dirs_arr, result, \
   _fragment_out, _found_values \
 ) {
@@ -220,7 +220,7 @@ BEGIN {
     _paths_values_dirs_arr_document[2] = _path_dir_src_document
     _document["values_index"][0] = ""
     document_make_values_index(_paths_values_dirs_arr_document, _indexed_value_paths, _document["values_index"])
-    document_build(_paths_values_dirs_arr_document, _document)
+    document_sub_placeholders_values(_paths_values_dirs_arr_document, _document)
     document_write(_document, dir_site)
     document_copy_static(_path_dir_src_document, dir_site, _document["values_index"]["_inline_path"]["value"])
     delete _document
@@ -235,7 +235,7 @@ BEGIN {
       _paths_values_dirs_arr_sitemap_entry[3] = dir_site "/sitemap/url"
       _sitemap_fragment["values_index"][0] = ""
       document_make_values_index(_paths_values_dirs_arr_sitemap_entry, _indexed_value_paths, _sitemap_fragment["values_index"])
-      document_build(_paths_values_dirs_arr_sitemap_entry, _sitemap_fragment)
+      document_sub_placeholders_values(_paths_values_dirs_arr_sitemap_entry, _sitemap_fragment)
       _children_sitemap = _children_sitemap _sitemap_fragment["fragment"]
       delete _sitemap_fragment
 
@@ -259,7 +259,7 @@ BEGIN {
   _paths_values_dirs_arr_sitemap[3] = dir_site "/../dist/tmp/sitemap"
   _sitemap["values_index"][0] = ""
   document_make_values_index(_paths_values_dirs_arr_sitemap, _indexed_value_paths, _sitemap["values_index"])
-  document_build(_paths_values_dirs_arr_sitemap, _sitemap)
+  document_sub_placeholders_values(_paths_values_dirs_arr_sitemap, _sitemap)
   document_write(_sitemap, dir_site)
   delete _sitemap
 
