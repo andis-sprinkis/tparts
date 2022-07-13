@@ -30,7 +30,7 @@ function indent_lines( \
   return trim_last_char(_indented_value_lines)
 }
 
-function make_values_index( \
+function document_make_values_index( \
   paths_values_dirs_arr, indexed_value_paths, result, \
   _cmd_find, _cmd_basename, _value_name, _i, _path, _is_indexed \
 ) {
@@ -168,11 +168,9 @@ function rm_block_placholder_lines(s) {
 }
 
 function document_build( \
-  paths_values_dirs_arr, indexed_value_paths, result, \
+  paths_values_dirs_arr, result, \
   _fragment_out, _found_values \
 ) {
-  make_values_index(paths_values_dirs_arr, indexed_value_paths, result["values_index"])
-
   _fragment_out = read_value_file(result["values_index"]["_inline_build_entrypoint"])
 
   while (find_values_placeholders_in_str(_fragment_out, result["values_index"], _found_values) > 0) {
@@ -230,7 +228,8 @@ BEGIN {
     _paths_values_dirs_arr_document[2] = _path_dir_src_document
     _document["values_index"][0] = ""
 
-    document_build(_paths_values_dirs_arr_document, _indexed_value_paths, _document)
+    document_make_values_index(_paths_values_dirs_arr_document, _indexed_value_paths, _document["values_index"])
+    document_build(_paths_values_dirs_arr_document, _document)
     _document_url_path = read_value_file(_document["values_index"]["_inline_path"])
     _document_filename = read_value_file(_document["values_index"]["_inline_filename"])
     document_write(_document, dir_site, _document_url_path, _document_filename)
@@ -241,12 +240,14 @@ BEGIN {
 
     if (! _noindex_match[0]) {
       print "Building sitemap fragment"
+
       _paths_values_dirs_arr_sitemap_entry[1] = dir_site
       _paths_values_dirs_arr_sitemap_entry[2] = _path_dir_src_document
       _paths_values_dirs_arr_sitemap_entry[3] = dir_site "/sitemap/url"
       _sitemap_fragment["values_index"][0] = ""
 
-      document_build(_paths_values_dirs_arr_sitemap_entry, _indexed_value_paths, _sitemap_fragment)
+      document_make_values_index(_paths_values_dirs_arr_sitemap_entry, _indexed_value_paths, _sitemap_fragment["values_index"])
+      document_build(_paths_values_dirs_arr_sitemap_entry, _sitemap_fragment)
       _children_sitemap = _children_sitemap _sitemap_fragment["fragment"]
       delete _sitemap_fragment
 
@@ -270,7 +271,8 @@ BEGIN {
   _paths_values_dirs_arr_sitemap[3] = dir_site "/../dist/tmp/sitemap"
   _sitemap["values_index"][0] = ""
 
-  document_build(_paths_values_dirs_arr_sitemap, _indexed_value_paths, _sitemap)
+  document_make_values_index(_paths_values_dirs_arr_sitemap, _indexed_value_paths, _sitemap["values_index"])
+  document_build(_paths_values_dirs_arr_sitemap, _sitemap)
   _sitemap_url_path = read_value_file(_sitemap["values_index"]["_inline_path"])
   _sitemap_filename = read_value_file(_sitemap["values_index"]["_inline_filename"])
   document_write(_sitemap, dir_site, _sitemap_url_path, _sitemap_filename)
