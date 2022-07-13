@@ -210,19 +210,19 @@ BEGIN {
     match(_path_dir_src_document, /.*\/(403|404|robots\.txt$)/, _noindex_match)
 
     if (! _noindex_match[0]) {
-      print "Building sitemap fragment"
+      print "Building sitemap entry"
 
       _paths_values_dirs_arr_sitemap_entry[1] = dir_site
       _paths_values_dirs_arr_sitemap_entry[2] = _path_dir_src_document
       _paths_values_dirs_arr_sitemap_entry[3] = dir_site "/sitemap/url"
-      _sitemap_fragment["values_index"][0] = ""
-      document_make_values_index(_paths_values_dirs_arr_sitemap_entry, _indexed_value_paths, _sitemap_fragment["values_index"])
-      document_sub_placeholders_values(_paths_values_dirs_arr_sitemap_entry, _sitemap_fragment)
-      _children_sitemap = _children_sitemap _sitemap_fragment["fragment"]
-      delete _sitemap_fragment
+      _sitemap_entry["values_index"][0] = ""
+      document_make_values_index(_paths_values_dirs_arr_sitemap_entry, _indexed_value_paths, _sitemap_entry["values_index"])
+      document_sub_placeholders_values(_paths_values_dirs_arr_sitemap_entry, _sitemap_entry)
+      _children_sitemap = _children_sitemap _sitemap_entry["fragment"]
+      delete _sitemap_entry
 
-      print "Built sitemap fragment"
-    } else print "Skipping building sitemap fragment"
+      print "Built sitemap entry"
+    } else print "Skipping building sitemap entry"
 
     print "Built document " _path_dir_src_document
   }
