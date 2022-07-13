@@ -32,17 +32,17 @@ function indent_lines( \
 
 function document_make_values_index( \
   paths_values_dirs_arr, indexed_value_paths, result, \
-  _cmd_find, _cmd_basename, _value_name, _i, _path, _is_indexed \
+  _cmd_find, _cmd_basename, _value_name, _i, _path, _is_indexed_path \
 ) {
   for (_i in paths_values_dirs_arr) {
-    _is_indexed = 0
+    _is_indexed_path = 0
 
     for (_path in indexed_value_paths) {
-      if (_is_indexed) break
-      if (_path == paths_values_dirs_arr[_i]) _is_indexed = 1
+      if (_is_indexed_path) break
+      if (_path == paths_values_dirs_arr[_i]) _is_indexed_path = 1
     }
 
-    if (! _is_indexed) {
+    if (! _is_indexed_path) {
       _cmd_find = "find " paths_values_dirs_arr[_i] "/_* -maxdepth 0 -type f"
       while ((_cmd_find | getline _line ) > 0) {
         _cmd_basename = "basename " _line
@@ -51,18 +51,11 @@ function document_make_values_index( \
 
         indexed_value_paths[paths_values_dirs_arr[_i]][_value_name]["path"] = _line
 
-        if (match(_line, /_block_.*/)) {
-          indexed_value_paths[paths_values_dirs_arr[_i]][_value_name]["type"] = "block"
-          continue
-        }
-        if (match(_line, /_pre_.*/)) {
-          indexed_value_paths[paths_values_dirs_arr[_i]][_value_name]["type"] = "pre"
-          continue
-        }
-        if (match(_line, /_inline_.*/)) {
-          indexed_value_paths[paths_values_dirs_arr[_i]][_value_name]["type"] = "inline"
-          continue
-        }
+        if (match(_line, /_block_.*/)) indexed_value_paths[paths_values_dirs_arr[_i]][_value_name]["type"] = "block"
+        else if (match(_line, /_pre_.*/)) indexed_value_paths[paths_values_dirs_arr[_i]][_value_name]["type"] = "pre"
+        else if (match(_line, /_inline_.*/)) indexed_value_paths[paths_values_dirs_arr[_i]][_value_name]["type"] = "inline"
+
+        indexed_value_paths[paths_values_dirs_arr[_i]][_value_name]["value"] = read_value_file(indexed_value_paths[paths_values_dirs_arr[_i]][_value_name])
       }
       close(_cmd_find)
     }
@@ -70,6 +63,7 @@ function document_make_values_index( \
     for (_value_name in indexed_value_paths[paths_values_dirs_arr[_i]]) {
       result[_value_name]["path"] = indexed_value_paths[paths_values_dirs_arr[_i]][_value_name]["path"]
       result[_value_name]["type"] = indexed_value_paths[paths_values_dirs_arr[_i]][_value_name]["type"]
+      result[_value_name]["value"] = indexed_value_paths[paths_values_dirs_arr[_i]][_value_name]["value"]
     }
   }
 }
@@ -133,10 +127,7 @@ function sub_values_placeholders_in_str( \
     for (_i in _fragment_out_arr) {
       _empty_line = 0
       if (match(_fragment_out_arr[_i], _value_placeholder)) {
-        if (! _read) {
-          _value_lines = read_value_file(values_index[_value])
-          _read = 1
-        }
+        _value_lines = values_index[_value]["value"]
 
         if (values_index[_value]["type"] == "block") {
           if (_fragment_out_arr[_i] == "") {
@@ -182,11 +173,11 @@ function document_build( \
 }
 
 function document_write( \
-  document, dir_site, url_path, document_filename, \
+  document, dir_site, \
   _path_dir_document_out, _path_file_document_out \
 ) {
-  _path_dir_document_out = dir_site "/../dist/" url_path
-  _path_file_document_out = _path_dir_document_out "/" document_filename
+  _path_dir_document_out = dir_site "/../dist/" document["values_index"]["_inline_path"]["value"]
+  _path_file_document_out = _path_dir_document_out "/" document["values_index"]["_inline_filename"]["value"]
 
   if (! system("mkdir -p " _path_dir_document_out)) {
     print document["fragment"] >> _path_file_document_out
@@ -228,13 +219,10 @@ BEGIN {
     _paths_values_dirs_arr_document[1] = dir_site
     _paths_values_dirs_arr_document[2] = _path_dir_src_document
     _document["values_index"][0] = ""
-
     document_make_values_index(_paths_values_dirs_arr_document, _indexed_value_paths, _document["values_index"])
     document_build(_paths_values_dirs_arr_document, _document)
-    _document_url_path = read_value_file(_document["values_index"]["_inline_path"])
-    _document_filename = read_value_file(_document["values_index"]["_inline_filename"])
-    document_write(_document, dir_site, _document_url_path, _document_filename)
-    document_copy_static(_path_dir_src_document, dir_site, _document_url_path)
+    document_write(_document, dir_site)
+    document_copy_static(_path_dir_src_document, dir_site, _document["values_index"]["_inline_path"]["value"])
     delete _document
 
     match(_path_dir_src_document, /.*\/(403|404|robots\.txt$)/, _noindex_match)
@@ -246,7 +234,6 @@ BEGIN {
       _paths_values_dirs_arr_sitemap_entry[2] = _path_dir_src_document
       _paths_values_dirs_arr_sitemap_entry[3] = dir_site "/sitemap/url"
       _sitemap_fragment["values_index"][0] = ""
-
       document_make_values_index(_paths_values_dirs_arr_sitemap_entry, _indexed_value_paths, _sitemap_fragment["values_index"])
       document_build(_paths_values_dirs_arr_sitemap_entry, _sitemap_fragment)
       _children_sitemap = _children_sitemap _sitemap_fragment["fragment"]
@@ -271,12 +258,9 @@ BEGIN {
   _paths_values_dirs_arr_sitemap[2] = dir_site "/sitemap/document"
   _paths_values_dirs_arr_sitemap[3] = dir_site "/../dist/tmp/sitemap"
   _sitemap["values_index"][0] = ""
-
   document_make_values_index(_paths_values_dirs_arr_sitemap, _indexed_value_paths, _sitemap["values_index"])
   document_build(_paths_values_dirs_arr_sitemap, _sitemap)
-  _sitemap_url_path = read_value_file(_sitemap["values_index"]["_inline_path"])
-  _sitemap_filename = read_value_file(_sitemap["values_index"]["_inline_filename"])
-  document_write(_sitemap, dir_site, _sitemap_url_path, _sitemap_filename)
+  document_write(_sitemap, dir_site)
   delete _sitemap
 
   print "Built sitemap"
