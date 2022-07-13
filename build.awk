@@ -34,7 +34,7 @@ function indent_lines( \
 
 function document_make_values_index( \
   paths_values_dirs_arr, indexed_value_paths, result, \
-  _cmd_find, _cmd_basename, _value_name, _i, _path, _is_indexed_path \
+  _cmd_find, _cmd_basename, _value_name, _i, _path, _is_indexed_path, _prop \
 ) {
   for (_i in paths_values_dirs_arr) {
     _is_indexed_path = 0
@@ -63,9 +63,9 @@ function document_make_values_index( \
     }
 
     for (_value_name in indexed_value_paths[paths_values_dirs_arr[_i]]) {
-      result[_value_name]["path"] = indexed_value_paths[paths_values_dirs_arr[_i]][_value_name]["path"]
-      result[_value_name]["type"] = indexed_value_paths[paths_values_dirs_arr[_i]][_value_name]["type"]
-      result[_value_name]["value"] = indexed_value_paths[paths_values_dirs_arr[_i]][_value_name]["value"]
+      for (_prop in indexed_value_paths[paths_values_dirs_arr[_i]][_value_name]) {
+        result[_value_name][_prop] = indexed_value_paths[paths_values_dirs_arr[_i]][_value_name][_prop]
+      }
     }
   }
 }
