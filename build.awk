@@ -13,18 +13,20 @@ function trim_last_char(str) {
 }
 
 function indent_lines( \
-  value_lines_arr, indent, \
-  _indented_value_lines, _in_preformatted, _preformatted_begin_match, _preformatted_end_match, _i \
+  value_lines, indent, \
+  _indented_value_lines, _in_preformatted, _preformatted_begin_match, _preformatted_end_match, _value_lines_arr, _i \
 ) {
+  split(value_lines, _value_lines_arr, "\n")
+
   _in_preformatted = 0
-  for (_i in value_lines_arr) {
-    match(value_lines_arr[_i], /(<pre>)|(<pre( .*))/, _preformatted_begin_match)
-    match(value_lines_arr[_i], /<\/pre>/, _preformatted_end_match)
+  for (_i in _value_lines_arr) {
+    match(_value_lines_arr[_i], /(<pre>)|(<pre( .*))/, _preformatted_begin_match)
+    match(_value_lines_arr[_i], /<\/pre>/, _preformatted_end_match)
 
     if (_preformatted_end_match[0] != "") _in_preformatted = 0
     else if (_preformatted_begin_match[0] != "") _in_preformatted = 1
 
-    _indented_value_lines = _indented_value_lines ((_i == 1 || _in_preformatted || _preformatted_end_match[0]) ? "" : indent) value_lines_arr[_i] "\n"
+    _indented_value_lines = _indented_value_lines ((_i == 1 || _in_preformatted || _preformatted_end_match[0]) ? "" : indent) _value_lines_arr[_i] "\n"
   }
 
   return trim_last_char(_indented_value_lines)
@@ -70,18 +72,12 @@ function document_make_values_index( \
 
 function find_values_placeholders_in_str( \
   str, values_index, result, \
-  _line_index, _value_index, _count \
+  _value_index, _count \
 ) {
-  split(str, _str_arr, "\n")
-  _count = 0
-
-  for (_line_index in _str_arr) {
-    for (_value_index in values_index) {
-      if (match(_str_arr[_line_index], "<!-- " _value_index " -->")) {
-        result[_value_index] = 1
-        _count++
-      }
-    }
+  for (_value_index in values_index) {
+    _value_count = match(str, "<!-- " _value_index " -->")
+    if (_value_count) result[_value_index] = 1
+    _count += _value_count
   }
 
   return _count
@@ -125,23 +121,12 @@ function sub_values_placeholders_in_str( \
     _value_placeholder = "<!-- " _value " -->"
 
     for (_i in _fragment_out_arr) {
-      _empty_line = 0
       if (match(_fragment_out_arr[_i], _value_placeholder)) {
-        _value_lines = values_index[_value]["value"]
-
         if (values_index[_value]["type"] == "block") {
-          if (_fragment_out_arr[_i] == "") {
-            _empty_line = (_empty_line || 1)
-            break
-          }
-
+          if (_fragment_out_arr[_i] == "") break
           _indent = match(_fragment_out_arr[_i], /^\s+/, _indent_match) ? _indent_match[0] : ""
-
-          split(trim_last_char(_value_lines), _value_lines_array, "\n")
-          sub(_value_placeholder, indent_lines(_value_lines_array, _indent), _fragment_out_arr[_i])
-        } else {
-          sub(_value_placeholder, _value_lines, _fragment_out_arr[_i])
-        }
+          sub(_value_placeholder, indent_lines(trim_last_char(values_index[_value]["value"]), _indent), _fragment_out_arr[_i])
+        } else sub(_value_placeholder, values_index[_value]["value"], _fragment_out_arr[_i])
       }
 
       _fragment_out = _fragment_out _fragment_out_arr[_i] "\n"
