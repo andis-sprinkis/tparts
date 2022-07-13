@@ -187,6 +187,7 @@ function document_write( \
 ) {
   _path_dir_document_out = dir_site "/../dist/" url_path
   _path_file_document_out = _path_dir_document_out "/" document_filename
+
   if (! system("mkdir -p " _path_dir_document_out)) {
     print document["fragment"] >> _path_file_document_out
     close(_path_file_document_out)
