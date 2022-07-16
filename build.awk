@@ -1,3 +1,23 @@
+function parse_args( \
+  result, \
+  _dir_site, _dir_dist \
+) {
+  if (! ARGV[1] || ! ARGV[2]) {
+    print "Must provide paths of site and dist directories"
+    exit 1
+  }
+
+  _cmd_dir_site = "readlink -f " ARGV[1]
+  _cmd_dir_site | getline _dir_site
+  close(_cmd_dir_site)
+  result[0] = _dir_site
+
+  _cmd_dir_dist = "readlink -f " ARGV[2]
+  _cmd_dir_dist | getline _dir_dist
+  close(_cmd_dir_dist)
+  result[1] = _dir_dist
+}
+
 function escape_ml(str) {
   gsub(/&/, "\\\\\\&amp;", str)
   gsub(/</, "\\\\\\&lt;", str)
@@ -155,10 +175,10 @@ function document_sub_placeholders_values( \
 }
 
 function document_write( \
-  document, dir_site, \
+  document, dir_dist, \
   _path_dir_document_out, _path_file_document_out \
 ) {
-  _path_dir_document_out = dir_site "/../dist/" document["values_index"]["_inline_path"]["value"]
+  _path_dir_document_out = dir_dist "/" document["values_index"]["_inline_path"]["value"]
   _path_file_document_out = _path_dir_document_out "/" document["values_index"]["_inline_filename"]["value"]
 
   if (! system("mkdir -p " _path_dir_document_out)) {
@@ -167,44 +187,43 @@ function document_write( \
   }
 }
 
-function document_copy_static(\
-  path_document_src, dir_site, url_path, \
+function document_copy_static( \
+  path_document_src, dir_dist, url_path, \
   _path_dir_static \
 ) {
   _path_dir_src_static = path_document_src "/static"
-  _path_dir_dist_static = dir_site "/../dist/" url_path "/"
+  _path_dir_dist_static = dir_dist "/" url_path "/"
 
   if (! system("test -d " _path_dir_src_static)) system("cp -r " _path_dir_src_static "/* " _path_dir_dist_static)
 }
 
 BEGIN {
-  if (! dir_site) {
-    print "No root directory provided"
-    exit 1
-  }
+  parse_args(_args_parsed)
+  _dir_site = _args_parsed[0]
+  _dir_dist = _args_parsed[1]
 
-  print "Root directory " dir_site
+  print "Root directory " _dir_site
 
-  system("rm -rf " dir_site "/../dist && mkdir -p " dir_site "/../dist/tmp/sitemap")
+  system("rm -rf " _dir_dist " && mkdir -p " _dir_dist "/tmp/sitemap")
 
   _children_sitemap = ""
 
   print "Building generic documents"
 
-  _cmd_find_documents = "find " dir_site "/documents/* -maxdepth 0 -type d"
+  _cmd_find_documents = "find " _dir_site "/documents/* -maxdepth 0 -type d"
 
   _indexed_value_paths[0] = ""
 
   while ((_cmd_find_documents | getline _path_dir_src_document ) > 0) {
     print "Building document " _path_dir_src_document
 
-    _paths_values_dirs_arr_document[1] = dir_site
+    _paths_values_dirs_arr_document[1] = _dir_site
     _paths_values_dirs_arr_document[2] = _path_dir_src_document
     _document["values_index"][0] = ""
     document_make_values_index(_paths_values_dirs_arr_document, _indexed_value_paths, _document["values_index"])
     document_sub_placeholders_values(_paths_values_dirs_arr_document, _document)
-    document_write(_document, dir_site)
-    document_copy_static(_path_dir_src_document, dir_site, _document["values_index"]["_inline_path"]["value"])
+    document_write(_document, _dir_dist)
+    document_copy_static(_path_dir_src_document, _dir_dist, _document["values_index"]["_inline_path"]["value"])
     delete _document
 
     match(_path_dir_src_document, /.*\/(403|404|robots\.txt$)/, _noindex_match)
@@ -212,9 +231,9 @@ BEGIN {
     if (! _noindex_match[0]) {
       print "Building sitemap entry"
 
-      _paths_values_dirs_arr_sitemap_entry[1] = dir_site
+      _paths_values_dirs_arr_sitemap_entry[1] = _dir_site
       _paths_values_dirs_arr_sitemap_entry[2] = _path_dir_src_document
-      _paths_values_dirs_arr_sitemap_entry[3] = dir_site "/sitemap/url"
+      _paths_values_dirs_arr_sitemap_entry[3] = _dir_site "/sitemap/url"
       _sitemap_entry["values_index"][0] = ""
       document_make_values_index(_paths_values_dirs_arr_sitemap_entry, _indexed_value_paths, _sitemap_entry["values_index"])
       document_sub_placeholders_values(_paths_values_dirs_arr_sitemap_entry, _sitemap_entry)
@@ -232,22 +251,22 @@ BEGIN {
 
   print "Building sitemap"
 
-  _path_file_children_sitemap = dir_site "/../dist/tmp/sitemap/_block_sitemap_children.xml"
+  _path_file_children_sitemap = _dir_dist "/tmp/sitemap/_block_sitemap_children.xml"
   print _children_sitemap >> _path_file_children_sitemap 
   close(_path_file_children_sitemap)
 
-  _paths_values_dirs_arr_sitemap[1] = dir_site
-  _paths_values_dirs_arr_sitemap[2] = dir_site "/sitemap/document"
-  _paths_values_dirs_arr_sitemap[3] = dir_site "/../dist/tmp/sitemap"
+  _paths_values_dirs_arr_sitemap[1] = _dir_site
+  _paths_values_dirs_arr_sitemap[2] = _dir_site "/sitemap/document"
+  _paths_values_dirs_arr_sitemap[3] = _dir_dist "/tmp/sitemap"
   _sitemap["values_index"][0] = ""
   document_make_values_index(_paths_values_dirs_arr_sitemap, _indexed_value_paths, _sitemap["values_index"])
   document_sub_placeholders_values(_paths_values_dirs_arr_sitemap, _sitemap)
-  document_write(_sitemap, dir_site)
+  document_write(_sitemap, _dir_dist)
   delete _sitemap
 
   print "Built sitemap"
 
-  system("rm -rf " dir_site "/../dist/tmp")
+  system("rm -rf " _dir_dist "/tmp")
 
   print "Finished"
 
