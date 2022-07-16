@@ -30,12 +30,6 @@ function escape_ml(str) {
   return str
 }
 
-function escape_amp(str) {
-  gsub(/&/, "\\\\&", str)
-
-  return str
-}
-
 function trim_last_char(str) {
   return substr(str, 1, length(str) - 1)
 }
@@ -122,7 +116,7 @@ function read_value_file( \
 ) {
   while((getline _line < (value["path"])) > 0) {
     if (value["type"] == "_inline_") {
-      _value_lines = _value_lines escape_amp(_line)
+      _value_lines = _value_lines _line
       continue
     }
     if (value["type"] == "_pre_") {
@@ -130,7 +124,7 @@ function read_value_file( \
       continue
     }
     if (value["type"] == "_block_") {
-      _value_lines = _value_lines escape_amp(_line) "\n"
+      _value_lines = _value_lines _line "\n"
       continue
     }
   }
@@ -143,7 +137,7 @@ function read_value_file( \
 
 function sub_values_placeholders_in_str( \
   found_values, values_index, fragment, \
-  _value_lines, _value_lines_array, _fragment_out, _indent, _indent_match, _value_placeholder, _value, _empty_line, _i \
+  _value_lines, _value_lines_array, _fragment_out, _indent, _indent_match, _value_placeholder, _value, _i, _index_placeholder_start, _index_placeholder_end \
 ) {
   for (_value in found_values) {
     _value_lines = ""
@@ -158,8 +152,17 @@ function sub_values_placeholders_in_str( \
         if (values_index[_value]["type"] == "_block_") {
           if (_fragment_out_arr[_i] == "") break
           _indent = match(_fragment_out_arr[_i], /^\s+/, _indent_match) ? _indent_match[0] : ""
-          sub(_value_placeholder, indent_lines(trim_last_char(values_index[_value]["value"]), _indent), _fragment_out_arr[_i])
-        } else sub(_value_placeholder, values_index[_value]["value"], _fragment_out_arr[_i])
+
+          _index_placeholder_start = index(_fragment_out_arr[_i], _value_placeholder)
+          _index_placeholder_end = _index_placeholder_start + length(_value_placeholder)
+          _fragment_out_arr[_i] = substr(_fragment_out_arr[_i], 1, _index_placeholder_start - 1) indent_lines(trim_last_char(values_index[_value]["value"]), _indent) substr(_fragment_out_arr[_i], _index_placeholder_end)
+        } else if (values_index[_value]["type"] == "_inline_") {
+          _index_placeholder_start = index(_fragment_out_arr[_i], _value_placeholder)
+          _index_placeholder_end = _index_placeholder_start + length(_value_placeholder)
+          _fragment_out_arr[_i] = substr(_fragment_out_arr[_i], 1, _index_placeholder_start - 1) values_index[_value]["value"] substr(_fragment_out_arr[_i], _index_placeholder_end)
+        } else {
+          sub(_value_placeholder, values_index[_value]["value"], _fragment_out_arr[_i])
+        }
       }
 
       _fragment_out = _fragment_out _fragment_out_arr[_i] "\n"
