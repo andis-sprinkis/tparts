@@ -56,7 +56,7 @@ function indent_lines( \
 
 function document_make_values_index( \
   paths_values_dirs_arr, indexed_value_paths, result, \
-  _cmd_find, _cmd_basename, _value_name, _i, _path, _is_indexed_path, _prop, _prefix_match, _basename_match \
+  _cmd_find, _value_name, _i, _path, _line, _is_indexed_path, _prop, _prefix_match, _basename_match \
 ) {
   for (_i in paths_values_dirs_arr) {
     _is_indexed_path = 0
@@ -68,12 +68,14 @@ function document_make_values_index( \
 
     if (! _is_indexed_path) {
       _cmd_find = "find " paths_values_dirs_arr[_i] "/_* -maxdepth 0 -type f"
+
       while ((_cmd_find | getline _line ) > 0) {
         match(_line, /[^/]*$/, _basename_match)
 
         indexed_value_paths[paths_values_dirs_arr[_i]][_basename_match[0]]["path"] = _line
 
         match(_basename_match[0], /^_[a-z]*_/, _prefix_match)
+
         if (_prefix_match[0]) {
           indexed_value_paths[paths_values_dirs_arr[_i]][_basename_match[0]]["type"] = _prefix_match[0]
           delete _prefix_match
@@ -83,6 +85,7 @@ function document_make_values_index( \
 
         delete _basename_match
       }
+
       close(_cmd_find)
     }
 
