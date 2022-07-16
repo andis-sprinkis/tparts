@@ -21,11 +21,11 @@ function parse_args( \
 }
 
 function escape_ml(str) {
-  gsub(/&/, "\\\\\\&amp;", str)
-  gsub(/</, "\\\\\\&lt;", str)
-  gsub(/>/, "\\\\\\&gt;", str)
-  gsub(/"/, "\\\\\\&quot;", str)
-  gsub(/'/, "\\\\\\&apos;", str)
+  gsub(/&/, "\\&amp;", str)
+  gsub(/</, "\\&lt;", str)
+  gsub(/>/, "\\&gt;", str)
+  gsub(/"/, "\\&quot;", str)
+  gsub(/'/, "\\&apos;", str)
 
   return str
 }
@@ -156,12 +156,10 @@ function sub_values_placeholders_in_str( \
           _index_placeholder_start = index(_fragment_out_arr[_i], _value_placeholder)
           _index_placeholder_end = _index_placeholder_start + length(_value_placeholder)
           _fragment_out_arr[_i] = substr(_fragment_out_arr[_i], 1, _index_placeholder_start - 1) indent_lines(trim_last_char(values_index[_value]["value"]), _indent) substr(_fragment_out_arr[_i], _index_placeholder_end)
-        } else if (values_index[_value]["type"] == "_inline_") {
+        } else {
           _index_placeholder_start = index(_fragment_out_arr[_i], _value_placeholder)
           _index_placeholder_end = _index_placeholder_start + length(_value_placeholder)
           _fragment_out_arr[_i] = substr(_fragment_out_arr[_i], 1, _index_placeholder_start - 1) values_index[_value]["value"] substr(_fragment_out_arr[_i], _index_placeholder_end)
-        } else {
-          sub(_value_placeholder, values_index[_value]["value"], _fragment_out_arr[_i])
         }
       }
 
