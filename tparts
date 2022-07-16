@@ -56,7 +56,7 @@ function indent_lines( \
 
 function document_make_values_index( \
   paths_values_dirs_arr, indexed_value_paths, result, \
-  _cmd_find, _cmd_basename, _value_name, _i, _path, _is_indexed_path, _prop \
+  _cmd_find, _cmd_basename, _value_name, _i, _path, _is_indexed_path, _prop, _prefix_match \
 ) {
   for (_i in paths_values_dirs_arr) {
     _is_indexed_path = 0
@@ -75,9 +75,11 @@ function document_make_values_index( \
 
         indexed_value_paths[paths_values_dirs_arr[_i]][_value_name]["path"] = _line
 
-        if (match(_line, /_block_.*/)) indexed_value_paths[paths_values_dirs_arr[_i]][_value_name]["type"] = "block"
-        else if (match(_line, /_pre_.*/)) indexed_value_paths[paths_values_dirs_arr[_i]][_value_name]["type"] = "pre"
-        else if (match(_line, /_inline_.*/)) indexed_value_paths[paths_values_dirs_arr[_i]][_value_name]["type"] = "inline"
+        match(_value_name, /^_[a-z]*_/, _prefix_match)
+        if (_prefix_match[0]) {
+          indexed_value_paths[paths_values_dirs_arr[_i]][_value_name]["type"] = _prefix_match[0]
+          delete _prefix_match
+        }
 
         indexed_value_paths[paths_values_dirs_arr[_i]][_value_name]["value"] = read_value_file(indexed_value_paths[paths_values_dirs_arr[_i]][_value_name])
       }
@@ -110,22 +112,22 @@ function read_value_file( \
   _value_lines, _line \
 ) {
   while((getline _line < (value["path"])) > 0) {
-    if (value["type"] == "inline") {
+    if (value["type"] == "_inline_") {
       _value_lines = _value_lines _line
       continue
     }
-    if (value["type"] == "pre") {
+    if (value["type"] == "_pre_") {
       _value_lines = _value_lines escape_ml(_line) "\n"
       continue
     }
-    if (value["type"] == "block") {
+    if (value["type"] == "_block_") {
       _value_lines = _value_lines _line "\n"
       continue
     }
   }
   close(value["path"])
 
-  if (value["type"] == "pre") _value_lines = trim_last_char(_value_lines)
+  if (value["type"] == "_pre_") _value_lines = trim_last_char(_value_lines)
 
   return _value_lines
 }
@@ -144,7 +146,7 @@ function sub_values_placeholders_in_str( \
 
     for (_i in _fragment_out_arr) {
       if (match(_fragment_out_arr[_i], _value_placeholder)) {
-        if (values_index[_value]["type"] == "block") {
+        if (values_index[_value]["type"] == "_block_") {
           if (_fragment_out_arr[_i] == "") break
           _indent = match(_fragment_out_arr[_i], /^\s+/, _indent_match) ? _indent_match[0] : ""
           sub(_value_placeholder, indent_lines(trim_last_char(values_index[_value]["value"]), _indent), _fragment_out_arr[_i])
@@ -228,7 +230,7 @@ BEGIN {
     document_copy_static(_path_dir_src_document, _dir_dist, _document["values_index"]["_inline_path"]["value"])
     delete _document
 
-    match(_path_dir_src_document, /.*\/(403|404|robots\.txt$)/, _noindex_match)
+    match(_path_dir_src_document, /.*\/(403$|404$|robots\.txt$)/, _noindex_match)
 
     if (! _noindex_match[0]) {
       print "Building sitemap entry"
