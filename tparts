@@ -30,6 +30,12 @@ function escape_ml(str) {
   return str
 }
 
+function escape_amp(str) {
+  gsub(/&/, "\\\\&", str)
+
+  return str
+}
+
 function trim_last_char(str) {
   return substr(str, 1, length(str) - 1)
 }
@@ -116,7 +122,7 @@ function read_value_file( \
 ) {
   while((getline _line < (value["path"])) > 0) {
     if (value["type"] == "_inline_") {
-      _value_lines = _value_lines _line
+      _value_lines = _value_lines escape_amp(_line)
       continue
     }
     if (value["type"] == "_pre_") {
@@ -124,7 +130,7 @@ function read_value_file( \
       continue
     }
     if (value["type"] == "_block_") {
-      _value_lines = _value_lines _line "\n"
+      _value_lines = _value_lines escape_amp(_line) "\n"
       continue
     }
   }
