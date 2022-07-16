@@ -1,3 +1,5 @@
+#!/usr/bin/awk -f
+
 function parse_args( \
   result, \
   _dir_site, _dir_dist \
