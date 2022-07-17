@@ -5,7 +5,7 @@ function parse_args( \
   _dir_site, _dir_dist \
 ) {
   if (! ARGV[1] || ! ARGV[2]) {
-    print "Must provide paths of site and dist directories"
+    print "Error: Must provide paths of site and dist directories"
     exit 1
   }
 
@@ -174,13 +174,20 @@ function sub_values_placeholders_in_str( \
 
 function document_sub_placeholders_values( \
   paths_values_dirs_arr, result, \
-  _fragment_out, _found_values \
+  _fragment_out, _found_values, _i, _max_iterations \
 ) {
   _fragment_out = result["values_index"]["_inline_build_entrypoint"]["value"]
 
+  _max_iterations = 100
+  _i
   while (find_values_placeholders_in_str(_fragment_out, result["values_index"], _found_values) > 0) {
+    if (_i > _max_iterations) {
+      print "Error: Possible circular template value dependency (" _max_iterations " iterations exceeded)"
+      exit 1
+    }
     _fragment_out = sub_values_placeholders_in_str(_found_values, result["values_index"], _fragment_out)
     delete _found_values
+    _i++
   }
 
   gsub(/\s+<!-- _block_.*-->/, "", _fragment_out)
