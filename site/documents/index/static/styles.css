@@ -1,10 +1,11 @@
 :root {
   --remsize: clamp(1.2rem, 2.2vw, 1.95rem);
-  --grid-gap: 0.7em;
+  --grid-gap: 1em;
   --paragraph-width: 40rem;
   --border-hr: 0.1em solid #00000011;
   --indent-size: clamp(1.35em, 1.8em, 7vw);
 }
+
 * {
   box-sizing: border-box;
 }
@@ -20,6 +21,10 @@ body {
 body, main, section, article, ul, ol, li {
   display: grid;
   grid-row-gap: var(--grid-gap);
+}
+
+ul {
+  grid-row-gap: calc(0.5 * var(--grid-gap));
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -52,8 +57,8 @@ hr {
   border: none;
   border-bottom: var(--border-hr);
   max-width: calc(var(--paragraph-width) * 0.54);
-  margin-bottom: var(--grid-gap);
-  margin-top: var(--grid-gap);
+  margin-bottom: calc(0.5 * var(--grid-gap));
+  margin-top: calc(0.5 * var(--grid-gap));
 }
 
 li {
@@ -61,11 +66,11 @@ li {
 }
 
 h1 {
-  margin-bottom: calc(1.5 * var(--grid-gap));
+  margin-bottom: var(--grid-gap);
 }
 
 h2 {
-  margin-top: var(--grid-gap);
+  margin-top: calc(0.5 * var(--grid-gap));
 }
 
 ul {
