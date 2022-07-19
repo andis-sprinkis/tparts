@@ -1,8 +1,129 @@
-body {
-  background-color: lightgray;
+:root {
+  --remsize: clamp(1.2rem, 2.2vw, 1.95rem);
+  --grid-gap: 0.7em;
+  --paragraph-width: 40rem;
+  --border-hr: 0.1em solid #00000011;
+  --indent-size: clamp(1.35em, 1.8em, 7vw);
+}
+* {
+  box-sizing: border-box;
 }
 
-pre.pre {
-  background-color: black;
-  color: lightgray;
+body {
+  font-size: var(--remsize);
+  font-family: serif;
+  margin: 0;
+  padding: 2em 0.75em 5em 0.75em;
+  line-height: 1.5;
+}
+
+body, main, section, article, ul, ol, li {
+  display: grid;
+  grid-row-gap: var(--grid-gap);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+  font-size: 1em;
+}
+
+main {
+  margin-top: calc(2 * var(--grid-gap));
+}
+
+ul, ol {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p, li, nav, hr, pre {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  width: 100%;
+  max-width: var(--paragraph-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+hr {
+  position: relative;
+  border: none;
+  border-bottom: var(--border-hr);
+  max-width: calc(var(--paragraph-width) * 0.54);
+  margin-bottom: var(--grid-gap);
+  margin-top: var(--grid-gap);
+}
+
+li {
+  position: relative;
+}
+
+h1 {
+  margin-bottom: calc(1.5 * var(--grid-gap));
+}
+
+h2 {
+  margin-top: var(--grid-gap);
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul li {
+  padding-left: var(--indent-size);
+  position: relative;
+}
+
+ul li:before {
+  content: '⚬';
+  position: absolute;
+  top: 0;
+  left: 0.4em;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.nav-top__link-home::before {
+  content: "← "
+}
+
+pre {
+  font-size: 0.735em;
+}
+
+@page {
+  margin: 1cm;
+}
+
+@media print {
+  body {
+    padding: 0;
+    font-size: 1.1em;
+  }
+
+  main {
+    margin-top: 1.5cm;
+  }
+
+  h1, h2, h3, h4, h5, h6, p, li, nav, hr, pre {
+    max-width: 75vw;
+  }
+
+  .nav-top {
+    display: none;
+  }
 }
