@@ -27,11 +27,11 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v1
       - name: Build artifact
-        run: ./build
+        run: "./build"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: './dist'
+          path: "./dist"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@main
