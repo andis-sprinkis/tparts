@@ -7,7 +7,7 @@
   "name": "<!-- _inline_site_name -->",
   "orientation": "<!-- _inline_orientation -->",
   "short_name": "<!-- _inline_site_short_name -->",
-  "start_url": "https://<!-- _inline_domain -->",
+  "start_url": "https://<!-- _inline_domain --><!-- _inline_path_host_prefix -->",
   "theme_color": "<!-- _inline_theme_color -->",
   "icons": [{
     "src": "<!-- _inline_url_icon -->",
