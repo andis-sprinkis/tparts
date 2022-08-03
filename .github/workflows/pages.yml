@@ -27,7 +27,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v1
       - name: Build artifact
-        run: "echo \"/tparts\" > ./site/_inline_path_host_prefix && ./build"
+        run: "echo \"andis-sprinkis.github.io\" > ./site/_inline_domain && echo \"/tparts\" > ./site/_inline_path_host_prefix && ./build"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
