@@ -5,7 +5,7 @@ A static site generator script written in AWK.
 Requires `awk`, `find` in a typical \*nix shell environment.
 
 
-To build the example project from source files in `./site` into the output directory `./dist`, run
+To build the [example project](https://andis-sprinkis.github.io/tparts/) from source files in `./site` into the output directory `./dist`, run
 ```bash
 ./tparts ./site ./dist
 ```
