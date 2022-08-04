@@ -1,6 +1,7 @@
 pages:
   stage: deploy
   script:
+    - awk --help
     - echo "andis-sprinkis.gitlab.io" > ./site/_inline_domain
     - echo "tparts" > ./site/_inline_path_host_prefix
     - ./build
