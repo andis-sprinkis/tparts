@@ -3,6 +3,7 @@ image: debian
 pages:
   stage: deploy
   script:
+    - apt update
     - apt install gawk -y
     - echo "andis-sprinkis.gitlab.io" > ./site/_inline_domain
     - echo "tparts" > ./site/_inline_path_host_prefix
