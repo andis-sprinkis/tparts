@@ -108,6 +108,10 @@ a:hover {
 
 pre {
   font-size: 0.735em;
+  overflow-x: scroll;
+  padding: 1em;
+  background-color: #00000009;
+  border-radius: 0.185em;
 }
 
 @page {
