@@ -11,6 +11,6 @@ pages:
     - mv ./dist ./public
   artifacts:
     paths:
-      - dist
+      - public
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
