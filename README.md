@@ -10,7 +10,7 @@ To build the [example project](https://andis-sprinkis.github.io/tparts/) from so
 ./tparts ./site ./dist
 ```
 
-Currently tested and confirmed to work correctly via GNU AWK.
+**Currently tested and confirmed to work correctly via GNU AWK (`gawk`).**
 
 ---
 
