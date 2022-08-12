@@ -1,7 +1,7 @@
 :root {
   --remsize: clamp(1.2rem, 2.2vw, 1.95rem);
   --grid-gap: 1em;
-  --paragraph-width: 25em;
+  --paragraph-width: 40rem;
   --border-hr: 0.1em solid #00000011;
   --indent-size: clamp(1.35em, 1.8em, 7vw);
 }
