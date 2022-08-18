@@ -138,7 +138,7 @@ function read_value_file( \
 
 function sub_values_placeholders_in_str( \
   found_values, values_index, fragment, \
-  _fragment_out, _indent, _indent_match, _value_placeholder, _value, _i, _index_placeholder_start, _index_placeholder_end, _before_placeholder, _after_placeholder \
+  _fragment_out, _indent, _indent_match, _value_placeholder, _value, _i, _index_placeholder_start, _index_placeholder_end, _before_placeholder, _after_placeholder, _replacement \
 ) {
   for (_value in found_values) {
     split(fragment, _fragment_out_arr, "\n")
@@ -156,10 +156,10 @@ function sub_values_placeholders_in_str( \
 
         if (values_index[_value]["type"] == "_block_") {
           _indent = match(_fragment_out_arr[_i], /^\s+/, _indent_match) ? _indent_match[0] : ""
-          _fragment_out_arr[_i] = _before_placeholder indent_lines(trim_last_char(values_index[_value]["value"]), _indent) _after_placeholder
-        } else {
-          _fragment_out_arr[_i] = _before_placeholder values_index[_value]["value"] _after_placeholder
-        }
+          _replacement = indent_lines(trim_last_char(values_index[_value]["value"]), _indent)
+        } else _replacement = values_index[_value]["value"]
+
+        _fragment_out_arr[_i] = _before_placeholder _replacement _after_placeholder
       }
 
       _fragment_out = _fragment_out _fragment_out_arr[_i] "\n"
