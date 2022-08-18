@@ -79,13 +79,11 @@ function document_make_values_index( \
 
         if (_prefix_match[0]) {
           indexed_value_paths[paths_values_dirs_arr[_i]][_basename_match[0]]["type"] = _prefix_match[0]
-
           delete _prefix_match
         }
 
         indexed_value_paths[paths_values_dirs_arr[_i]][_basename_match[0]]["value"] = \
           read_value_file(indexed_value_paths[paths_values_dirs_arr[_i]][_basename_match[0]])
-
         delete _basename_match
       }
 
