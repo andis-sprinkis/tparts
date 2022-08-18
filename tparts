@@ -48,7 +48,8 @@ function indent_lines( \
     if (_preformatted_end_match[0] != "") _in_preformatted = 0
     else if (_preformatted_begin_match[0] != "") _in_preformatted = 1
 
-    _indented_value_lines = _indented_value_lines ((_i == 1 || _in_preformatted || _preformatted_end_match[0]) ? "" : indent) _value_lines_arr[_i] "\n"
+    _indented_value_lines = \
+      _indented_value_lines ((_i == 1 || _in_preformatted || _preformatted_end_match[0]) ? "" : indent) _value_lines_arr[_i] "\n"
   }
 
   return trim_last_char(_indented_value_lines)
@@ -78,10 +79,12 @@ function document_make_values_index( \
 
         if (_prefix_match[0]) {
           indexed_value_paths[paths_values_dirs_arr[_i]][_basename_match[0]]["type"] = _prefix_match[0]
+
           delete _prefix_match
         }
 
-        indexed_value_paths[paths_values_dirs_arr[_i]][_basename_match[0]]["value"] = read_value_file(indexed_value_paths[paths_values_dirs_arr[_i]][_basename_match[0]])
+        indexed_value_paths[paths_values_dirs_arr[_i]][_basename_match[0]]["value"] = \
+          read_value_file(indexed_value_paths[paths_values_dirs_arr[_i]][_basename_match[0]])
 
         delete _basename_match
       }
@@ -137,12 +140,9 @@ function read_value_file( \
 
 function sub_values_placeholders_in_str( \
   found_values, values_index, fragment, \
-  _value_lines, _value_lines_array, _fragment_out, _indent, _indent_match, _value_placeholder, _value, _i, _index_placeholder_start, _index_placeholder_end \
+  _fragment_out, _indent, _indent_match, _value_placeholder, _value, _i, _index_placeholder_start, _index_placeholder_end, _before_placeholder, _after_placeholder \
 ) {
   for (_value in found_values) {
-    _value_lines = ""
-    _read = 0
-
     split(fragment, _fragment_out_arr, "\n")
     _fragment_out = ""
     _value_placeholder = "<!-- " _value " -->"
@@ -153,13 +153,14 @@ function sub_values_placeholders_in_str( \
 
         _index_placeholder_start = index(_fragment_out_arr[_i], _value_placeholder)
         _index_placeholder_end = _index_placeholder_start + length(_value_placeholder)
+        _before_placeholder = substr(_fragment_out_arr[_i], 1, _index_placeholder_start - 1)
+        _after_placeholder = substr(_fragment_out_arr[_i], _index_placeholder_end)
 
         if (values_index[_value]["type"] == "_block_") {
           _indent = match(_fragment_out_arr[_i], /^\s+/, _indent_match) ? _indent_match[0] : ""
-
-          _fragment_out_arr[_i] = substr(_fragment_out_arr[_i], 1, _index_placeholder_start - 1) indent_lines(trim_last_char(values_index[_value]["value"]), _indent) substr(_fragment_out_arr[_i], _index_placeholder_end)
+          _fragment_out_arr[_i] = _before_placeholder indent_lines(trim_last_char(values_index[_value]["value"]), _indent) _after_placeholder
         } else {
-          _fragment_out_arr[_i] = substr(_fragment_out_arr[_i], 1, _index_placeholder_start - 1) values_index[_value]["value"] substr(_fragment_out_arr[_i], _index_placeholder_end)
+          _fragment_out_arr[_i] = _before_placeholder values_index[_value]["value"] _after_placeholder
         }
       }
 
@@ -179,12 +180,12 @@ function document_sub_placeholders_values( \
   _fragment_out = result["values_index"]["_inline_build_entrypoint"]["value"]
 
   _max_iterations = 100
-  _i
   while (find_values_placeholders_in_str(_fragment_out, result["values_index"], _found_values) > 0) {
     if (_i > _max_iterations) {
       print "Error: Possible circular template value dependency (" _max_iterations " iterations exceeded)"
       exit 1
     }
+
     _fragment_out = sub_values_placeholders_in_str(_found_values, result["values_index"], _fragment_out)
     delete _found_values
     _i++
