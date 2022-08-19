@@ -45,8 +45,7 @@ function indent_lines( \
     match(_value_lines_arr[_i], /(<pre>)|(<pre( .*))/, _preformatted_begin_match)
     match(_value_lines_arr[_i], /<\/pre>/, _preformatted_end_match)
 
-    if (_preformatted_end_match[0] != "") _in_preformatted = 0
-    else if (_preformatted_begin_match[0] != "") _in_preformatted = 1
+    _in_preformatted = (_preformatted_begin_match[0] != "") && (_preformatted_end_match[0] == "")
 
     _indented_value_lines = \
       _indented_value_lines ((_i == 1 || _in_preformatted || _preformatted_end_match[0]) ? "" : indent) _value_lines_arr[_i] "\n"
