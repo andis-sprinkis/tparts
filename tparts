@@ -36,19 +36,16 @@ function trim_last_char(str) {
 
 function indent_lines( \
   value_lines, indent, \
-  _indented_value_lines, _in_preformatted, _preformatted_begin_match, _preformatted_end_match, _value_lines_arr, _i \
+  _indented_value_lines, _preformatted_begin_match, _preformatted_end_match, _value_lines_arr, _i \
 ) {
   split(value_lines, _value_lines_arr, "\n")
 
-  _in_preformatted = 0
   for (_i in _value_lines_arr) {
     match(_value_lines_arr[_i], /(<pre>)|(<pre( .*))/, _preformatted_begin_match)
     match(_value_lines_arr[_i], /<\/pre>/, _preformatted_end_match)
 
-    _in_preformatted = (_preformatted_begin_match[0] != "") && (_preformatted_end_match[0] == "")
-
     _indented_value_lines = \
-      _indented_value_lines ((_i == 1 || _in_preformatted || _preformatted_end_match[0]) ? "" : indent) _value_lines_arr[_i] "\n"
+      _indented_value_lines ((_i == 1 || _preformatted_begin_match[0] || _preformatted_end_match[0]) ? "" : indent) _value_lines_arr[_i] "\n"
   }
 
   return trim_last_char(_indented_value_lines)
