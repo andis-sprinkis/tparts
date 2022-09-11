@@ -32,6 +32,10 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 1em;
 }
 
+h1 {
+  font-weight: bold;
+}
+
 main {
   margin-top: calc(2 * var(--grid-gap));
 }
