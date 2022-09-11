@@ -1,4 +1,4 @@
-name: Buil and deploy example site to Github Pages
+name: Build and deploy example site to Github Pages
 
 on:
   push:
