@@ -257,7 +257,7 @@ BEGIN {
       delete _sitemap_entry
 
       print "Built sitemap entry"
-    } else print "Skipping building sitemap entry"
+    } else print "Skipped building sitemap entry"
 
     print "Built document " _path_dir_src_document
   }
