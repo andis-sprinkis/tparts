@@ -220,9 +220,8 @@ BEGIN {
 
   print "Building generic documents"
 
-  _cmd_find_documents = "find " _dir_site "/documents/* -maxdepth 0 -type d"
-
   _indexed_value_paths[0] = ""
+  _cmd_find_documents = "find " _dir_site "/documents/* -maxdepth 0 -type d"
 
   while ((_cmd_find_documents | getline _path_dir_src_document ) > 0) {
     print "Building document " _path_dir_src_document
@@ -258,7 +257,6 @@ BEGIN {
   close(_cmd_find_documents)
 
   print "Built generic documents"
-
   print "Building sitemap"
 
   _path_file_children_sitemap = _dir_dist "/tmp/sitemap/_block_sitemap_children.xml"
