@@ -1,23 +1,14 @@
 #!/usr/bin/awk -f
 
-function parse_args( \
-  result, \
-  _dir_site, _dir_dist \
+function readlink( \
+  path, \
+  _cmd, _dir \
 ) {
-  if (! ARGV[1] || ! ARGV[2]) {
-    print "Error: Must provide paths of site and dist directories"
-    exit 1
-  }
+  _cmd = "readlink -f " path
+  _cmd | getline _dir
+  close(_cmd)
 
-  _cmd_dir_site = "readlink -f " ARGV[1]
-  _cmd_dir_site | getline _dir_site
-  close(_cmd_dir_site)
-  result[0] = _dir_site
-
-  _cmd_dir_dist = "readlink -f " ARGV[2]
-  _cmd_dir_dist | getline _dir_dist
-  close(_cmd_dir_dist)
-  result[1] = _dir_dist
+  return _dir
 }
 
 function escape_ml(str) {
@@ -112,17 +103,16 @@ function read_value_file( \
   _value_lines, _line \
 ) {
   while((getline _line < (value["path"])) > 0) {
-    if (value["type"] == "_inline_") {
-      _value_lines = _value_lines _line
-      continue
-    }
-    if (value["type"] == "_pre_") {
-      _value_lines = _value_lines escape_ml(_line) "\n"
-      continue
-    }
-    if (value["type"] == "_block_") {
-      _value_lines = _value_lines _line "\n"
-      continue
+    switch (value["type"]) {
+      case "_inline_":
+        _value_lines = _value_lines _line
+        continue
+      case "_pre_":
+        _value_lines = _value_lines escape_ml(_line) "\n"
+        continue
+      case "_block_":
+        _value_lines = _value_lines _line "\n"
+        continue
     }
   }
   close(value["path"])
@@ -145,15 +135,15 @@ function sub_values_placeholders_in_str( \
       if (match(_fragment_out_arr[_i], _value_placeholder)) {
         if (values_index[_value]["type"] == "_block_" && _fragment_out_arr[_i] == "") break
 
-        _index_placeholder_start = index(_fragment_out_arr[_i], _value_placeholder)
-        _index_placeholder_end = _index_placeholder_start + length(_value_placeholder)
-        _before_placeholder = substr(_fragment_out_arr[_i], 1, _index_placeholder_start - 1)
-        _after_placeholder = substr(_fragment_out_arr[_i], _index_placeholder_end)
-
         if (values_index[_value]["type"] == "_block_") {
           _indent = match(_fragment_out_arr[_i], /^\s+/, _indent_match) ? _indent_match[0] : ""
           _replacement = indent_lines(trim_last_char(values_index[_value]["value"]), _indent)
         } else _replacement = values_index[_value]["value"]
+
+        _index_placeholder_start = index(_fragment_out_arr[_i], _value_placeholder)
+        _index_placeholder_end = _index_placeholder_start + length(_value_placeholder)
+        _before_placeholder = substr(_fragment_out_arr[_i], 1, _index_placeholder_start - 1)
+        _after_placeholder = substr(_fragment_out_arr[_i], _index_placeholder_end)
 
         _fragment_out_arr[_i] = _before_placeholder _replacement _after_placeholder
       }
@@ -214,9 +204,13 @@ function document_copy_static( \
 }
 
 BEGIN {
-  parse_args(_args_parsed)
-  _dir_site = _args_parsed[0]
-  _dir_dist = _args_parsed[1]
+  if (! ARGV[1] || ! ARGV[2]) {
+    print "Error: Must provide paths of site and dist directories"
+    exit 1
+  }
+
+  _dir_site = readlink(ARGV[1])
+  _dir_dist = readlink(ARGV[2])
 
   print "Root directory " _dir_site
 
