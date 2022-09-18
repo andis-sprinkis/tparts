@@ -71,6 +71,7 @@ function document_make_values_index( \
 
         indexed_value_paths[paths_values_dirs_arr[_i]][_basename_match[0]]["value"] = \
           read_value_file(indexed_value_paths[paths_values_dirs_arr[_i]][_basename_match[0]])
+
         delete _basename_match
       }
 
