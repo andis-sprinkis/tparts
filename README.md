@@ -8,6 +8,7 @@ To build the example project ([on github.io](https://andis-sprinkis.github.io/tp
 ```bash
 ./tparts ./site ./dist
 ```
+or the `./build` script.
 
 ---
 
