@@ -40,7 +40,7 @@ function indent_lines( \
 }
 
 function values_index_add_path( \
-  global_values_index, path, \
+  values_index, path, \
   _cmd_find, _find_path_result, _prefix_match, _basename_match \
 ) {
   _cmd_find = "find " path "/_* -maxdepth 0 -type f"
@@ -48,17 +48,16 @@ function values_index_add_path( \
   while ((_cmd_find | getline _find_path_result) > 0) {
     match(_find_path_result, /[^/]*$/, _basename_match)
 
-    global_values_index[path][_basename_match[0]]["path"] = _find_path_result
+    values_index[path][_basename_match[0]]["path"] = _find_path_result
 
     match(_basename_match[0], /^_[a-z]*_/, _prefix_match)
 
     if (_prefix_match[0]) {
-      global_values_index[path][_basename_match[0]]["type"] = _prefix_match[0]
+      values_index[path][_basename_match[0]]["type"] = _prefix_match[0]
       delete _prefix_match
     }
 
-    global_values_index[path][_basename_match[0]]["value"] = \
-      read_value_file(global_values_index[path][_basename_match[0]])
+    values_index[path][_basename_match[0]]["value"] = read_value_file(values_index[path][_basename_match[0]])
 
     delete _basename_match
   }
@@ -68,7 +67,7 @@ function values_index_add_path( \
 
 function document_populate_values_index( \
   paths_values_dirs_arr, global_values_index, document_values_index, \
-  _cmd_find, _value_name, _i, _path, _find_path_result, _is_indexed_path, _prop, _prefix_match, _basename_match \
+  _value_name, _i, _prop \
 ) {
   for (_i in paths_values_dirs_arr) {
     if (! paths_values_dirs_arr[_i] in global_values_index) values_index_add_path(global_values_index, paths_values_dirs_arr[_i])
