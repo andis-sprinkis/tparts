@@ -129,8 +129,6 @@ function sub_values_placeholders_in_str( \
     for (_i in _fragment_out_arr) {
       if (match(_fragment_out_arr[_i], _value_placeholder)) {
         if (values_index[_value]["type"] == "_block_") {
-          if (_fragment_out_arr[_i] == "") break
-
           _indent = match(_fragment_out_arr[_i], /^\s+/, _indent_match) ? _indent_match[0] : ""
           _replacement = indent_lines(trim_last_char(values_index[_value]["value"]), _indent)
         } else _replacement = values_index[_value]["value"]
