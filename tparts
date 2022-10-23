@@ -39,43 +39,43 @@ function indent_lines( \
   return trim_last_char(_indented_lines)
 }
 
-function values_index_add_path( \
-  values_index, path, \
-  _cmd_find, _find_path_result, _prefix_match, _basename_match \
+function populate_global_values_index( \
+  paths_values_dirs_arr, \
+  _i  \
 ) {
-  _cmd_find = "find " path "/_* -maxdepth 0 -type f"
+  for (_i in paths_values_dirs_arr) {
+    if (! paths_values_dirs_arr[_i] in _global_values_index) {
+      _cmd_find = "find " paths_values_dirs_arr[_i] "/_* -maxdepth 0 -type f"
 
-  while ((_cmd_find | getline _find_path_result) > 0) {
-    match(_find_path_result, /[^/]*$/, _basename_match)
+      while ((_cmd_find | getline _find_path_result) > 0) {
+        match(_find_path_result, /[^/]*$/, _basename_match)
 
-    values_index[path][_basename_match[0]]["path"] = _find_path_result
+        _global_values_index[paths_values_dirs_arr[_i]][_basename_match[0]]["path"] = _find_path_result
 
-    match(_basename_match[0], /^_[a-z]*_/, _prefix_match)
+        match(_basename_match[0], /^_[a-z]*_/, _prefix_match)
 
-    if (_prefix_match[0]) {
-      values_index[path][_basename_match[0]]["type"] = _prefix_match[0]
-      delete _prefix_match
+        if (_prefix_match[0]) {
+          _global_values_index[paths_values_dirs_arr[_i]][_basename_match[0]]["type"] = _prefix_match[0]
+          delete _prefix_match
+        }
+
+        _global_values_index[paths_values_dirs_arr[_i]][_basename_match[0]]["value"] = read_value_file(_global_values_index[paths_values_dirs_arr[_i]][_basename_match[0]])
+
+        delete _basename_match
+      }
+
+      close(_cmd_find)
     }
-
-    values_index[path][_basename_match[0]]["value"] = read_value_file(values_index[path][_basename_match[0]])
-
-    delete _basename_match
   }
-
-  close(_cmd_find)
 }
 
 function document_populate_values_index( \
-  paths_values_dirs_arr, global_values_index, document_values_index, \
+  paths_values_dirs_arr, document, \
   _value_name, _i, _prop \
 ) {
-  for (_i in paths_values_dirs_arr) {
-    if (! paths_values_dirs_arr[_i] in global_values_index) values_index_add_path(global_values_index, paths_values_dirs_arr[_i])
-
-    for (_value_name in global_values_index[paths_values_dirs_arr[_i]]) {
-      for (_prop in global_values_index[paths_values_dirs_arr[_i]][_value_name]) {
-        document_values_index[_value_name][_prop] = global_values_index[paths_values_dirs_arr[_i]][_value_name][_prop]
-      }
+  for (_i in paths_values_dirs_arr) for (_value_name in _global_values_index[paths_values_dirs_arr[_i]]) {
+    for (_prop in _global_values_index[paths_values_dirs_arr[_i]][_value_name]) {
+      document["values_index"][_value_name][_prop] = _global_values_index[paths_values_dirs_arr[_i]][_value_name][_prop]
     }
   }
 }
@@ -151,33 +151,33 @@ function sub_values_placeholders_in_str( \
 }
 
 function document_sub_placeholders_values( \
-  paths_values_dirs_arr, result, \
+  document, \
   _fragment_out, _found_values, _i, _max_iterations \
 ) {
-  _fragment_out = result["values_index"]["_inline_build_entrypoint"]["value"]
+  _fragment_out = document["values_index"]["_inline_build_entrypoint"]["value"]
 
   _max_iterations = 100
-  while (find_values_placeholders_in_str(_fragment_out, result["values_index"], _found_values) > 0) {
+  while (find_values_placeholders_in_str(_fragment_out, document["values_index"], _found_values) > 0) {
     if (_i > _max_iterations) {
       print "Error: Possible circular template value dependency (" _max_iterations " iterations exceeded)"
       exit 1
     }
 
-    _fragment_out = sub_values_placeholders_in_str(_found_values, result["values_index"], _fragment_out)
+    _fragment_out = sub_values_placeholders_in_str(_found_values, document["values_index"], _fragment_out)
     delete _found_values
     _i++
   }
 
   gsub(/\s+<!-- _block_.*-->/, "", _fragment_out)
 
-  result["fragment"] = _fragment_out
+  document["fragment"] = _fragment_out
 }
 
 function document_write( \
-  document, dir_dist, \
+  document, \
   _path_dir_document_out, _path_file_document_out \
 ) {
-  _path_dir_document_out = dir_dist "/" document["values_index"]["_inline_path"]["value"]
+  _path_dir_document_out = _dir_dist "/" document["values_index"]["_inline_path"]["value"]
   _path_file_document_out = _path_dir_document_out "/" document["values_index"]["_inline_filename"]["value"]
 
   if (! system("mkdir -p " _path_dir_document_out)) {
@@ -187,11 +187,11 @@ function document_write( \
 }
 
 function document_copy_static( \
-  path_document_src, dir_dist, url_path, \
-  _path_dir_static \
+  document, \
+  _path_dir_src_static, _path_dir_dist_static \
 ) {
-  _path_dir_src_static = path_document_src "/static"
-  _path_dir_dist_static = dir_dist "/" url_path "/"
+  _path_dir_src_static = document["path_src"] "/static"
+  _path_dir_dist_static = _dir_dist "/" document["values_index"]["_inline_path"]["value"] "/"
 
   if (! system("test -d " _path_dir_src_static)) system("cp -r " _path_dir_src_static "/* " _path_dir_dist_static)
 }
@@ -207,49 +207,75 @@ BEGIN {
 
   print "Root directory " _dir_site
 
-  system("rm -rf " _dir_dist " && mkdir -p " _dir_dist "/tmp/sitemap")
-
+  _global_values_index[0] = ""
   _children_sitemap = ""
 
-  print "Building generic documents"
+  system("rm -rf " _dir_dist " && mkdir -p " _dir_dist "/tmp/{sitemap,sitenav}")
 
-  _values_index[0] = ""
+  print "Indexing generic document paths"
+
   _cmd_find_documents = "find " _dir_site "/documents/* -maxdepth 0 -type d"
-
+  _i = 0
   while ((_cmd_find_documents | getline _path_dir_src_document ) > 0) {
-    print "Building document " _path_dir_src_document
-
-    _paths_values_dirs_arr_document[1] = _dir_site
-    _paths_values_dirs_arr_document[2] = _path_dir_src_document
-    _document["values_index"][0] = ""
-    document_populate_values_index(_paths_values_dirs_arr_document, _values_index, _document["values_index"])
-    document_sub_placeholders_values(_paths_values_dirs_arr_document, _document)
-    document_write(_document, _dir_dist)
-    document_copy_static(_path_dir_src_document, _dir_dist, _document["values_index"]["_inline_path"]["value"])
-    delete _document
-
-    match(_path_dir_src_document, /.*\/(403$|404$|manifest\.webmanifest$|robots\.txt$)/, _noindex_match)
-
-    if (! _noindex_match[0]) {
-      print "Building sitemap entry"
-
-      _paths_values_dirs_arr_sitemap_entry[1] = _dir_site
-      _paths_values_dirs_arr_sitemap_entry[2] = _path_dir_src_document
-      _paths_values_dirs_arr_sitemap_entry[3] = _dir_site "/sitemap/url"
-      _sitemap_entry["values_index"][0] = ""
-      document_populate_values_index(_paths_values_dirs_arr_sitemap_entry, _values_index, _sitemap_entry["values_index"])
-      document_sub_placeholders_values(_paths_values_dirs_arr_sitemap_entry, _sitemap_entry)
-      _children_sitemap = _children_sitemap _sitemap_entry["fragment"]
-      delete _sitemap_entry
-
-      print "Built sitemap entry"
-    } else print "Skipped building sitemap entry"
-
-    print "Built document " _path_dir_src_document
+    print "Found " _path_dir_src_document
+    _paths_src_generic_documents_arr[_i] = _path_dir_src_document
+    _i++
   }
   close(_cmd_find_documents)
 
+  print "Finished indexing generic document paths"
+
+  print "Indexing generic document values"
+
+  for (_i in _paths_src_generic_documents_arr) {
+    _paths_values_dirs_arr_document[1] = _dir_site
+    _paths_values_dirs_arr_document[2] = _paths_src_generic_documents_arr[_i]
+    populate_global_values_index(_paths_values_dirs_arr_document)
+
+    _generic_documents[_i]["values_index"][0] = ""
+    _generic_documents[_i]["path_src"] = _paths_src_generic_documents_arr[_i]
+
+    document_populate_values_index(_paths_values_dirs_arr_document, _generic_documents[_i])
+  }
+
+  print "Finished indexing generic document values"
+
+  print "Building generic documents"
+
+  for (_i in _generic_documents) {
+    document_sub_placeholders_values(_generic_documents[_i])
+    document_write(_generic_documents[_i])
+    document_copy_static(_generic_documents[_i])
+  }
+
   print "Built generic documents"
+
+  print "Building sitemap entries"
+
+  for (_i in _generic_documents) {
+    if (match(_generic_documents[_i]["values_index"]["_inline_filename"]["value"], /(403\.html$|404\.html$|manifest\.webmanifest$|robots\.txt$)/)) {
+      print "Skipped building sitemap entry" _generic_documents[_i]["path_src"]
+      continue
+    }
+
+    print "Building sitemap entry " _generic_documents[_i]["path_src"]
+
+    _paths_values_dirs_arr_sitemap_entry[1] = _dir_site
+    _paths_values_dirs_arr_sitemap_entry[2] = _generic_documents[_i]["path_src"]
+    _paths_values_dirs_arr_sitemap_entry[3] = _dir_site "/sitemap/url"
+
+    populate_global_values_index(_paths_values_dirs_arr_sitemap_entry)
+
+    _sitemap_entry["values_index"][0] = ""
+    document_populate_values_index(_paths_values_dirs_arr_sitemap_entry, _sitemap_entry)
+    document_sub_placeholders_values(_sitemap_entry)
+    _children_sitemap = _children_sitemap _sitemap_entry["fragment"]
+
+    print "Built sitemap entry " _generic_documents[_i]["path_src"]
+  }
+
+  print "Finished building sitemap entries"
+
   print "Building sitemap"
 
   _path_file_children_sitemap = _dir_dist "/tmp/sitemap/_block_sitemap_children.xml"
@@ -259,11 +285,13 @@ BEGIN {
   _paths_values_dirs_arr_sitemap[1] = _dir_site
   _paths_values_dirs_arr_sitemap[2] = _dir_site "/sitemap/document"
   _paths_values_dirs_arr_sitemap[3] = _dir_dist "/tmp/sitemap"
+
+  populate_global_values_index(_paths_values_dirs_arr_sitemap)
+
   _sitemap["values_index"][0] = ""
-  document_populate_values_index(_paths_values_dirs_arr_sitemap, _values_index, _sitemap["values_index"])
-  document_sub_placeholders_values(_paths_values_dirs_arr_sitemap, _sitemap)
-  document_write(_sitemap, _dir_dist)
-  delete _sitemap
+  document_populate_values_index(_paths_values_dirs_arr_sitemap, _sitemap)
+  document_sub_placeholders_values(_sitemap)
+  document_write(_sitemap)
 
   print "Built sitemap"
 
