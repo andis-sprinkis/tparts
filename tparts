@@ -228,7 +228,6 @@ BEGIN {
   print "Indexing generic document values"
 
   for (_i in _paths_src_generic_documents_arr) {
-    _generic_documents[_i]["values_index"][0] = ""
     _generic_documents[_i]["path_src"] = _paths_src_generic_documents_arr[_i]
     _generic_documents[_i]["paths_values_dir"][1] = _dir_site
     _generic_documents[_i]["paths_values_dir"][2] = _paths_src_generic_documents_arr[_i]
@@ -259,7 +258,6 @@ BEGIN {
 
     print "Building sitemap entry " _generic_documents[_i]["path_src"]
 
-    _sitemap_entry["values_index"][0] = ""
     _sitemap_entry["paths_values_dir"][1] = _dir_site
     _sitemap_entry["paths_values_dir"][2] = _generic_documents[_i]["path_src"]
     _sitemap_entry["paths_values_dir"][3] = _dir_site "/sitemap/url"
@@ -280,7 +278,6 @@ BEGIN {
   print _children_sitemap >> _path_file_children_sitemap 
   close(_path_file_children_sitemap)
 
-  _sitemap["values_index"][0] = ""
   _sitemap["paths_values_dir"][1] = _dir_site
   _sitemap["paths_values_dir"][2] = _dir_site "/sitemap/document"
   _sitemap["paths_values_dir"][3] = _dir_dist "/tmp/sitemap"
