@@ -210,7 +210,7 @@ BEGIN {
   _global_values_index[0] = ""
   _children_sitemap = ""
 
-  system("rm -rf " _dir_dist " && mkdir -p " _dir_dist "/tmp/{sitemap,sitenav}")
+  system("rm -rf " _dir_dist " && mkdir -p " _dir_dist "/tmp/sitemap")
 
   print "Indexing generic document paths"
 
