@@ -2,7 +2,7 @@ name: Build and deploy example site to Github Pages
 
 on:
   push:
-    branches: ["master"]
+    branches: [$default-branch]
 
   workflow_dispatch:
 
@@ -25,13 +25,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Pages
-        uses: actions/configure-pages@v1
+        uses: actions/configure-pages@v2
+      - name: Update domain
+        run: "echo \"andis-sprinkis.github.io\" > ./site/_inline_domain"
+      - name: Update host path prefix
+        run: "echo \"/tparts\" > ./site/_inline_path_host_prefix"
       - name: Build artifact
-        run: "echo \"andis-sprinkis.github.io\" > ./site/_inline_domain && echo \"/tparts\" > ./site/_inline_path_host_prefix && ./build"
+        run: "./build"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           path: "./dist"
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@main
+        uses: actions/deploy-pages@v1
