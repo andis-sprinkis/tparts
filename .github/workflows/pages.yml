@@ -2,7 +2,7 @@ name: Build and deploy example site to Github Pages
 
 on:
   push:
-    branches: [$default-branch]
+    branches: ["master"]
 
   workflow_dispatch:
 
