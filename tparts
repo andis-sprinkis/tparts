@@ -204,59 +204,74 @@ BEGIN {
 
   _dir_site = readlink(ARGV[1])
   _dir_dist = readlink(ARGV[2])
+  _dir_tmp = _dir_dist "/tmp/sitemap"
 
-  print "Root directory " _dir_site
+  print "Site source directory " _dir_site
+  print "Site build destination directory " _dir_dist
+  print "Site build temporary files directory " _dir_tmp
 
   _global_values_index[0] = ""
   _children_sitemap = ""
 
-  system("rm -rf " _dir_dist " && mkdir -p " _dir_dist "/tmp/sitemap")
+  print "\nCreating site build destination and build temporary files directories"
 
-  print "Indexing generic document paths"
+  system("rm -rf " _dir_dist " && mkdir -p " _dir_tmp "/sitemap")
+
+  print "Created site build destination and build temporary files directories"
+
+  print "\nIndexing generic document paths"
 
   _cmd_find_documents = "find " _dir_site "/documents/* -maxdepth 0 -type d"
   _i = 0
   while ((_cmd_find_documents | getline _path_dir_src_document ) > 0) {
-    print "Found " _path_dir_src_document
+    print "    Indexed path for document " _path_dir_src_document
     _paths_src_generic_documents_arr[_i] = _path_dir_src_document
     _i++
   }
   close(_cmd_find_documents)
 
-  print "Finished indexing generic document paths"
+  print "Indexed generic document paths"
 
-  print "Indexing generic document values"
+  print "\nIndexing generic document values"
 
   for (_i in _paths_src_generic_documents_arr) {
+    print "    Indexing values for document " _paths_src_generic_documents_arr[_i]
+
     _generic_documents[_i]["path_src"] = _paths_src_generic_documents_arr[_i]
     _generic_documents[_i]["paths_values_dir"][1] = _dir_site
     _generic_documents[_i]["paths_values_dir"][2] = _paths_src_generic_documents_arr[_i]
     populate_global_values_index(_generic_documents[_i]["paths_values_dir"])
 
     document_populate_values_index(_generic_documents[_i])
+
+    print "    Indexed values for document " _paths_src_generic_documents_arr[_i]
   }
 
-  print "Finished indexing generic document values"
+  print "Indexed generic document values"
 
-  print "Building generic documents"
+  print "\nBuilding generic documents"
 
   for (_i in _generic_documents) {
+    print "    Building document " _generic_documents[_i]["path_src"]
+
     document_sub_placeholders_values(_generic_documents[_i])
     document_write(_generic_documents[_i])
     document_copy_static(_generic_documents[_i])
+
+    print "    Built document " _generic_documents[_i]["path_src"]
   }
 
   print "Built generic documents"
 
-  print "Building sitemap entries"
+  print "\nBuilding sitemap entries"
 
   for (_i in _generic_documents) {
     if (match(_generic_documents[_i]["values_index"]["_inline_filename"]["value"], /(403\.html$|404\.html$|manifest\.webmanifest$|robots\.txt$)/)) {
-      print "Skipped building sitemap entry" _generic_documents[_i]["path_src"]
+      print "    Skipped building sitemap entry for document " _generic_documents[_i]["path_src"]
       continue
     }
 
-    print "Building sitemap entry " _generic_documents[_i]["path_src"]
+    print "    Building sitemap entry for document " _generic_documents[_i]["path_src"]
 
     _sitemap_entry["paths_values_dir"][1] = _dir_site
     _sitemap_entry["paths_values_dir"][2] = _generic_documents[_i]["path_src"]
@@ -267,20 +282,20 @@ BEGIN {
     document_sub_placeholders_values(_sitemap_entry)
     _children_sitemap = _children_sitemap _sitemap_entry["fragment"]
 
-    print "Built sitemap entry " _generic_documents[_i]["path_src"]
+    print "    Built sitemap entry for document " _generic_documents[_i]["path_src"]
   }
 
-  print "Finished building sitemap entries"
+  print "Built sitemap entries"
 
-  print "Building sitemap"
+  print "\nBuilding sitemap"
 
-  _path_file_children_sitemap = _dir_dist "/tmp/sitemap/_block_sitemap_children.xml"
+  _path_file_children_sitemap = _dir_tmp "/sitemap/_block_sitemap_children.xml"
   print _children_sitemap >> _path_file_children_sitemap 
   close(_path_file_children_sitemap)
 
   _sitemap["paths_values_dir"][1] = _dir_site
   _sitemap["paths_values_dir"][2] = _dir_site "/sitemap/document"
-  _sitemap["paths_values_dir"][3] = _dir_dist "/tmp/sitemap"
+  _sitemap["paths_values_dir"][3] = _dir_tmp "/sitemap"
   populate_global_values_index(_sitemap["paths_values_dir"])
 
   document_populate_values_index(_sitemap)
@@ -289,9 +304,13 @@ BEGIN {
 
   print "Built sitemap"
 
-  system("rm -rf " _dir_dist "/tmp")
+  print "\nRemoving site temporary files directory"
 
-  print "Finished"
+  system("rm -rf " _dir_tmp)
+
+  print "Removed site temporary files directory"
+
+  print "\nDone!"
 
   exit
 }
