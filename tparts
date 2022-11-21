@@ -159,7 +159,7 @@ function document_sub_placeholders_values( \
   _max_iterations = 100
   while (find_values_placeholders_in_str(_fragment_out, document["values_index"], _found_values) > 0) {
     if (_i > _max_iterations) {
-      print "Error: Possible circular template value dependency (" _max_iterations " iterations exceeded)"
+      print "Error: Possible circular template value placeholder use (" _max_iterations " iterations exceeded)"
       exit 1
     }
 
