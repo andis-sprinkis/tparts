@@ -3,7 +3,7 @@
   --grid-gap: 1em;
   --paragraph-width: 40rem;
   --border-hr: 0.1em solid #00000011;
-  --indent-size: clamp(1.35em, 1.8em, 7vw);
+  --indent-width: clamp(1.35em, 1.8em, 7vw);
 }
 
 * {
@@ -83,7 +83,7 @@ ul {
 }
 
 ul li {
-  padding-left: var(--indent-size);
+  padding-left: var(--indent-width);
   position: relative;
 }
 
