@@ -1,5 +1,5 @@
 :root {
-  --remsize: clamp(1.2rem, 2.2vw, 1.95rem);
+  --rem-size: clamp(1.2rem, 2.2vw, 1.95rem);
   --grid-gap: 1em;
   --paragraph-width: 40rem;
   --border-hr: 0.1em solid #00000011;
@@ -11,7 +11,7 @@
 }
 
 body {
-  font-size: var(--remsize);
+  font-size: var(--rem-size);
   font-family: serif;
   margin: 0;
   padding: 2em 0.75em 5em 0.75em;
