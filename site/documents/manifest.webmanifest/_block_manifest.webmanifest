@@ -9,9 +9,11 @@
   "short_name": "<!-- _inline_site_short_name -->",
   "start_url": "<!-- _inline_site_url -->",
   "theme_color": "<!-- _inline_theme_color -->",
-  "icons": [{
-    "src": "<!-- _inline_url_icon -->",
-    "sizes": "any",
-    "type": "image/svg+xml"
-  }]
+  "icons": [
+    {
+      "src": "<!-- _inline_url_icon -->",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
 }

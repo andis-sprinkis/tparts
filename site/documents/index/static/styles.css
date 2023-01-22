@@ -18,7 +18,13 @@ body {
   line-height: 1.5;
 }
 
-body, main, section, article, ul, ol, li {
+body,
+main,
+section,
+article,
+ul,
+ol,
+li {
   display: grid;
   grid-row-gap: var(--grid-gap);
 }
@@ -27,7 +33,12 @@ ul {
   grid-row-gap: calc(0.5 * var(--grid-gap));
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: normal;
   font-size: 1em;
 }
@@ -40,20 +51,28 @@ main {
   margin-top: calc(2 * var(--grid-gap));
 }
 
-ul, ol {
+ul,
+ol {
   margin-top: 0;
   margin-bottom: 0;
 }
 
-h1, h2, h3, h4, h5, h6, p, li, nav, hr, pre {
-  margin-top: 0;
-  margin-bottom: 0;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+li,
+nav,
+hr,
+pre {
+  margin: 0 auto;
   padding-top: 0;
   padding-bottom: 0;
   width: 100%;
   max-width: var(--paragraph-width);
-  margin-left: auto;
-  margin-right: auto;
 }
 
 hr {
@@ -88,7 +107,7 @@ ul li {
 }
 
 ul li:before {
-  content: '⚬';
+  content: "⚬";
   position: absolute;
   top: 0;
   left: 0.4em;
@@ -107,7 +126,7 @@ a:hover {
 }
 
 .nav-top__link-home::before {
-  content: "← "
+  content: "← ";
 }
 
 pre {
@@ -132,7 +151,17 @@ pre {
     margin-top: 1.5cm;
   }
 
-  h1, h2, h3, h4, h5, h6, p, li, nav, hr, pre {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  li,
+  nav,
+  hr,
+  pre {
     max-width: 75vw;
   }
 
