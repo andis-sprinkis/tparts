@@ -1,4 +1,5 @@
 {
   "editorconfig": true,
-  "singleQuote": true
+  "singleQuote": true,
+  "quoteProps": "consistent"
 }

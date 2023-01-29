@@ -1,0 +1,6 @@
+**/.git
+**/.svn
+**/.hg
+**/_inline_*
+**/_pre_*
+/dist

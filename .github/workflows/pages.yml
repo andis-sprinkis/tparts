@@ -2,7 +2,7 @@ name: Build and deploy example site to Github Pages
 
 on:
   push:
-    branches: ["master"]
+    branches: ['master']
 
   workflow_dispatch:
 
@@ -12,7 +12,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: true
 
 jobs:
@@ -27,15 +27,15 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Update domain
-        run: "echo \"andis-sprinkis.github.io\" > ./site/_inline_domain"
+        run: 'echo "andis-sprinkis.github.io" > ./site/_inline_domain'
       - name: Update host path prefix
-        run: "echo \"/tparts\" > ./site/_inline_path_host_prefix"
+        run: 'echo "/tparts" > ./site/_inline_path_host_prefix'
       - name: Build artifact
-        run: "./build"
+        run: './build'
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: "./dist"
+          path: './dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
