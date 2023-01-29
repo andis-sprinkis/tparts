@@ -95,20 +95,21 @@ function find_values_placeholders_in_str( \
 
 function read_value_file( \
   value, \
-  _value_lines, _line \
+  _value_lines, _line, _util_line_match \
 ) {
-  while((getline _line < (value["path"])) > 0) {
-    switch (value["type"]) {
-      case "_inline_":
-        _value_lines = _value_lines _line
-        continue
-      case "_pre_":
-        _value_lines = _value_lines escape_ml(_line) "\n"
-        continue
-      case "_block_":
-        _value_lines = _value_lines _line "\n"
-        continue
-    }
+  switch (value["type"]) {
+    case "_inline_":
+      while((getline _line < (value["path"])) > 0) { _value_lines = _value_lines _line }
+      break
+    case "_pre_":
+      while((getline _line < (value["path"])) > 0) { _value_lines = _value_lines escape_ml(_line) "\n" }
+      break
+    case "_block_":
+      while((getline _line < (value["path"])) > 0) { 
+        match(_line, /(<!-- prettier-ignore.*)/, _util_line_match)
+        ! _util_line_match[0] && _value_lines = _value_lines _line "\n" 
+      }
+      break
   }
   close(value["path"])
 
