@@ -107,7 +107,7 @@ ul li {
 }
 
 ul li:before {
-  content: "⚬";
+  content: '⚬';
   position: absolute;
   top: 0;
   left: 0.4em;
@@ -126,7 +126,7 @@ a:hover {
 }
 
 .nav-top__link-home::before {
-  content: "← ";
+  content: '← ';
 }
 
 pre {
