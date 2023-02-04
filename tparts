@@ -264,15 +264,15 @@ BEGIN {
 
   print "Built generic documents"
 
-  print "\nBuilding sitemap entries"
+  print "\nBuilding sitemap document entries for generic documents"
 
   for (_i in _generic_documents) {
     if (match(_generic_documents[_i]["values_index"]["_inline_filename"]["value"], /(403\.html$|404\.html$|manifest\.webmanifest$|robots\.txt$)/)) {
-      print "    Skipped building sitemap entry for document " _generic_documents[_i]["path_src"]
+      print "    Skipped building sitemap document entry for generic document " _generic_documents[_i]["path_src"]
       continue
     }
 
-    print "    Building sitemap entry for document " _generic_documents[_i]["path_src"]
+    print "    Building sitemap document entry for generic document " _generic_documents[_i]["path_src"]
 
     _sitemap_entry["paths_values_dir"][1] = _dir_site
     _sitemap_entry["paths_values_dir"][2] = _generic_documents[_i]["path_src"]
@@ -283,16 +283,16 @@ BEGIN {
     document_sub_placeholders_values(_sitemap_entry)
     _children_sitemap = _children_sitemap _sitemap_entry["fragment"]
 
-    print "    Built sitemap entry for document " _generic_documents[_i]["path_src"]
+    print "    Built sitemap document entry for generic document " _generic_documents[_i]["path_src"]
   }
-
-  print "Built sitemap entries"
-
-  print "\nBuilding sitemap"
 
   _path_file_children_sitemap = _dir_tmp "/sitemap/_block_sitemap_children.xml"
   print _children_sitemap >> _path_file_children_sitemap 
   close(_path_file_children_sitemap)
+
+  print "Built sitemap document entries for generic documents"
+
+  print "\nIndexing sitemap document value"
 
   _sitemap["paths_values_dir"][1] = _dir_site
   _sitemap["paths_values_dir"][2] = _dir_site "/sitemap/document"
@@ -300,10 +300,15 @@ BEGIN {
   populate_global_values_index(_sitemap["paths_values_dir"])
 
   document_populate_values_index(_sitemap)
+
+  print "Indexed sitemap document value"
+
+  print "\nBuilding sitemap document"
+
   document_sub_placeholders_values(_sitemap)
   document_write(_sitemap)
 
-  print "Built sitemap"
+  print "Built sitemap document"
 
   print "\nRemoving site temporary files directory " _dir_tmp
 
