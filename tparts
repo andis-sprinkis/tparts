@@ -205,7 +205,7 @@ BEGIN {
 
   _dir_site = readlink(ARGV[1])
   _dir_dist = readlink(ARGV[2])
-  _dir_tmp = _dir_dist "/tmp/sitemap"
+  _dir_tmp = _dir_dist "/tmp"
 
   print "Site source directory " _dir_site
   print "Site build destination directory " _dir_dist
