@@ -214,11 +214,11 @@ BEGIN {
   _global_values_index[0] = ""
   _children_sitemap = ""
 
-  print "\nCreating site build destination and build temporary files directories nested path " _dir_tmp "/sitemap"
+  print "\nCreating site build destination and build temporary files directories and subdirectories " _dir_tmp "/sitemap"
 
   system("rm -rf " _dir_dist " && mkdir -p " _dir_tmp "/sitemap")
 
-  print "Created site build destination and build temporary files directory nested path " _dir_tmp "/sitemap"
+  print "Created site build destination and build temporary files directories and subdirectories " _dir_tmp "/sitemap"
 
   print "\nIndexing generic document paths"
 
