@@ -292,7 +292,7 @@ BEGIN {
 
   print "Built sitemap document entries for generic documents"
 
-  print "\nIndexing sitemap document value"
+  print "\nBuilding sitemap document"
 
   _sitemap["paths_values_dir"][1] = _dir_site
   _sitemap["paths_values_dir"][2] = _dir_site "/sitemap/document"
@@ -300,11 +300,6 @@ BEGIN {
   populate_global_values_index(_sitemap["paths_values_dir"])
 
   document_populate_values_index(_sitemap)
-
-  print "Indexed sitemap document value"
-
-  print "\nBuilding sitemap document"
-
   document_sub_placeholders_values(_sitemap)
   document_write(_sitemap)
 
