@@ -1,9 +1,19 @@
 :root {
-  --rem-size: clamp(1.2rem, 2.2vw, 1.95rem);
+  --bg-color-pre: #00000009;
+  --border-color-hr: #00000011;
   --grid-gap: 1em;
-  --paragraph-width: 40rem;
-  --border-hr: 0.1em solid #00000011;
   --indent-width: clamp(1.35em, 1.8em, 7vw);
+  --paragraph-width: 40rem;
+  --rem-size: clamp(1.2rem, 2.2vw, 1.95rem);
+  --font-size-pre: calc(var(--rem-size) * 0.735);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --bg-color-pre: #ffffff09;
+    --border-color-hr: #ffffff11;
+  }
 }
 
 * {
@@ -78,7 +88,7 @@ pre {
 hr {
   position: relative;
   border: none;
-  border-bottom: var(--border-hr);
+  border-bottom: 0.1em solid var(--border-color-hr);
   max-width: calc(var(--paragraph-width) * 0.54);
   margin-bottom: calc(0.5 * var(--grid-gap));
   margin-top: calc(0.5 * var(--grid-gap));
@@ -125,16 +135,19 @@ a:hover {
   white-space: nowrap;
 }
 
-.nav-top__link-home::before {
-  content: '← ';
+pre, code {
+  font-size: var(--font-size-pre);
 }
 
 pre {
-  font-size: 0.735em;
   overflow-x: scroll;
   padding: 1em;
-  background-color: #00000009;
+  background-color: var(--bg-color-pre);
   border-radius: 0.185em;
+}
+
+pre code {
+
 }
 
 @page {
