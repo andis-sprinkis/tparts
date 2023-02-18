@@ -1,11 +1,12 @@
 :root {
   --bg-color-pre: #00000009;
   --border-color-hr: #00000011;
+  --border-radius-pre: 0.185em;
   --grid-gap: 1em;
-  --indent-width: clamp(1.35em, 1.8em, 7vw);
+  --li-indent-width: clamp(1.35em, 1.8em, 7vw);
   --paragraph-width: 40rem;
   --rem-size: clamp(1.2rem, 2.2vw, 1.95rem);
-  --font-size-pre: calc(var(--rem-size) * 0.735);
+  --font-size-pre: calc(var(--rem-size) * 0.8125);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -112,7 +113,7 @@ ul {
 }
 
 ul li {
-  padding-left: var(--indent-width);
+  padding-left: var(--li-indent-width);
   position: relative;
 }
 
@@ -143,7 +144,19 @@ pre {
   overflow-x: scroll;
   padding: 1em;
   background-color: var(--bg-color-pre);
-  border-radius: 0.185em;
+  border-radius: var(--border-radius-pre);
+}
+
+code {
+  padding: 0.075em 0.3em;
+  background-color: var(--bg-color-pre);
+  border-radius: var(--border-radius-pre);
+}
+
+pre code {
+  padding: 0;
+  background-color: initial;
+  border-radius: 0;
 }
 
 @page {
