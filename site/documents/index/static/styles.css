@@ -187,6 +187,12 @@ pre code {
     max-width: 75vw;
   }
 
+  code {
+    padding: 0;
+    background-color: initial;
+    border-radius: 0;
+  }
+
   .nav-top {
     display: none;
   }
