@@ -124,14 +124,6 @@ ul li:before {
   left: 0.4em;
 }
 
-a {
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
 .nowrap {
   white-space: nowrap;
 }
