@@ -3,7 +3,7 @@
   --border-color-hr: #00000011;
   --border-radius-pre: 0.185em;
   --grid-gap: 1em;
-  --li-indent-width: clamp(1.35em, 1.8em, 7vw);
+  --li-indent-width: clamp(1.35em, 1.675em, 7vw);
   --paragraph-width: 40rem;
   --rem-size: clamp(1.2rem, 2.2vw, 1.95rem);
   --font-size-pre: calc(var(--rem-size) * 0.8125);
