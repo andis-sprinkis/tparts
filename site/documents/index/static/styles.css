@@ -7,11 +7,13 @@
   --paragraph-width: 40rem;
   --rem-size: clamp(1.2rem, 2.2vw, 1.95rem);
   --font-size-pre: calc(var(--rem-size) * 0.8125);
+  --line-height: 1.5;
+  --line-height-em: calc(var(--line-height) * 1em);
+  color-scheme: light dark;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    color-scheme: dark;
     --bg-color-pre: #ffffff09;
     --border-color-hr: #ffffff11;
   }
@@ -26,7 +28,7 @@ body {
   font-family: serif;
   margin: 0;
   padding: 2em 0.75em 5em 0.75em;
-  line-height: 1.5;
+  line-height: var(--line-height);
 }
 
 body,
@@ -119,10 +121,13 @@ ul li {
 }
 
 ul li:before {
-  content: '⚬';
+  content: url('./bullet.svg');
+  display: inline-block;
+  width: 1em;
+  height: 1em;
   position: absolute;
-  top: 0;
-  left: 0.4em;
+  top: calc(calc(var(--line-height-em) - 1em) / 2);
+  left: 0;
 }
 
 .nowrap {
