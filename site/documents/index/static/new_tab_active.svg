@@ -5,7 +5,7 @@
     }
 
     .symbol {
-      fill: CanvasText;
+      fill: ActiveText;
       text-anchor: middle;
       dominant-baseline: middle;
       font-family: serif;
@@ -13,9 +13,9 @@
 
     @media print {
       .symbol {
-        fill: #000;
+        fill: ActiveText;
       }
     }
   </style>
-  <text x="50" y="50" font-size="87" class="symbol">⚬</text>
+  <text x="50" y="50" font-size="87" class="symbol">⧉</text>
 </svg>
