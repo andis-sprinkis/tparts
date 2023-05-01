@@ -66,8 +66,8 @@ a:visited:focus {
   }
 }
 
-a[target='_blank']:after {
-  content: url('./new_tab.svg');
+a[target='_blank']::after {
+  content: url('./new_tab_light.svg');
   display: inline-block;
   width: 1em;
   height: 1em;
@@ -76,26 +76,26 @@ a[target='_blank']:after {
   margin-left: 0.1em;
 }
 
-a[target='_blank']:visited:after {
-  content: url('./new_tab_visited.svg');
+a[target='_blank']:visited::after {
+  content: url('./new_tab_visited_light.svg');
 }
 
-a[target='_blank']:focus:after,
-a[target='_blank']:visited:focus:after {
-  content: url('./new_tab_focus.svg');
+a[target='_blank']:focus::after,
+a[target='_blank']:visited:focus::after {
+  content: url('./new_tab_focus_light.svg');
 }
 
 @media (prefers-color-scheme: dark) {
-  a[target='_blank']:after {
+  a[target='_blank']::after {
     content: url('./new_tab_dark.svg');
   }
 
-  a[target='_blank']:visited:after {
+  a[target='_blank']:visited::after {
     content: url('./new_tab_visited_dark.svg');
   }
 
-  a[target='_blank']:focus:after,
-  a[target='_blank']:visited:focus:after {
+  a[target='_blank']:focus::after,
+  a[target='_blank']:visited:focus::after {
     content: url('./new_tab_focus_dark.svg');
   }
 }
@@ -190,8 +190,8 @@ ul li {
   position: relative;
 }
 
-ul li:before {
-  content: url('./bullet.svg');
+ul li::before {
+  content: url('./bullet_light.svg');
   display: inline-block;
   width: 1em;
   height: 1em;
@@ -201,7 +201,7 @@ ul li:before {
 }
 
 @media (prefers-color-scheme: dark) {
-  ul li:before {
+  ul li::before {
     content: url('./bullet_dark.svg');
   }
 }
@@ -219,12 +219,12 @@ ul.inline-list li {
   width: unset;
 }
 
-ul.inline-list li:before {
+ul.inline-list li::before {
   content: none;
 }
 
-ul.inline-list li:not(:last-child):after {
-  content: url('./dot.svg');
+ul.inline-list li:not(:last-child)::after {
+  content: url('./dot_light.svg');
   display: inline-block;
   width: 1em;
   height: 1em;
@@ -235,7 +235,7 @@ ul.inline-list li:not(:last-child):after {
 }
 
 @media (prefers-color-scheme: dark) {
-  ul.inline-list li:not(:last-child):after {
+  ul.inline-list li:not(:last-child)::after {
     content: url('./dot_dark.svg');
   }
 }
