@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
   <style>
     .symbol {
-      fill: #000;
+      fill: #8c8cff;
       text-anchor: middle;
       dominant-baseline: middle;
       font-family: serif;
     }
   </style>
-  <text x="50" y="50" font-size="87" class="symbol">⚬</text>
+  <text x="50" y="50" font-size="87" class="symbol">⧉</text>
 </svg>
