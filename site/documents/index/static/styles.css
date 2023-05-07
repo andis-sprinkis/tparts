@@ -170,10 +170,6 @@ hr {
   margin-top: calc(0.5 * var(--grid-gap));
 }
 
-li {
-  position: relative;
-}
-
 h1 {
   margin-bottom: var(--grid-gap);
 }
