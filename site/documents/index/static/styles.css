@@ -151,7 +151,9 @@ p,
 li,
 nav,
 hr,
-pre {
+pre,
+ul.inline-list-sep,
+ul.inline-list-spread {
   margin: 0 auto;
   padding-top: 0;
   padding-bottom: 0;
@@ -206,24 +208,24 @@ ul li::before {
   }
 }
 
-ul.inline-list {
+ul.inline-list-sep {
   display: flex;
   flex-wrap: wrap;
   grid-row-gap: initial;
 }
 
-ul.inline-list li {
+ul.inline-list-sep li {
   padding: 0;
   margin: 0;
   display: inline;
   width: unset;
 }
 
-ul.inline-list li::before {
+ul.inline-list-sep li::before {
   content: none;
 }
 
-ul.inline-list li:not(:last-child)::after {
+ul.inline-list-sep li:not(:last-child)::after {
   content: url('./dot_light.svg');
   display: inline-block;
   width: 1em;
@@ -235,9 +237,27 @@ ul.inline-list li:not(:last-child)::after {
 }
 
 @media (prefers-color-scheme: dark) {
-  ul.inline-list li:not(:last-child)::after {
+  ul.inline-list-sep li:not(:last-child)::after {
     content: url('./dot_dark.svg');
   }
+}
+
+ul.inline-list-spread {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  column-gap: 2.25em;
+}
+
+ul.inline-list-spread li {
+  padding: 0;
+  margin: 0;
+  display: inline;
+  width: unset;
+}
+
+ul.inline-list-spread li::before {
+  content: none;
 }
 
 .nowrap {
