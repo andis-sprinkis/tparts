@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 100">
   <style>
     .symbol {
       fill: blue;
@@ -6,6 +6,19 @@
       dominant-baseline: middle;
       font-family: serif;
     }
+
+    .symbol.visited {
+      fill: purple;
+    }
+
+    .symbol.focus {
+      fill: red;
+    }
   </style>
+
   <text x="50" y="50" font-size="85" class="symbol">⧉</text>
+
+  <text x="150" y="50" font-size="85" class="symbol visited">⧉</text>
+
+  <text x="250" y="50" font-size="85" class="symbol focus">⧉</text>
 </svg>
