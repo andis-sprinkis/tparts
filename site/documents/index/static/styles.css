@@ -3,11 +3,11 @@
   --border-color-hr: #00000011;
   --border-radius-pre: 0.185em;
   --grid-gap: 1em;
-  --li-indent-width: clamp(1.35em, 1.6em, 7vw);
-  --paragraph-width: 40rem;
+  --li-indent-width: clamp(1.35em, 1.45em, 7vw);
+  --paragraph-width: 38rem;
   --rem-size: clamp(1.2rem, 2.2vw, 1.95rem);
   --font-size-pre: calc(var(--rem-size) * 0.8125);
-  --line-height: 1.5;
+  --line-height: 1.65;
   --line-height-em: calc(var(--line-height) * 1em);
   --inline-symbol-margin-top: calc(calc(var(--line-height-em) - 0.85em) / 2);
   color-scheme: light dark;
@@ -298,7 +298,7 @@ pre code {
 @media print {
   body {
     padding: 0;
-    font-size: 1.1em;
+    font-size: 1em;
   }
 
   main {
@@ -319,7 +319,7 @@ pre code {
   pre,
   ul.inline-list-sep,
   ul.inline-list-spread {
-    max-width: 75vw;
+    max-width: 70vw;
   }
 
   pre,
