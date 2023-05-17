@@ -228,8 +228,8 @@ ul.inline-list-sep li:not(:last-child)::after {
   height: 1em;
   position: relative;
   top: var(--inline-symbol-margin-top);
-  margin-right: 0.22em;
-  margin-left: 0.22em;
+  margin-right: 0.15em;
+  margin-left: 0.15em;
 }
 
 @media (prefers-color-scheme: dark) {
