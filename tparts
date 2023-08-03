@@ -198,6 +198,10 @@ function document_copy_static( \
 }
 
 BEGIN {
+  # ----------------------------------------------------------------------------
+
+  # ARGV[1] - source files directory path.
+  # ARGV[2] - build directory path.
   if (! ARGV[1] || ! ARGV[2]) {
     print "Error: Must provide paths of site and dist directories"
     exit 1
@@ -214,11 +218,15 @@ BEGIN {
   _global_values_index[0] = ""
   _children_sitemap = ""
 
+  # ----------------------------------------------------------------------------
+
   print "\nCreating site build destination and build temporary files directories and subdirectories " _dir_tmp "/sitemap"
 
   system("rm -rf " _dir_dist " && mkdir -p " _dir_tmp "/sitemap")
 
   print "Created site build destination and build temporary files directories and subdirectories " _dir_tmp "/sitemap"
+
+  # ----------------------------------------------------------------------------
 
   print "\nIndexing generic document paths"
 
@@ -232,6 +240,8 @@ BEGIN {
   close(_cmd_find_documents)
 
   print "Indexed generic document paths"
+
+  # ----------------------------------------------------------------------------
 
   print "\nIndexing generic document values"
 
@@ -250,6 +260,8 @@ BEGIN {
 
   print "Indexed generic document values"
 
+  # ----------------------------------------------------------------------------
+
   print "\nBuilding generic documents"
 
   for (_i in _generic_documents) {
@@ -263,6 +275,8 @@ BEGIN {
   }
 
   print "Built generic documents"
+
+  # ----------------------------------------------------------------------------
 
   print "\nBuilding sitemap document entries for generic documents"
 
@@ -292,6 +306,8 @@ BEGIN {
 
   print "Built sitemap document entries for generic documents"
 
+  # ----------------------------------------------------------------------------
+
   print "\nBuilding sitemap document"
 
   _sitemap["paths_values_dir"][1] = _dir_site
@@ -305,11 +321,15 @@ BEGIN {
 
   print "Built sitemap document"
 
+  # ----------------------------------------------------------------------------
+
   print "\nRemoving site temporary files directory " _dir_tmp
 
   system("rm -rf " _dir_tmp)
 
   print "Removed site temporary files directory " _dir_tmp
+
+  # ----------------------------------------------------------------------------
 
   print "\nDone!"
 
