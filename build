@@ -1,4 +1,7 @@
 #!/usr/bin/env sh
+#
+# Running this script to builds the example site.
+#
 set -e
 dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 

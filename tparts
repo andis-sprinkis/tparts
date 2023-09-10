@@ -1,5 +1,6 @@
 #!/usr/bin/awk -f
 
+# Takes file or directory path string and returns symbolic links or canonical file name of the given path.
 function readlink( \
   path, \
   _cmd, _dir \
@@ -11,6 +12,7 @@ function readlink( \
   return _dir
 }
 
+# Takes HTML/XML format string and returns the string where XML and HTML syntax characters are replaced with their character entity references.
 function escape_ml(str) {
   gsub(/&/, "\\&amp;", str)
   gsub(/</, "\\&lt;", str)
@@ -21,10 +23,13 @@ function escape_ml(str) {
   return str
 }
 
+# Takes string. Returns the string with last character removed.
 function trim_last_char(str) {
   return substr(str, 1, length(str) - 1)
 }
 
+# Takes multi-line string and a characted sequence, and prefixes the string lines with the given indentation char. sequence.
+# Skips indenting on preformatted text lines wrapped in <pre> tags blocks.
 function indent_lines( \
   original_lines, indent, \
   _indented_lines, _lines_arr, _preformatted_boundary_match, _i \
@@ -39,27 +44,28 @@ function indent_lines( \
   return trim_last_char(_indented_lines)
 }
 
-function populate_global_values_index( \
+# Takes array of directories and populates _values_files_index with the found template value files data.
+function populate_values_files_index( \
   paths_values_dirs_arr, \
   _i  \
 ) {
   for (_i in paths_values_dirs_arr) {
-    if (! paths_values_dirs_arr[_i] in _global_values_index) {
+    if (! paths_values_dirs_arr[_i] in _values_files_index) {
       _cmd_find = "find " paths_values_dirs_arr[_i] "/_* -maxdepth 0 -type f"
 
       while ((_cmd_find | getline _find_path_result) > 0) {
         match(_find_path_result, /[^/]*$/, _basename_match)
 
-        _global_values_index[paths_values_dirs_arr[_i]][_basename_match[0]]["path"] = _find_path_result
+        _values_files_index[paths_values_dirs_arr[_i]][_basename_match[0]]["path"] = _find_path_result
 
         match(_basename_match[0], /^_[a-z]*_/, _prefix_match)
 
         if (_prefix_match[0]) {
-          _global_values_index[paths_values_dirs_arr[_i]][_basename_match[0]]["type"] = _prefix_match[0]
+          _values_files_index[paths_values_dirs_arr[_i]][_basename_match[0]]["type"] = _prefix_match[0]
           delete _prefix_match
         }
 
-        _global_values_index[paths_values_dirs_arr[_i]][_basename_match[0]]["value"] = read_value_file(_global_values_index[paths_values_dirs_arr[_i]][_basename_match[0]])
+        _values_files_index[paths_values_dirs_arr[_i]][_basename_match[0]]["value"] = read_value_file(_values_files_index[paths_values_dirs_arr[_i]][_basename_match[0]])
 
         delete _basename_match
       }
@@ -69,17 +75,19 @@ function populate_global_values_index( \
   }
 }
 
+# Takes a document data structure and populates the document's values index entry in _values_files_index.
 function document_populate_values_index( \
   document, \
   _value_name, _i, _prop \
 ) {
-  for (_i in document["paths_values_dir"]) for (_value_name in _global_values_index[document["paths_values_dir"][_i]]) {
-    for (_prop in _global_values_index[document["paths_values_dir"][_i]][_value_name]) {
-      document["values_index"][_value_name][_prop] = _global_values_index[document["paths_values_dir"][_i]][_value_name][_prop]
+  for (_i in document["paths_values_dir"]) for (_value_name in _values_files_index[document["paths_values_dir"][_i]]) {
+    for (_prop in _values_files_index[document["paths_values_dir"][_i]][_value_name]) {
+      document["values_index"][_value_name][_prop] = _values_files_index[document["paths_values_dir"][_i]][_value_name][_prop]
     }
   }
 }
 
+# Takes a value string, pointer to values index and a pointer to result array. Indexes in the result array the template value names that are found. Counts how many of template value names from the values index are present in the value string and returns the count.
 function find_values_placeholders_in_str( \
   str, values_index, result, \
   _value_index, _count \
@@ -93,6 +101,7 @@ function find_values_placeholders_in_str( \
   return _count
 }
 
+# Reads document single template value file as a string.
 function read_value_file( \
   value, \
   _value_lines, _line, _util_line_match \
@@ -118,6 +127,7 @@ function read_value_file( \
   return _value_lines
 }
 
+# Single pass of replacing template placeholders names in a document with their respective value files contents.
 function sub_values_placeholders_in_str( \
   found_values, values_index, fragment, \
   _fragment_out, _indent, _indent_match, _value_placeholder, _value, _i, _index_placeholder_start, _index_placeholder_end, _before_placeholder, _after_placeholder, _replacement \
@@ -130,6 +140,7 @@ function sub_values_placeholders_in_str( \
     for (_i in _fragment_out_arr) {
       if (match(_fragment_out_arr[_i], _value_placeholder)) {
         if (values_index[_value]["type"] == "_block_") {
+          # Maintains block spaces char. indentation in the document.
           _indent = match(_fragment_out_arr[_i], /^\s+/, _indent_match) ? _indent_match[0] : ""
           _replacement = indent_lines(trim_last_char(values_index[_value]["value"]), _indent)
         } else _replacement = values_index[_value]["value"]
@@ -151,6 +162,7 @@ function sub_values_placeholders_in_str( \
   return _fragment_out
 }
 
+# Finds and replaces template value placeholders in a document iteratively, with their respective value file contents.
 function document_sub_placeholders_values( \
   document, \
   _fragment_out, _found_values, _i, _max_iterations \
@@ -174,6 +186,7 @@ function document_sub_placeholders_values( \
   document["fragment"] = _fragment_out
 }
 
+# Writes the specified document to it's build path.
 function document_write( \
   document, \
   _path_dir_document_out, _path_file_document_out \
@@ -187,6 +200,7 @@ function document_write( \
   }
 }
 
+# Takes a document data structure and copies the document related static files into it's build directory.
 function document_copy_static( \
   document, \
   _path_dir_src_static, _path_dir_dist_static \
@@ -197,9 +211,9 @@ function document_copy_static( \
   if (! system("test -d " _path_dir_src_static)) system("cp -r " _path_dir_src_static "/* " _path_dir_dist_static)
 }
 
-BEGIN {
-  # ----------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
+BEGIN {
   # ARGV[1] - source files directory path.
   # ARGV[2] - build directory path.
   if (! ARGV[1] || ! ARGV[2]) {
@@ -215,7 +229,7 @@ BEGIN {
   print "Site build destination directory " _dir_dist
   print "Site build temporary files directory " _dir_tmp
 
-  _global_values_index[0] = ""
+  _values_files_index[0] = ""
   _children_sitemap = ""
 
   # ----------------------------------------------------------------------------
@@ -251,7 +265,7 @@ BEGIN {
     _generic_documents[_i]["path_src"] = _paths_src_generic_documents_arr[_i]
     _generic_documents[_i]["paths_values_dir"][1] = _dir_site
     _generic_documents[_i]["paths_values_dir"][2] = _paths_src_generic_documents_arr[_i]
-    populate_global_values_index(_generic_documents[_i]["paths_values_dir"])
+    populate_values_files_index(_generic_documents[_i]["paths_values_dir"])
 
     document_populate_values_index(_generic_documents[_i])
 
@@ -291,7 +305,7 @@ BEGIN {
     _sitemap_entry["paths_values_dir"][1] = _dir_site
     _sitemap_entry["paths_values_dir"][2] = _generic_documents[_i]["path_src"]
     _sitemap_entry["paths_values_dir"][3] = _dir_site "/sitemap/url"
-    populate_global_values_index(_sitemap_entry["paths_values_dir"])
+    populate_values_files_index(_sitemap_entry["paths_values_dir"])
 
     document_populate_values_index(_sitemap_entry)
     document_sub_placeholders_values(_sitemap_entry)
@@ -313,7 +327,7 @@ BEGIN {
   _sitemap["paths_values_dir"][1] = _dir_site
   _sitemap["paths_values_dir"][2] = _dir_site "/sitemap/document"
   _sitemap["paths_values_dir"][3] = _dir_tmp "/sitemap"
-  populate_global_values_index(_sitemap["paths_values_dir"])
+  populate_values_files_index(_sitemap["paths_values_dir"])
 
   document_populate_values_index(_sitemap)
   document_sub_placeholders_values(_sitemap)
