@@ -182,17 +182,6 @@ _generic_documents [
 ]
 ```
 
-## To-do
-
-- [ ] Feature – navigation menu generator
-    - [ ] Multiple menus
-    - [ ] Custom links list
-    - [ ] Project documents list
-        - [ ] No-index parameter
-    - [ ] Nested
-        - [ ] Limiting document levels
-    - [ ] Weighted items ordering
-
 ---
 
 This software is licensed under the GNU General Public License Version 3.
