@@ -41,19 +41,19 @@ In the example project it means creating the HTML documents, supplementary files
 
 Template value file name prefixes determine value placeholder substitution type – how the text value will be inserted in higher order document template output:
 
--   `_inline_` – to be inserted inline.
+-   `_inline_` – to be inserted inline
 
     (The configuration values, which don't get directly inserted into the documents also use this prefix.)
 
--   `_block_` – to be inserted as a block of one or multiple new lines.
--   `_pre_` – to be inserted as preformatted text (HTML `<pre>`).
+-   `_block_` – to be inserted as a block of one or multiple new lines
+-   `_pre_` – to be inserted as preformatted text (HTML `<pre>`)
 
 ---
 
-Template value files values can be defined in a hierarchy of single or multiple inheritance scopes, e.g. in the example project, the value files under
+Template value files values can be defined in a hierarchy of inheritance scopes, e.g. in the example project, the value files under
 
--   `./site/*` – project scope values
--   `./site/(documents|sitemap)/<document label>/*` – document local scope values
+-   `./site/*` are project scope values
+-   `./site/(documents|sitemap)/<document label>/*` are document local scope values
 
 where document local scope value files overwrite project scope values.
 
