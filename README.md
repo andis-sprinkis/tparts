@@ -91,7 +91,7 @@ _values_files_index: [
 e.g.
 
 ```
-_values_files_index [
+_values_files_index: [
   /home/user/tparts/site/documents/404: [
     _inline_title: [
       path: /home/user/tparts/site/documents/404/_inline_title
@@ -150,8 +150,8 @@ Document level resolved values indices data structure:
 e.g.
 
 ```
-_generic_documents [
-  1 [
+_generic_documents: [
+  1: [
     path_src: /home/user/tparts/site/documents/index
     paths_values_dir: [
       /home/user/project/tparts/site
