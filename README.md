@@ -25,7 +25,6 @@ or run the `build` script.
 
 ## Non-goals
 
-1. One-fits-all library with many features.
 1. Separating content and document markup (e.g. Markdown parser).
 1. Document templating language.
 
