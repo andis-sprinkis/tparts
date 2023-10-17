@@ -58,7 +58,7 @@ where document local scope value files overwrite project scope values.
 
 ---
 
-Some value files contents worth noting:
+Some notable value files and their contents:
 
 -   `_inline_build_entrypoint` – name of the root level template value file for a document.
 -   `_inline_path` – output document nested directory path in the project build.
