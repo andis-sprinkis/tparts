@@ -49,6 +49,18 @@ a:visited {
   color: purple;
 }
 
+@media print {
+  a:visited {
+    color: blue;
+  }
+
+}
+
+.nav-top a:visited,
+.nav-bottom a:visited {
+  color: blue;
+}
+
 a:focus, a:active, a:visited:active {
   color: red;
 }
@@ -64,6 +76,11 @@ a:hover {
 
   a:visited {
     color: #ffadff;
+  }
+
+  .nav-top a:visited,
+  .nav-bottom a:visited {
+    color: #8c8cff;
   }
 
   a:focus, a:active, a:visited:active {
@@ -85,6 +102,11 @@ a[target='_blank']::after {
 
 a[target='_blank']:visited::after {
   background-position: -1em 0;
+}
+
+.nav-top a[target='_blank']:visited::after,
+.nav-bottom a[target='_blank']:visited::after {
+  background-position: 0 0;
 }
 
 a[target='_blank']:focus::after, a[target='_blank']:active::after {
