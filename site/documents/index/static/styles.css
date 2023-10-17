@@ -41,10 +41,20 @@ body {
 
 a {
   color: blue;
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.175em;
 }
 
-a:focus {
+a:visited {
+  color: purple;
+}
+
+a:focus, a:active, a:visited:active {
   color: red;
+}
+
+a:hover {
+  text-decoration-thickness: 0.1345em;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -52,7 +62,11 @@ a:focus {
     color: #8c8cff;
   }
 
-  a:focus {
+  a:visited {
+    color: #ffadff;
+  }
+
+  a:focus, a:active, a:visited:active {
     color: #ff6666;
   }
 }
@@ -73,7 +87,7 @@ a[target='_blank']:visited::after {
   background-position: -1em 0;
 }
 
-a[target='_blank']:focus::after {
+a[target='_blank']:focus::after, a[target='_blank']:active::after {
   background-position: -2em 0;
 }
 
