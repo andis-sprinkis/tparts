@@ -11,3 +11,6 @@ max_line_length = 120
 
 [*.{md,mdx}]
 indent_size = 4
+
+[*.{htm,html,xml,xhtml}]
+max_line_length = off
