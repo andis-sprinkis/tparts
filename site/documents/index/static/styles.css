@@ -18,6 +18,7 @@
   --url-icon-new-tab: url('./new_tab_light.svg');
   --url-icon-bullet: url('./bullet_light.svg');
   --url-icon-dot: url('./dot_light.svg');
+  --color-focus-outline: var(--text-color);
   color-scheme: light dark;
 }
 
@@ -34,6 +35,11 @@
     --url-icon-bullet: url('./bullet_dark.svg');
     --url-icon-dot: url('./dot_dark.svg');
   }
+}
+
+*:focus {
+  outline: var(--color-focus-outline) solid 0.15em;
+  outline-offset: 0.2em;
 }
 
 * {
@@ -54,6 +60,7 @@ a {
   color: var(--text-color-link);
   text-decoration-thickness: 0.05em;
   text-underline-offset: 0.175em;
+  border-radius: 0.0125em;
 }
 
 a:visited {
