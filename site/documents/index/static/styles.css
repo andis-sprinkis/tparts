@@ -19,6 +19,8 @@
   --url-icon-bullet: url('./bullet_light.svg');
   --url-icon-dot: url('./dot_light.svg');
   --color-focus-outline: var(--text-color);
+  --thickness-underline: 0.05em;
+  --thickness-underline-hover: 0.1345em;
   color-scheme: light dark;
 }
 
@@ -58,7 +60,7 @@ body {
 
 a {
   color: var(--text-color-link);
-  text-decoration-thickness: 0.05em;
+  text-decoration-thickness: var(--thickness-underline);
   text-underline-offset: 0.175em;
   border-radius: 0.0125em;
 }
@@ -85,7 +87,7 @@ a:visited:active {
 }
 
 a:hover {
-  text-decoration-thickness: 0.1345em;
+  text-decoration-thickness: var(--thickness-underline-hover);
 }
 
 a[target='_blank']::after {
@@ -117,6 +119,15 @@ a[target='_blank']:active::after {
   a[target='_blank']::after {
     content: none;
   }
+}
+
+abbr {
+  text-decoration-style: dashed;
+  text-decoration-thickness: var(--thickness-underline);
+}
+
+abbr:hover {
+  text-decoration-thickness: var(--thickness-underline-hover);
 }
 
 body,
