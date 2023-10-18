@@ -72,7 +72,8 @@ a:visited {
   color: var(--text-color-link);
 }
 
-a:focus, a:active, a:visited:active {
+a:active,
+a:visited:active {
   color: var(--text-color-link-active);
 }
 
@@ -101,7 +102,7 @@ a[target='_blank']:visited::after {
   background-position: 0 0;
 }
 
-a[target='_blank']:focus::after, a[target='_blank']:active::after {
+a[target='_blank']:active::after {
   background-position: -2em 0;
 }
 
