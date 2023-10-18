@@ -4,7 +4,7 @@ A static site generator script written in GNU AWK.
 
 Requires `gawk`, `find` in a typical \*nix shell environment.
 
----
+## Example project
 
 To build the example project ([on github.io](https://andis-sprinkis.github.io/tparts/), [on gitlab.io](https://andis-sprinkis.gitlab.io/tparts)) from source files found in `./site` into the output directory `./dist`, run
 
@@ -14,21 +14,18 @@ tparts ./site ./dist
 
 or run the `build` script.
 
-## Goals
+## Goals and non-goals
 
-1. Compiles web documents, handling the repetative parts.
-1. Boilerplate for low-maintenance, static websites.
-1. No external dependencies I need to worry about.
-1. Hopefully works _forever_, as I don't expect GNU AWK to change a lot.
-1. Remains as rudamentary and concise as possible.
-1. Example project has good accessibility.
-
-## Non-goals
-
-1. Separating content and document markup (e.g. Markdown parser).
-1. Document templating language.
-
----
+-   Goals
+    1. Compiles web documents, handling the repetative parts.
+    1. Boilerplate for low-maintenance, static websites.
+    1. No external dependencies I need to worry about.
+    1. Hopefully works _forever_, as I don't expect GNU AWK to change a lot.
+    1. Remains as rudamentary and concise as possible.
+    1. Example project has good accessibility.
+-   Non-goals
+    1. Separating content and document markup (e.g. Markdown parser).
+    1. Document templating language (something comparable to Pug or Handlebars).
 
 ## How does the script work?
 
@@ -47,16 +44,12 @@ Template value file name prefixes determine value placeholder substitution type 
 -   `_block_` – to be inserted as a block of one or multiple new lines
 -   `_pre_` – to be inserted as preformatted text (HTML `<pre>`)
 
----
-
 Template value files values can be defined in a hierarchy of inheritance scopes, e.g. in the example project, the value files under
 
 -   `./site/*` are project scope values
 -   `./site/(documents|sitemap)/<document label>/*` are document local scope values
 
 where document local scope value files overwrite project scope values.
-
----
 
 Some notable value files and their contents:
 
