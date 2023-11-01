@@ -29,7 +29,7 @@ or run the `build` script.
 
 ## How does the script work?
 
-This tparts script is for building a set of plain text files – documents, in their target directories, from reusable, hierarchially inheritant parts – template value files, prefixed by `_inline_`, `_block_`, `_pre_`.
+The tparts script is for building a set of plain text files – documents, in their target directories, from reusable, hierarchially inheritant parts – template value files, prefixed by `_inline_`, `_block_`, `_pre_`.
 
 In the example project it means creating the HTML documents, supplementary files like `manifest.webmanifest`, `robots.txt`, `sitemap.xml` from the globally defined and the document specific values in the available template value files. And also copying static assets to their specified document directories.
 
