@@ -111,9 +111,9 @@ _values_files_index: [
 
 Identified as `_generic_documents`, `_sitemap_entry`, `_sitemap`.
 
-While the `_values_files_index` is a cache of all template values, these values are subsequently written in document-level values indices, being resolved according theirn hierarchy of scopes.
+While the `_values_files_index` is a cache of all template values, the values are subsequently written in the document-level values indices, being resolved according their hierarchy of scopes.
 
-When building a document level values index, the values defined on the document scope e.g. `./site/documents/index/_inline_title` take precedence over the global scope value `./site/_inline_title`.
+When building a document level values index, the values defined on the document scope, like the value `./site/documents/index/_inline_title`, take precedence over the global scope value, like the value `./site/_inline_title`.
 
 Document level resolved values indices data structure:
 
