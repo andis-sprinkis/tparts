@@ -22,7 +22,7 @@ or run the `build` script.
     1. No external dependencies I need to worry about or maintain.
     1. Works _forever_, as I don't expect GNU AWK to change a lot.
     1. Remains as rudamentary and concise as possible.
-    1. Example project has good accessibility.
+    1. The example project has good accessibility.
 -   Non-goals
     1. Separating content and document markup (e.g. Markdown parser).
     1. Document templating language (something comparable to Pug or Handlebars).
