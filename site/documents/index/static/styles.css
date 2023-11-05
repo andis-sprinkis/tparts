@@ -110,7 +110,7 @@ a[target='_blank']::after {
 }
 
 abbr {
-  text-decoration-style: dashed;
+  text-decoration-style: dotted;
   text-decoration-thickness: var(--thickness-underline);
   text-underline-offset: var(--offset-underline);
 }
