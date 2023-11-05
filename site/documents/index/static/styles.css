@@ -102,19 +102,6 @@ a[target='_blank']::after {
   margin-left: 0.1em;
 }
 
-a[target='_blank']:visited::after {
-  background-position: -1em 0;
-}
-
-.nav-top a[target='_blank']:visited::after,
-.nav-bottom a[target='_blank']:visited::after {
-  background-position: 0 0;
-}
-
-a[target='_blank']:active::after {
-  background-position: -2em 0;
-}
-
 @media print {
   a[target='_blank']::after {
     content: none;
