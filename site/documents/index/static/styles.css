@@ -113,10 +113,6 @@ abbr {
   text-decoration-thickness: var(--thickness-underline);
 }
 
-abbr:hover {
-  text-decoration-thickness: var(--thickness-underline-hover);
-}
-
 body,
 nav,
 main,
