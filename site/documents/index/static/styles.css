@@ -20,6 +20,7 @@
   --url-icon-dot: url('./dot_light.svg');
   --color-focus-outline: var(--text-color);
   --thickness-underline: 0.05em;
+  --offset-underline: 0.175em;
   --thickness-underline-hover: 0.1345em;
   color-scheme: light dark;
 }
@@ -61,7 +62,7 @@ body {
 a {
   color: var(--text-color-link);
   text-decoration-thickness: var(--thickness-underline);
-  text-underline-offset: 0.175em;
+  text-underline-offset: var(--offset-underline);
   border-radius: 0.0125em;
 }
 
@@ -111,6 +112,7 @@ a[target='_blank']::after {
 abbr {
   text-decoration-style: dashed;
   text-decoration-thickness: var(--thickness-underline);
+  text-underline-offset: var(--offset-underline);
 }
 
 body,
