@@ -14,6 +14,7 @@
   --font-size-pre: calc(var(--rem-size) * 0.8125);
   --line-height: 1.65;
   --line-height-em: calc(var(--line-height) * 1em);
+  --line-height-nav-inline: calc(var(--line-height) * 1.33333333);
   --inline-symbol-margin-top: calc(calc(var(--line-height-em) - 0.85em) / 2);
   --url-icon-new-tab: url('./new_tab_light.svg');
   --url-icon-bullet: url('./bullet_light.svg');
@@ -174,6 +175,10 @@ ul.inline-list-spread {
   padding-bottom: 0;
   width: 100%;
   max-width: var(--paragraph-width);
+}
+
+nav .inline-list-sep, nav .inline-list-spread {
+  line-height: var(--line-height-nav-inline);
 }
 
 hr {
