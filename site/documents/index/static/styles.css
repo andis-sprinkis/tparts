@@ -92,7 +92,7 @@ a:hover {
   text-decoration-thickness: var(--thickness-underline-hover);
 }
 
-a[target='_blank']::after {
+a[target='_blank']::after, a[href^='mailto:']::after, a[href^='tel:']::after {
   content: '';
   background: var(--url-icon-new-tab);
   background-size: 3em;
@@ -105,7 +105,7 @@ a[target='_blank']::after {
 }
 
 @media print {
-  a[target='_blank']::after {
+  a[target='_blank']::after, a[href^='mailto:']::after, a[href^='tel:']::after {
     content: none;
   }
 }
