@@ -309,6 +309,10 @@ pre code {
   border-radius: 0;
 }
 
+.nowrap {
+  white-space: nowrap;
+}
+
 @page {
   margin: 1cm;
 }
