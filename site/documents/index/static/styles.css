@@ -19,10 +19,10 @@
   --url-icon-new-tab: url('./new_tab_light.svg');
   --url-icon-bullet: url('./bullet_light.svg');
   --url-icon-dot: url('./dot_light.svg');
-  --color-focus-outline: var(--text-color);
+  --color-focus-outline: #00000080;
   --thickness-underline: 0.05em;
   --offset-underline: 0.175em;
-  --thickness-underline-hover: 0.1345em;
+  --thickness-underline-hover: 0.1125em;
   color-scheme: light dark;
 }
 
@@ -35,6 +35,7 @@
     --text-color-link: #8c8cff;
     --text-color-link-active: #ff6666;
     --text-color-link-visited: #ffadff;
+    --color-focus-outline: #f3f3f6;
     --url-icon-new-tab: url('./new_tab_dark.svg');
     --url-icon-bullet: url('./bullet_dark.svg');
     --url-icon-dot: url('./dot_dark.svg');
@@ -42,7 +43,7 @@
 }
 
 *:focus {
-  outline: var(--color-focus-outline) solid 0.15em;
+  outline: var(--color-focus-outline) solid 0.1em;
   outline-offset: 0.2em;
 }
 
@@ -102,11 +103,13 @@ a[target='_blank']::after, a[href^='mailto:']::after, a[href^='tel:']::after {
   position: relative;
   top: var(--inline-symbol-margin-top);
   margin-left: 0.1em;
+  opacity: 0.5;
 }
 
 @media print {
   a[target='_blank']::after, a[href^='mailto:']::after, a[href^='tel:']::after {
     content: none;
+    opacity: initial;
   }
 }
 
@@ -254,12 +257,14 @@ ul.inline-list-sep li:not(:last-child)::after {
   top: var(--inline-symbol-margin-top);
   margin-right: 0.15em;
   margin-left: 0.15em;
+  opacity: 0.275;
 }
 
 
 @media print {
   ul.inline-list-sep li:not(:last-child)::after {
     print-color-adjust: exact;
+    opacity: initial;
   }
 }
 
