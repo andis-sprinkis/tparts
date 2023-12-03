@@ -126,6 +126,7 @@ abbr {
   text-decoration-thickness: var(--thickness-underline);
   text-underline-offset: var(--offset-underline);
   border-radius: var(--border-radius-outline);
+  cursor: help;
 }
 
 abbr[title]:hover::after,
