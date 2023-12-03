@@ -6,6 +6,7 @@
   --text-color-link: blue;
   --text-color-link-active: red;
   --text-color-link-visited: purple;
+  --border-radius-outline: 0.0125em;
   --border-radius-pre: 0.185em;
   --grid-gap: 1em;
   --li-indent-width: clamp(1.35em, 1.45em, 7vw);
@@ -23,6 +24,10 @@
   --thickness-underline: 0.05em;
   --offset-underline: 0.175em;
   --thickness-underline-hover: 0.1125em;
+  --bg-color-tooltip: var(--text-color);
+  --text-color-tooltip: var(--bg-color);
+  --padding-tooltip: 0.25em 0.5em;
+  --border-radius-tooltip: 0.5em;
   color-scheme: light dark;
 }
 
@@ -65,7 +70,7 @@ a {
   color: var(--text-color-link);
   text-decoration-thickness: var(--thickness-underline);
   text-underline-offset: var(--offset-underline);
-  border-radius: 0.0125em;
+  border-radius: var(--border-radius-pre);
 }
 
 a:visited {
@@ -114,9 +119,25 @@ a[target='_blank']::after, a[href^='mailto:']::after, a[href^='tel:']::after {
 }
 
 abbr {
+  position: relative;
   text-decoration-style: dotted;
   text-decoration-thickness: var(--thickness-underline);
   text-underline-offset: var(--offset-underline);
+  border-radius: var(--border-radius-pre);
+}
+
+abbr[title]:hover::after,
+abbr[title]:focus::after {
+  position: absolute;
+  top: var(--line-height-em);
+  left: 0;
+  width: auto;
+  white-space: nowrap;
+  content: attr(title);
+  background-color: var(--bg-color-tooltip);
+  color: var(--text-color-tooltip);
+  border-radius: var(--border-radius-tooltip);
+  padding: var(--padding-tooltip);
 }
 
 body,
