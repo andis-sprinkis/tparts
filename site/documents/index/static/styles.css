@@ -26,8 +26,10 @@
   --thickness-underline-hover: 0.1125em;
   --bg-color-tooltip: var(--text-color);
   --text-color-tooltip: var(--bg-color);
-  --padding-tooltip: 0.25em 0.5em;
-  --border-radius-tooltip: 0.5em;
+  --padding-tooltip: 0.175em 0.5em;
+  --border-radius-tooltip: 0.185em;
+  --font-size-tooltip: calc(var(--rem-size) * 0.8125);
+  --z-index-tooltip: 1;
   color-scheme: light dark;
 }
 
@@ -70,7 +72,7 @@ a {
   color: var(--text-color-link);
   text-decoration-thickness: var(--thickness-underline);
   text-underline-offset: var(--offset-underline);
-  border-radius: var(--border-radius-pre);
+  border-radius: var(--border-radius-outline);
 }
 
 a:visited {
@@ -123,13 +125,13 @@ abbr {
   text-decoration-style: dotted;
   text-decoration-thickness: var(--thickness-underline);
   text-underline-offset: var(--offset-underline);
-  border-radius: var(--border-radius-pre);
+  border-radius: var(--border-radius-outline);
 }
 
 abbr[title]:hover::after,
 abbr[title]:focus::after {
   position: absolute;
-  top: var(--line-height-em);
+  top: calc(1.25 * var(--line-height-em));
   left: 0;
   width: auto;
   white-space: nowrap;
@@ -138,6 +140,8 @@ abbr[title]:focus::after {
   color: var(--text-color-tooltip);
   border-radius: var(--border-radius-tooltip);
   padding: var(--padding-tooltip);
+  font-size: var(--font-size-tooltip);
+  z-index: var(--z-index-tooltip);
 }
 
 body,
@@ -305,10 +309,6 @@ ul.inline-list-spread li {
 
 ul.inline-list-spread li::before {
   content: none;
-}
-
-.nowrap {
-  white-space: nowrap;
 }
 
 pre,
