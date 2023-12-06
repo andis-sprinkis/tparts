@@ -4,7 +4,7 @@
       fill: #000;
       text-anchor: middle;
       dominant-baseline: middle;
-      font-family: serif;
+      font-family: Arial, sans-serif;
     }
   </style>
   <text x="50" y="50" font-size="85" class="symbol">⚬</text>
