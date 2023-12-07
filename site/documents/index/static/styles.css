@@ -74,6 +74,29 @@ body {
   background-color: var(--bg-color);
 }
 
+@page {
+  margin: 1cm;
+}
+
+@media print {
+  body {
+    padding: 0;
+    font-size: 1em;
+  }
+}
+
+main {
+  margin-top: calc(4 * var(--grid-gap));
+  margin-bottom: calc(4 * var(--grid-gap));
+}
+
+@media print {
+  main {
+    margin-top: 1.5cm;
+    margin-bottom: 0;
+  }
+}
+
 a {
   color: var(--text-color-link);
   text-decoration-thickness: var(--underline-thickness);
@@ -154,6 +177,12 @@ abbr[title]:focus::after {
   z-index: var(--z-index-tooltip);
 }
 
+@media print {
+  abbr {
+    text-decoration: none;
+  }
+}
+
 body,
 nav,
 main,
@@ -184,11 +213,6 @@ h1 {
   font-weight: bold;
 }
 
-main {
-  margin-top: calc(4 * var(--grid-gap));
-  margin-bottom: calc(4 * var(--grid-gap));
-}
-
 ul,
 ol {
   margin-top: 0;
@@ -213,6 +237,24 @@ ul.inline-list-spread {
   padding-bottom: 0;
   width: 100%;
   max-width: var(--paragraph-width);
+}
+
+@media print {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  li,
+  nav,
+  hr,
+  pre,
+  ul.inline-list-sep,
+  ul.inline-list-spread {
+    max-width: 70vw;
+  }
 }
 
 nav .inline-list-sep,
@@ -255,7 +297,7 @@ ul li::before {
   width: 1em;
   height: var(--line-height-em);
   position: absolute;
-  top:0;
+  top: 0;
   left: 0;
 }
 
@@ -332,6 +374,13 @@ pre {
   border-radius: var(--border-radius-pre);
 }
 
+@media print {
+  pre {
+    white-space: pre-wrap;
+    overflow-x: initial;
+  }
+}
+
 code {
   padding: 0.175em 0.3125em;
   background-color: var(--bg-color-pre);
@@ -344,41 +393,7 @@ pre code {
   border-radius: 0;
 }
 
-.nowrap {
-  white-space: nowrap;
-}
-
-@page {
-  margin: 1cm;
-}
-
 @media print {
-  body {
-    padding: 0;
-    font-size: 1em;
-  }
-
-  main {
-    margin-top: 1.5cm;
-    margin-bottom: 0;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p,
-  li,
-  nav,
-  hr,
-  pre,
-  ul.inline-list-sep,
-  ul.inline-list-spread {
-    max-width: 70vw;
-  }
-
   pre,
   code {
     padding: 0;
@@ -387,12 +402,12 @@ pre code {
     font-size: 1em;
   }
 
-  pre {
-    white-space: pre-wrap;
-  }
-
   .nav-top,
   .nav-bottom {
     display: none;
   }
+}
+
+.nowrap {
+  white-space: nowrap;
 }
