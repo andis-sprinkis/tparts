@@ -133,8 +133,7 @@ a:hover {
 a[target='_blank']::after,
 a[href^='mailto:']::after,
 a[href^='tel:']::after {
-  content: '';
-  background: var(--url-icon-new-tab);
+  content: var(--url-icon-new-tab);
   display: inline-block;
   width: 1em;
   height: var(--line-height-em);
@@ -209,12 +208,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: normal;
   font-size: 1em;
-}
-
-h1 {
-  font-weight: bold;
 }
 
 ul,
@@ -280,7 +274,7 @@ h1 {
 }
 
 h2 {
-  margin-top: calc(0.5 * var(--grid-gap));
+  margin-top: var(--grid-gap);
 }
 
 ul {
@@ -295,8 +289,7 @@ ul li {
 }
 
 ul li::before {
-  content: '';
-  background: var(--url-icon-bullet);
+  content: var(--url-icon-bullet);
   display: inline-block;
   width: 1em;
   height: var(--line-height-em);
@@ -329,8 +322,7 @@ ul.inline-list-sep li::before {
 }
 
 ul.inline-list-sep li:not(:last-child)::after {
-  content: '';
-  background: var(--url-icon-dot);
+  content: var(--url-icon-dot);
   print-color-adjust: exact;
   display: inline-block;
   width: 1em;
