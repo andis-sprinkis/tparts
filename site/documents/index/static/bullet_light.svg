@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -83 100 165">
   <style>
     .symbol {
       fill: #000;
@@ -7,5 +7,5 @@
       font-family: Arial, sans-serif;
     }
   </style>
-  <text x="50" y="50" font-size="85" class="symbol">⚬</text>
+  <text cx="50%" cy="50%" font-size="100" class="symbol">⚬</text>
 </svg>

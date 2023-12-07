@@ -49,7 +49,7 @@
     --text-color-link: #8c8cff;
     --text-color-link-active: #ff6666;
     --text-color-link-visited: #ffadff;
-    --color-focus-outline: #f3f3f6;
+    --color-focus-outline: #f3f3f680;
     --url-icon-new-tab: url('./new_tab_dark.svg');
     --url-icon-bullet: url('./bullet_dark.svg');
     --url-icon-dot: url('./dot_dark.svg');
@@ -111,12 +111,10 @@ a[href^='mailto:']::after,
 a[href^='tel:']::after {
   content: '';
   background: var(--url-icon-new-tab);
-  background-size: 3em;
   display: inline-block;
   width: 1em;
-  height: 1em;
-  position: relative;
-  top: var(--inline-symbol-margin-top);
+  height: var(--line-height-em);
+  vertical-align: middle;
   margin-left: 0.1em;
   opacity: 0.5;
 }
@@ -256,9 +254,9 @@ ul li::before {
   background: var(--url-icon-bullet);
   display: inline-block;
   width: 1em;
-  height: 1em;
+  height: var(--line-height-em);
   position: absolute;
-  top: var(--inline-symbol-margin-top);
+  top:0;
   left: 0;
 }
 
@@ -291,9 +289,8 @@ ul.inline-list-sep li:not(:last-child)::after {
   print-color-adjust: exact;
   display: inline-block;
   width: 1em;
-  height: 1em;
-  position: relative;
-  top: var(--inline-symbol-margin-top);
+  height: var(--line-height-em);
+  vertical-align: middle;
   margin-right: 0.15em;
   margin-left: 0.15em;
   opacity: 0.275;
