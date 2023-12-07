@@ -4,7 +4,7 @@
       fill: #000000;
       text-anchor: middle;
       dominant-baseline: middle;
-      font-family: Arial, sans-serif;
+      font-family: Helvetica, Arial, sans-serif;
     }
   </style>
 
