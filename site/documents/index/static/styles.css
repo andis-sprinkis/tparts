@@ -139,7 +139,7 @@ a[href^='tel:']::after {
   width: 1em;
   height: var(--line-height-em);
   vertical-align: middle;
-  margin-left: 0.1em;
+  margin-left: 0.15em;
   opacity: 0.5;
 }
 
