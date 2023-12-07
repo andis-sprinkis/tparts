@@ -33,6 +33,8 @@
   --font-size-tooltip: calc(var(--rem-size) * 0.8125);
   --position-tooltip: absolute;
   --width-tooltip: auto;
+  --font-weight-tooltip: normal;
+  --font-style-tooltip: normal;
   --white-space-tooltip: nowrap;
   --max-width-tooltip: 100vw;
   --z-index-tooltip: 1;
@@ -174,6 +176,8 @@ abbr[title]:focus::after {
   border: var(--border-tooltip);
   padding: var(--padding-tooltip);
   font-size: var(--font-size-tooltip);
+  font-weight: var(--font-weight-tooltip);
+  font-style: var(--font-style-tooltip);
   z-index: var(--z-index-tooltip);
 }
 
