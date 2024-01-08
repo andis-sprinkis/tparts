@@ -8,7 +8,8 @@
   --text-color-link-visited: purple;
   --border-radius-outline: 0.0125em;
   --border-radius-pre: 0.185em;
-  --li-indent-width: clamp(1.35em, 1.45em, 7vw);
+  --ul-li-indent-width: clamp(1.35em, 1.45em, 7vw);
+  --ol-li-indent-width: clamp(2.75em, 2.75em, 7vw);
   --paragraph-width: 40rem;
   --rem-size: clamp(1.2rem, 2.2vw, 1.95rem);
   --font-size-pre: calc(var(--rem-size) * 0.8125);
@@ -205,7 +206,10 @@ li {
   grid-row-gap: var(--grid-gap);
 }
 
-ul, ul > li {
+ul,
+ol,
+ul > li,
+ol > li {
   grid-row-gap: calc(0.125 * var(--grid-gap));
 }
 
@@ -286,18 +290,41 @@ h1 {
   }
 }
 
-ul {
+ul, ol {
   list-style-type: none;
   padding: 0;
   position: relative;
 }
 
-ul li {
-  padding-left: var(--li-indent-width);
+ul > li, ol > li {
   position: relative;
 }
 
-ul li::before {
+ul > li {
+  padding-left: var(--ul-li-indent-width);
+}
+
+ol > li {
+  padding-left: var(--ol-li-indent-width);
+}
+
+ol {
+  counter-reset: item;
+}
+
+ol > li::before {
+  content: counter(item) ".";
+  counter-increment: item;
+  width: calc(var(--ol-li-indent-width) - 0.6125em);
+  margin-right: 0.6125em;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: right;
+}
+
+ul > li::before {
   content: var(--url-icon-bullet);
   display: inline-block;
   width: 1em;
@@ -308,7 +335,7 @@ ul li::before {
 }
 
 @media print {
-  ul li::before {
+  ul > li::before {
     print-color-adjust: exact;
   }
 }

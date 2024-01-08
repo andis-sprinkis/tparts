@@ -2,11 +2,11 @@
   <h1>Example nested page</h1>
   <p>
     Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur
-    mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia <abbr title="example of an abbreviation HTML tag" tabindex="0">ABBR</abbr>. Reprehenderit nostrud nostrud ipsum Lorem
+    mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia <abbr title="example of an abbreviation HTML tag" tabindex="0">abrv</abbr>. Reprehenderit nostrud nostrud ipsum Lorem
     est aliquip amet voluptate voluptate dolor minim nulla est proident. Nostrud officia pariatur ut officia.
   </p>
   <p><span class="nowrap">This sentence does not wrap.</span></p>
-  <h2>Unsorted list</h2>
+  <h2>Unordered list</h2>
   <ul>
     <li>
       <span
@@ -17,7 +17,13 @@
     <li>
       Sint consectetur cupidatat.
       <ul>
-        <li>Lorem ipsum dolor sit amet.</li>
+        <li>Lorem ipsum dolor sit amet.
+          <ol>
+            <li>Lorem ipsum dolor sit amet.</li>
+            <li>Officia excepteur.</li>
+            <li>Nisi anim cupidatat.</li>
+          </ol>
+        </li>
         <li>Officia excepteur.</li>
         <li>Nisi anim cupidatat.</li>
       </ul>
@@ -25,13 +31,38 @@
     <li>Sint consectetur cupidatat.</li>
     <li>Qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.</li>
   </ul>
-  <h2>Inline spread unsorted list</h2>
+  <h2>Ordered list</h2>
+  <ol>
+    <li>
+      <span
+        >Lorem ipsum dolor sit amet, <code>qui minim labore</code> adipisicing minim sint cillum sint consectetur
+        cupidatat.</span
+      >
+    </li>
+    <li>
+      Sint consectetur cupidatat.
+      <ol>
+        <li>Lorem ipsum dolor sit amet.
+          <ul>
+            <li>Lorem ipsum dolor sit amet.</li>
+            <li>Officia excepteur.</li>
+            <li>Nisi anim cupidatat.</li>
+          </ul>
+        </li>
+        <li>Officia excepteur.</li>
+        <li>Nisi anim cupidatat.</li>
+      </ol>
+    </li>
+    <li>Sint consectetur cupidatat.</li>
+    <li>Qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.</li>
+  </ol>
+  <h2>Inline spread unordered list</h2>
   <ul class="inline-list-spread">
     <li>Lorem ipsum dolor sit amet.</li>
     <li>Officia excepteur.</li>
     <li>Nisi anim cupidatat.</li>
   </ul>
-  <h2>Inline separator separated unsorted list</h2>
+  <h2>Inline separator separated unordered list</h2>
   <ul class="inline-list-sep">
     <li>Lorem ipsum dolor sit amet.</li>
     <li>Officia excepteur.</li>
