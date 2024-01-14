@@ -7,9 +7,9 @@
   --text-color-link-active: red;
   --text-color-link-visited: purple;
   --border-radius-outline: 0.0125em;
-  --border-radius-pre: 0.185em;
-  --ul-li-indent-width: clamp(1.35em, 1.45em, 7vw);
-  --ol-li-indent-width: clamp(2.75em, 2.75em, 7vw);
+  --border-radius-pre: 0.22em;
+  --ul-li-indent-width: clamp(1.35em, 1.75em, 7vw);
+  --ol-li-indent-width: clamp(2.8em, 2.75em, 7vw);
   --paragraph-width: 40rem;
   --rem-size: clamp(1.2rem, 2.2vw, 1.95rem);
   --font-size-pre: calc(var(--rem-size) * 0.8125);
@@ -28,7 +28,7 @@
   --bg-color-tooltip: var(--text-color);
   --text-color-tooltip: var(--bg-color);
   --padding-tooltip: 0.175em 0.5em;
-  --border-radius-tooltip: 0.185em;
+  --border-radius-tooltip: 0.22em;
   --border-tooltip: 0.1em solid var(--bg-color);
   --position-left-tooltip: 0;
   --position-top-tooltip: calc(1.25 * var(--line-height-em));
@@ -290,22 +290,33 @@ h1 {
   }
 }
 
-ul, ol {
+ul,
+ol {
   list-style-type: none;
   padding: 0;
   position: relative;
 }
 
-ul > li, ol > li {
+ul > li,
+ol > li {
   position: relative;
 }
 
-ul > li {
+ul > li ul > li,
+ol > li ul > li {
   padding-left: var(--ul-li-indent-width);
 }
 
-ol > li {
+ol > li ol > li,
+ul > li ol > li {
   padding-left: var(--ol-li-indent-width);
+}
+
+ol > li::before,
+ul > li::before {
+  position: absolute;
+  display: inline-block;
+  top: 0;
 }
 
 ol {
@@ -313,25 +324,41 @@ ol {
 }
 
 ol > li::before {
-  content: counter(item) ".";
+  content: counter(item) '.';
   counter-increment: item;
-  width: calc(var(--ol-li-indent-width) - 0.6125em);
-  margin-right: 0.6125em;
-  display: inline-block;
-  position: absolute;
-  top: 0;
-  left: 0;
+  width: calc(var(--ol-li-indent-width) - 0.75em);
+  margin-right: 0.75em;
+  left: calc(-1 * var(--ol-li-indent-width));
   text-align: right;
+}
+
+ol > li ol > li::before,
+ul > li ol > li::before,
+ul > li ul > li::before,
+ol > li ul > li::before {
+  left: 0;
 }
 
 ul > li::before {
   content: var(--url-icon-bullet);
-  display: inline-block;
   width: 1em;
   height: var(--line-height-em);
-  position: absolute;
-  top: 0;
-  left: 0;
+  left: calc(-1 * var(--ul-li-indent-width));
+}
+
+@media screen and (max-width: calc(40rem + calc(2 * 7vw))) {
+  ol > li {
+    padding-left: var(--ol-li-indent-width);
+  }
+
+  ul > li {
+    padding-left: var(--ul-li-indent-width);
+  }
+
+  ol > li::before,
+  ul > li::before {
+    left: 0;
+  }
 }
 
 @media print {
@@ -426,12 +453,12 @@ pre code {
 }
 
 nav.nav-top {
-  padding-bottom: calc(var(--grid-gap) * 0.25);
+  padding-bottom: calc(var(--grid-gap) * 0.35);
   border-bottom: 0.1em solid var(--border-color-hr);
 }
 
 nav.nav-bottom {
-  padding-top: calc(var(--grid-gap) * 0.25);
+  padding-top: calc(var(--grid-gap) * 0.35);
   border-top: 0.1em solid var(--border-color-hr);
 }
 
