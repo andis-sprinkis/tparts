@@ -220,6 +220,7 @@ h4,
 h5,
 h6 {
   font-size: 1em;
+  text-align: center;
 }
 
 ul,
@@ -264,15 +265,6 @@ ul.inline-list-spread {
   ul.inline-list-spread {
     max-width: 70vw;
   }
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  text-align: center;
 }
 
 nav .inline-list-sep,
