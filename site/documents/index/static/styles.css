@@ -452,16 +452,6 @@ pre code {
   border-radius: 0;
 }
 
-nav.nav-top {
-  padding-bottom: calc(var(--grid-gap) * 0.35);
-  border-bottom: 0.1em solid var(--border-color-hr);
-}
-
-nav.nav-bottom {
-  padding-top: calc(var(--grid-gap) * 0.35);
-  border-top: 0.1em solid var(--border-color-hr);
-}
-
 @media print {
   pre,
   code {
