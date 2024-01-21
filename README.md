@@ -57,6 +57,7 @@ Some notable value files and their contents:
 -   `_inline_path` – output document nested directory path in the project build.
 -   `_inline_filename` – output filename of a document in the project build.
 -   `_inline_lastmod` – document last modified date, used in sitemap entries.
+-   `_inline_static_asset_caching_id` – build-time generated ID string, which can be used in the document static asset URLs for cache busting.
 
 ### Data structures
 

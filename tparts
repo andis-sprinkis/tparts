@@ -1,6 +1,6 @@
 #!/usr/bin/awk -f
 
-# Takes file or directory path string and returns symbolic links or canonical file name of the given path.
+# Takes file or directory path string. Returns symbolic links or canonical file name of the given path.
 function readlink( \
   path, \
   _cmd, _dir \
@@ -12,7 +12,18 @@ function readlink( \
   return _dir
 }
 
-# Takes HTML/XML format string and returns the string where XML and HTML syntax characters are replaced with their character entity references.
+# Returns a string of a UNIX timestamp of the current time.
+function timestamp_unix( \
+  _cmd, _timestamp \
+) {
+  _cmd = "date +\"%s\""
+  _cmd | getline _timestamp
+  close(_cmd)
+
+  return _timestamp
+}
+
+# Takes HTML/XML format string. Returns the string where XML and HTML syntax characters are replaced with their character entity references.
 function escape_ml(str) {
   gsub(/&/, "\\&amp;", str)
   gsub(/</, "\\&lt;", str)
@@ -23,12 +34,12 @@ function escape_ml(str) {
   return str
 }
 
-# Takes string. Returns the string with last character removed.
+# Takes string. Returns the string with the last character removed.
 function trim_last_char(str) {
   return substr(str, 1, length(str) - 1)
 }
 
-# Takes multi-line string and a characted sequence, and prefixes the string lines with the given indentation char. sequence.
+# Takes multi-line string and a characted sequence. Prefixes the string lines with the given indentation char. sequence.
 # Skips indenting on preformatted text lines wrapped in <pre> tags blocks.
 function indent_lines( \
   original_lines, indent, \
@@ -44,7 +55,7 @@ function indent_lines( \
   return trim_last_char(_indented_lines)
 }
 
-# Takes array of directories and populates _values_files_index with the found template value files data.
+# Takes array of directory paths. Populates _values_files_index with the found template value files data.
 function populate_values_files_index( \
   paths_values_dirs_arr, \
   _i  \
@@ -54,7 +65,7 @@ function populate_values_files_index( \
       _cmd_find = "find " paths_values_dirs_arr[_i] "/_* -maxdepth 0 -type f"
 
       while ((_cmd_find | getline _find_path_result) > 0) {
-        match(_find_path_result, /[^/]*$/, _basename_match)
+        match(_find_path_result, /[^\/]*$/, _basename_match)
 
         _values_files_index[paths_values_dirs_arr[_i]][_basename_match[0]]["path"] = _find_path_result
 
@@ -75,7 +86,7 @@ function populate_values_files_index( \
   }
 }
 
-# Takes a document data structure and populates the document's values index entry in _values_files_index.
+# Takes a document data structure. Populates the document's values index entry in _values_files_index.
 function document_populate_values_index( \
   document, \
   _value_name, _i, _prop \
@@ -101,7 +112,7 @@ function find_values_placeholders_in_str( \
   return _count
 }
 
-# Reads document single template value file as a string.
+# Reads document single template value file. Returns the file as a string.
 function read_value_file( \
   value, \
   _value_lines, _line, _util_line_match \
@@ -231,14 +242,25 @@ BEGIN {
 
   _values_files_index[0] = ""
   _children_sitemap = ""
+  _static_asset_caching_id = "cache_" timestamp_unix()
 
   # ----------------------------------------------------------------------------
 
   print "\nCreating site build destination and build temporary files directories and subdirectories " _dir_tmp "/sitemap"
 
-  system("rm -rf " _dir_dist " && mkdir -p " _dir_tmp "/sitemap")
+  system("rm -rf " _dir_dist " && mkdir -p " _dir_tmp "/sitemap" " && mkdir -p " _dir_tmp "/build_info")
 
   print "Created site build destination and build temporary files directories and subdirectories " _dir_tmp "/sitemap"
+
+  # ----------------------------------------------------------------------------
+
+  print "\nWriting build info site values in " _dir_tmp "/build_info"
+
+  _path_file_static_asset_caching_id = _dir_tmp "/build_info/_inline_static_asset_caching_id"
+  print _static_asset_caching_id >> _path_file_static_asset_caching_id
+  close(_path_file_static_asset_caching_id)
+
+  print "\nCreated build info site values in " _dir_tmp "/build_info"
 
   # ----------------------------------------------------------------------------
 
@@ -265,6 +287,7 @@ BEGIN {
     _generic_documents[_i]["path_src"] = _paths_src_generic_documents_arr[_i]
     _generic_documents[_i]["paths_values_dir"][1] = _dir_site
     _generic_documents[_i]["paths_values_dir"][2] = _paths_src_generic_documents_arr[_i]
+    _generic_documents[_i]["paths_values_dir"][3] = _dir_tmp "/build_info"
     populate_values_files_index(_generic_documents[_i]["paths_values_dir"])
 
     document_populate_values_index(_generic_documents[_i])
