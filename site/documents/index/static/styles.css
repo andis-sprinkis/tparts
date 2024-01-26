@@ -112,6 +112,7 @@ a {
   text-decoration-thickness: var(--underline-thickness);
   text-underline-offset: var(--underline-offset);
   border-radius: var(--border-radius-outline);
+  font-weight: bold;
 }
 
 a:visited {
