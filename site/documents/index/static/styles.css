@@ -396,7 +396,7 @@ ul.inline-list-sep li:not(:last-child)::after {
   vertical-align: middle;
   margin-right: 0.15em;
   margin-left: 0.15em;
-  opacity: 0.275;
+  opacity: 0.5;
 }
 
 @media print {
