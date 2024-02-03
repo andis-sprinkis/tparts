@@ -1,4 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -83 100 165">
+<!--
+Values "mix-x min-y width height" for attribute "viewBox" of element <svg> are calculated as:
+-50 ceil((CSS line-height * 10) / 2) 100 (CSS line-height * 10)
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -88 100 175">
   <style>
     .symbol {
       fill: #000000;
