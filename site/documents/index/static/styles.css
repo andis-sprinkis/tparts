@@ -15,20 +15,21 @@
   --font-size-pre: calc(var(--rem-size) * 0.8125);
   --line-height: 1.75;
   --line-height-em: calc(var(--line-height) * 1em);
-  --line-height-nav-inline: calc(var(--line-height) * 1.125);
+  --line-height-nav-inline: calc(var(--line-height) * 1.175);
   --grid-gap: var(--line-height-em);
   --url-icon-new-tab: url('./new_tab_light.svg');
   --url-icon-bullet: url('./bullet_light.svg');
   --url-icon-dot: url('./dot_light.svg');
   --color-focus-outline: #00000080;
   --underline-thickness: 0.04em;
-  --underline-offset: 0.175em;
-  --underline-thickness-hover: 0.105em;
+  --underline-offset: 0.275em;
+  --underline-thickness-hover: 0.125em;
+  --underline-offset-active-focus: calc(var(--underline-offset) - calc(var(--underline-thickness-hover) / 2));
   --bg-color-text-selection: #00000080;
   --bg-color-tooltip: var(--text-color);
   --text-color-tooltip: var(--bg-color);
   --padding-tooltip: 0.175em 0.5em;
-  --border-radius-tooltip: 0.22em;
+  --border-radius-tooltip: 0.38125em;
   --border-tooltip: 0.1em solid var(--bg-color);
   --position-left-tooltip: 0;
   --position-top-tooltip: calc(1.25 * var(--line-height-em));
@@ -62,7 +63,7 @@
 
 *:focus {
   outline: var(--color-focus-outline) solid 0.1em;
-  outline-offset: 0.2em;
+  outline-offset: 0.3275em;
 }
 
 ::selection {
@@ -137,6 +138,7 @@ a:visited:active {
 
 a:hover {
   text-decoration-thickness: var(--underline-thickness-hover);
+  text-underline-offset: var(--underline-offset-active-focus);
 }
 
 a[target='_blank']::after,
@@ -147,7 +149,7 @@ a[href^='tel:']::after {
   width: 1em;
   height: var(--line-height-em);
   vertical-align: middle;
-  margin-left: 0.15em;
+  margin-left: 0.175em;
   opacity: 0.5;
 }
 
@@ -284,7 +286,7 @@ hr {
 
 h1 {
   margin-top: calc(1 * var(--grid-gap));
-  margin-bottom: var(--grid-gap);
+  margin-bottom: calc(0.5 * var(--grid-gap));
 }
 
 @media print {
@@ -394,8 +396,8 @@ ul.inline-list-sep li:not(:last-child)::after {
   width: 1em;
   height: var(--line-height-em);
   vertical-align: middle;
-  margin-right: 0.15em;
-  margin-left: 0.15em;
+  margin-right: 0.175em;
+  margin-left: 0.175em;
   opacity: 0.5;
 }
 
@@ -477,4 +479,8 @@ pre code {
 
 .nowrap {
   white-space: nowrap;
+}
+
+.text-align-left {
+  text-align: left;
 }
