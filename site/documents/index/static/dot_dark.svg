@@ -5,7 +5,7 @@ Values "mix-x min-y width height" for attribute "viewBox" of element <svg> are c
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -88 100 175">
   <style>
     .symbol {
-      fill: #f3f3f6;
+      fill: #e1e1e1;
       text-anchor: middle;
       dominant-baseline: middle;
       font-family: Helvetica, Arial, sans-serif;
