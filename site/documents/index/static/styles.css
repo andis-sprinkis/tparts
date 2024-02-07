@@ -46,12 +46,12 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-color: #171718;
+    --bg-color: #0d1117;
     --bg-color-pre: #ffffff09;
     --border-color-hr: #ffffff11;
     --text-color: #e1e1e1;
-    --text-color-link: #78a7ff;
-    --text-color-link-active: #ff6666;
+    --text-color-link: #2f81f7;
+    --text-color-link-active: #f55f55;
     --text-color-link-visited: #c797e2;
     --bg-color-text-selection: #e1e1e180;
     --color-focus-outline: #e1e1e180;
