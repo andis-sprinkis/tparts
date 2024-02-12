@@ -141,9 +141,7 @@ a:hover {
   text-underline-offset: var(--underline-offset-active-focus);
 }
 
-a[target='_blank']::after,
-a[href^='mailto:']::after,
-a[href^='tel:']::after {
+a[target='_blank']::after {
   content: var(--url-icon-new-tab);
   display: inline-block;
   width: 1em;
@@ -154,9 +152,7 @@ a[href^='tel:']::after {
 }
 
 @media print {
-  a[target='_blank']::after,
-  a[href^='mailto:']::after,
-  a[href^='tel:']::after {
+  a[target='_blank']::after {
     content: none;
     opacity: initial;
   }
