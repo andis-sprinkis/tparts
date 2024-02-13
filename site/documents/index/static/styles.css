@@ -62,7 +62,7 @@
 }
 
 *:focus {
-  outline: var(--color-focus-outline) solid 0.1em;
+  outline: var(--color-focus-outline) solid 0.2rem;
   outline-offset: 0.3275em;
 }
 
@@ -136,7 +136,8 @@ a:visited:active {
   color: var(--text-color-link-active);
 }
 
-a:hover {
+a:hover,
+a:focus {
   text-decoration-thickness: var(--underline-thickness-hover);
   text-underline-offset: var(--underline-offset-active-focus);
 }
@@ -476,6 +477,11 @@ pre code {
 
 .nowrap {
   white-space: nowrap;
+}
+
+small,
+.text-small {
+  font-size: 0.85em;
 }
 
 .text-align-left {
