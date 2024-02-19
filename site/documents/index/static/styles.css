@@ -126,11 +126,6 @@ a:visited {
   }
 }
 
-.nav-top a:visited,
-.nav-bottom a:visited {
-  color: var(--text-color-link);
-}
-
 a:active,
 a:visited:active {
   color: var(--text-color-link-active);
@@ -422,11 +417,6 @@ ul.inline-list-spread li {
 
 ul.inline-list-spread li::before {
   content: none;
-}
-
-nav.nav-top > ul.inline-list-sep,
-nav.nav-bottom > ul.inline-list-sep {
-  justify-content: center;
 }
 
 pre,
