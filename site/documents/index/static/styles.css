@@ -450,6 +450,10 @@ pre code {
   border-radius: 0;
 }
 
+.nav-bottom > ul.inline-list-sep {
+  justify-content: center;
+}
+
 @media print {
   pre,
   code {
