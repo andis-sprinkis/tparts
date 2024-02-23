@@ -6,6 +6,7 @@
   --text-color-link: blue;
   --text-color-link-active: red;
   --text-color-link-visited: purple;
+  --text-size-small: 0.85em;
   --border-radius-outline: 0.0125em;
   --border-radius-pre: 0.22em;
   --ul-li-indent-width: clamp(1.35em, 1.75em, 7vw);
@@ -58,6 +59,12 @@
     --url-icon-new-tab: url('./new_tab_dark.svg');
     --url-icon-bullet: url('./bullet_dark.svg');
     --url-icon-dot: url('./dot_dark.svg');
+  }
+}
+
+@media print {
+  :root {
+    --paragraph-width: 70vw;
   }
 }
 
@@ -243,24 +250,6 @@ ul.inline-list-spread {
   padding-bottom: 0;
   width: 100%;
   max-width: var(--paragraph-width);
-}
-
-@media print {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p,
-  li,
-  nav,
-  hr,
-  pre,
-  ul.inline-list-sep,
-  ul.inline-list-spread {
-    max-width: 70vw;
-  }
 }
 
 nav .inline-list-sep,
@@ -450,10 +439,6 @@ pre code {
   border-radius: 0;
 }
 
-.nav-bottom > ul.inline-list-sep {
-  justify-content: center;
-}
-
 @media print {
   pre,
   code {
@@ -462,7 +447,13 @@ pre code {
     border-radius: 0;
     font-size: 1em;
   }
+}
 
+.nav-bottom > ul.inline-list-sep {
+  justify-content: center;
+}
+
+@media print {
   .nav-top,
   .nav-bottom {
     display: none;
@@ -475,7 +466,7 @@ pre code {
 
 small,
 .text-small {
-  font-size: 0.85em;
+  font-size: var(--text-size-small);
 }
 
 .text-align-left {
