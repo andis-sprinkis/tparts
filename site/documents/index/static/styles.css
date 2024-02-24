@@ -420,6 +420,11 @@ pre {
   border-radius: var(--border-radius-pre);
 }
 
+pre.text-wrap {
+  white-space: pre-wrap;
+  overflow-x: initial;
+}
+
 @media print {
   pre {
     white-space: pre-wrap;
