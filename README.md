@@ -18,13 +18,13 @@ or run the `build` script.
 
 -   Goals
     1. Compiles web documents, handling the repetative parts.
-    1. Boilerplate for low-maintenance, static websites.
+    1. A boilerplate for low-maintenance, statically rendered websites.
     1. No external dependencies I need to worry about or maintain.
-    1. Works _forever_, as I don't expect GNU AWK to change a lot.
+    1. Works _forever_, as I don't expect the GNU AWK to change a lot.
     1. Remains as rudamentary and concise as possible.
-    1. The example web site project has good accessibility.
+    1. The example web site project has good UI accessibility.
 -   Non-goals
-    1. Separating content and document markup (e.g. Markdown parser).
+    1. Separating the content from the document structure or presentation (e.g. a Markdown parser).
     1. Document templating language (something comparable to Pug or Handlebars).
 
 ## How does the script work?
