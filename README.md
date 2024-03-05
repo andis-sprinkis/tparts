@@ -33,7 +33,7 @@ The tparts script is for building a set of plain text files – documents, in th
 
 In the example project it means creating the HTML documents, the supplementary files, like `manifest.webmanifest`, `robots.txt`, `sitemap.xml`, from the globally defined and the document specific values in the available template value files. And also copying the static asset files, like style sheets and images, to their document directories.
 
-In value files, the template value placeholders to be subsituted are the other value file names wrapped in the HTML comment syntax, e.g. `<-- _inline_lastmod -->` is to be subsituted in place with contents of a file `_inline_lastmod`. The substitution process is recursive, exhausiting the names of known value files.
+In value files, the template value placeholders to be subsituted are the other value file names wrapped in the HTML comment syntax, e.g. `<-- _inline_lastmod -->` is to be subsituted in place with contents of the file `_inline_lastmod`. The substitution process is recursive, exhausiting the names of known value files.
 
 Template value file name prefixes determine value placeholder substitution type – how the value file text content will be inserted in the output:
 
