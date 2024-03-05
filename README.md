@@ -29,13 +29,13 @@ or run the `build` script.
 
 ## How does the script work?
 
-The tparts script is for building a set of plain text files – documents, in their target directories, from reusable, hierarchially inheritant parts – template value files, prefixed by `_inline_`, `_block_`, `_pre_`.
+The tparts script is for building a set of plain text files – documents, in their target directories, from reusable, hierarchically-inheritant parts – the template value files, prefixed by `_inline_`, `_block_`, `_pre_`.
 
 In the example project it means creating the HTML documents, supplementary files like `manifest.webmanifest`, `robots.txt`, `sitemap.xml` from the globally defined and the document specific values in the available template value files. And copying the static assets to their document directories.
 
-In value files, the template value placeholders to be subsituted are other value file names wrapped in HTML comment syntax, e.g. `<-- _inline_lastmod -->` will be subsituted in place with contents of a file `_inline_lastmod`. Substitutions are recursive.
+In value files, the template value placeholders to be subsituted are the other value file names wrapped in HTML comment syntax, e.g. `<-- _inline_lastmod -->` is to be subsituted in place with contents of a file `_inline_lastmod`. The substitution process is recursive, exhausiting the names of known value files.
 
-Template value file name prefixes determine value placeholder substitution type – how the text value will be inserted in higher order document template output:
+Template value file name prefixes determine value placeholder substitution type – how the value file text content will be inserted in the output:
 
 -   `_inline_` – to be inserted inline
 
