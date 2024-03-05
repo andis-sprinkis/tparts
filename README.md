@@ -49,7 +49,7 @@ Template value files values can be defined in a hierarchy of inheritance scopes,
 -   `./site/*` are project scope values
 -   `./site/(documents|sitemap)/<document label>/*` are document local scope values
 
-where document local scope value files overwrite project scope values.
+where the document local scope value files overwrite the project scope values.
 
 Some notable value files and their contents:
 
