@@ -5,4 +5,4 @@
 set -e
 dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 
-$dir/tparts "$dir/site" "$dir/dist"
+"${dir}/tparts" "${dir}/site" "${dir}/dist"
