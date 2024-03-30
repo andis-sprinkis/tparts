@@ -424,7 +424,7 @@ code {
 
 pre {
   overflow-x: scroll;
-  padding: 1em;
+  padding: 0.75em 1em;
   background-color: var(--bg-color-pre);
   border-radius: var(--border-radius-pre);
 }
