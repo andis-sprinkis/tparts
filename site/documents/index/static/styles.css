@@ -387,8 +387,8 @@ ul.inline-list-sep li:not(:last-child)::after {
   width: 1em;
   height: var(--line-height-em);
   vertical-align: middle;
-  margin-right: 0.175em;
-  margin-left: 0.175em;
+  margin-right: 0.275em;
+  margin-left: 0.275em;
   opacity: 0.5;
 }
 
