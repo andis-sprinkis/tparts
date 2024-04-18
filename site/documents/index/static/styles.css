@@ -49,15 +49,15 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-color: #1d1d1d;
+    --bg-color: #131313;
     --bg-color-pre: #ffffff09;
     --border-color-hr: #ffffff11;
-    --text-color: #e1e1e1;
+    --text-color: #aba8a8;
     --text-color-link: #2f81f7;
     --text-color-link-active: #f55f55;
     --text-color-link-visited: #ab50d5;
-    --bg-color-text-selection: #e1e1e180;
-    --color-focus-outline: #e1e1e180;
+    --bg-color-text-selection: #aba8a880;
+    --color-focus-outline: #aba8a880;
     --url-icon-new-tab: url('./new_tab_dark.svg');
     --url-icon-bullet: url('./bullet_dark.svg');
     --url-icon-dot: url('./dot_dark.svg');
