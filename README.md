@@ -57,7 +57,7 @@ Some notable value files and their contents:
 -   `_inline_lastmod` – the document last modified date, used in the example site sitemap entries.
 -   `_inline_static_asset_caching_id` – build-time generated ID string, used in the example site document static asset URLs for cache busting.
 
-### Data structures
+### Runtime data structures
 
 #### Template values files index
 
