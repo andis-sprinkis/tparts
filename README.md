@@ -25,7 +25,7 @@ or run the `build` script.
     1. The example web site project has good UI accessibility.
 -   Non-goals
     1. Separating the content from the document structure or presentation (e.g. a Markdown parser).
-    1. A complex to implement document templating language (comparable to Pug or Handlebars).
+    1. A complex to maintain document templating language (something comparable to Pug or Handlebars).
 
 ## How does the script work?
 
