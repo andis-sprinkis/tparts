@@ -12,7 +12,11 @@ To build the example Web site project (hosted [on github.io](https://andis-sprin
 tparts ./site ./dist
 ```
 
-Or run the `build` script.
+Or run the `build` script:
+
+```sh
+./build
+```
 
 You can use an HTTP server, such as [serve](https://www.npmjs.com/package/serve), to preview the site locally:
 
