@@ -61,7 +61,7 @@ Some notable value files and their contents:
 
 #### Template values files index
 
-Declared as variable `_values_files_index`.
+Declared as variable `_values_files_index`
 
 Index of the all known template values files, grouped by their scope directory and indexed by file path.
 
@@ -108,7 +108,7 @@ _values_files_index: [
 
 #### Document level resolved value indices
 
-Declared as variables `_generic_documents`, `_sitemap_entry`, `_sitemap`.
+Declared as variables `_generic_documents`, `_sitemap_entry`, `_sitemap`
 
 While the `_values_files_index` is a cache of all template values, the values are subsequently written in the document-level values indices, being resolved according their hierarchy of scopes.
 
