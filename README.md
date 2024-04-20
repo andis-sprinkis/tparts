@@ -18,7 +18,7 @@ Or run the `build` script:
 ./build
 ```
 
-You can use an HTTP server, such as [serve](https://www.npmjs.com/package/serve), to preview the site locally:
+You can use an HTTP server, such as [`serve`](https://www.npmjs.com/package/serve), to preview the site locally:
 
 ```sh
 serve ./dist
