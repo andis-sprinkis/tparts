@@ -44,10 +44,10 @@ Template value file name prefixes determine value placeholder substitution type 
 -   `_block_` – to be inserted as a block of one or multiple new lines
 -   `_pre_` – to be inserted as preformatted text (HTML `<pre>`)
 
-Template value files values can be defined in a hierarchy of inheritance scopes, e.g. in the example project, the value files under paths
+Template value files values can be defined in a hierarchy of inheritance scopes, e.g. in the example project, where we get 2 scopes, the value files under paths
 
--   `./site/*` are the project scope values
--   `./site/(documents|sitemap)/<document label>/*` are the document local scope values, where the document local scope value files overwrite the project scope values
+1.   `./site/*` are the project scope values
+1.   `./site/(documents|sitemap)/<document label>/*` are the document local scope values, where the document local scope value files overwrite the project scope values
 
 Some notable value files and their contents:
 
@@ -110,9 +110,9 @@ _values_files_index: [
 
 Declared as variables `_generic_documents`, `_sitemap_entry`, `_sitemap`
 
-While the `_values_files_index` is a cache of all template values, the values are subsequently written in the document-level values indices, being resolved according their hierarchy of scopes.
+While the previously mentioned `_values_files_index` is a flat list caching all template values, the values are subsequently written in the document-level values indices, resolved according their document scopes hierarchy.
 
-When building a document level values index, the values defined on the document scope, like the value `./site/documents/index/_inline_title`, take precedence over the global scope value, like the value `./site/_inline_title`.
+So, when building a document level values index, the values defined on the very document scope, for example the value `./site/documents/index/_inline_title`, take precedence over defined corresponding project scope values, such as `./site/_inline_title`.
 
 Document level resolved values indices data structure:
 
