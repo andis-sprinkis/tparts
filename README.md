@@ -4,9 +4,9 @@ A static site generator script written in GNU AWK.
 
 Requires `gawk`, `find` in a typical \*nix shell environment.
 
-## Example project
+## The example project
 
-To build the example project ([on github.io](https://andis-sprinkis.github.io/tparts/), [on gitlab.io](https://andis-sprinkis.gitlab.io/tparts)) from source files found in `./site` into the output directory `./dist`, run
+To build the example project (hosted [on github.io](https://andis-sprinkis.github.io/tparts/), [on gitlab.io](https://andis-sprinkis.gitlab.io/tparts)) from source files found in `./site` into the output directory `./dist`, run
 
 ```sh
 tparts ./site ./dist
@@ -58,6 +58,8 @@ Some notable value files and their contents:
 -   `_inline_static_asset_caching_id` – build-time generated ID string, used in the example site document static asset URLs for cache busting.
 
 ### Runtime data structures
+
+This section describes how the tparts script indexes the value files during building the project.
 
 #### Template values files index
 
