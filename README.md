@@ -6,7 +6,7 @@ Requires `gawk`, `find` in a typical \*nix shell environment.
 
 ## The example project
 
-To build the example Web site project (hosted [on github.io](https://andis-sprinkis.github.io/tparts/), [on gitlab.io](https://andis-sprinkis.gitlab.io/tparts)) from source files found in `./site` into the output directory `./dist`, run
+To build the example Web site project (hosted [on github.io](https://andis-sprinkis.github.io/tparts/), [on gitlab.io](https://andis-sprinkis.gitlab.io/tparts)) from source files found in `./site` into the output directory `./dist`, run:
 
 ```sh
 tparts ./site ./dist
