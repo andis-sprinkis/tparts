@@ -27,7 +27,7 @@ serve ./dist
 ## Goals and non-goals
 
 -   Goals
-    1. Compiles web documents, handling the repetative parts.
+    1. Generates web documents, handling the repetative parts.
     1. A boilerplate for low-maintenance, statically rendered websites.
     1. No external dependencies I need to worry about or maintain.
     1. Works _forever_, as I don't expect the GNU AWK to change a lot.
