@@ -1,5 +1,5 @@
 :root {
-  --bg-color: #ffffff;
+  --bg-color: #ebebeb;
   --bg-color-pre: #00000009;
   --border-color-hr: #00000011;
   --text-color: #000000;
@@ -12,6 +12,7 @@
   --ul-li-indent-width: clamp(1.35em, 1.75em, 7vw);
   --ol-li-indent-width: clamp(2.8em, 2.75em, 7vw);
   --paragraph-width: 40rem;
+  --font-family: Helvetica, Arial, sans-serif;
   --rem-size: clamp(1.2rem, 2.2vw, 1.95rem);
   --font-size-pre: calc(var(--rem-size) * 0.8125);
   --line-height: 1.75;
@@ -25,7 +26,7 @@
   --url-icon-dot: url('./dot_light.svg');
   --color-focus-outline: #00000080;
   --underline-thickness: 0.04em;
-  --underline-offset: 0.275em;
+  --underline-offset: 0.36125em;
   --underline-thickness-hover: 0.125em;
   --underline-offset-active-focus: calc(var(--underline-offset) - calc(var(--underline-thickness-hover) / 2));
   --bg-color-text-selection: #00000080;
@@ -69,10 +70,16 @@
     --paragraph-width: 70vw;
     --ol-ul-grid-gap: calc(0.25 * var(--grid-gap));
     --li-grid-gap: calc(0.15 * var(--grid-gap));
+    --underline-offset: 0.275em;
+    --bg-color: #ffffff;
   }
 }
 
 *:focus {
+  outline: none;
+}
+
+*:focus-visible, abbr:focus {
   outline: var(--color-focus-outline) solid 0.2rem;
   outline-offset: 0.3275em;
 }
@@ -88,7 +95,7 @@
 
 body {
   font-size: var(--rem-size);
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: var(--font-family);
   margin: 0;
   padding: calc(2 * var(--grid-gap)) 0.75em calc(4 * var(--grid-gap)) 0.75em;
   line-height: var(--line-height);
@@ -387,8 +394,8 @@ ul.inline-list-sep li:not(:last-child)::after {
   width: 1em;
   height: var(--line-height-em);
   vertical-align: middle;
-  margin-right: 0.275em;
-  margin-left: 0.275em;
+  margin-right: 0.26125em;
+  margin-left: 0.26125em;
   opacity: 0.5;
 }
 
@@ -403,7 +410,7 @@ ul.inline-list-spread {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  column-gap: 2.25em;
+  column-gap: 1.375em;
 }
 
 ul.inline-list-spread li {
@@ -467,9 +474,18 @@ pre code {
   justify-content: center;
 }
 
+.nav-document-actions {
+  margin-top: var(--grid-gap);
+}
+
+.nav-document-actions > ul.inline-list-spread {
+  justify-content: center;
+}
+
 @media print {
   .nav-top,
-  .nav-bottom {
+  .nav-bottom,
+  .nav-document-actions {
     display: none;
   }
 }
@@ -485,4 +501,13 @@ small,
 
 .text-align-left {
   text-align: left;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+button {
+  font-size: calc(0.95 * var(--text-size-small));
+  padding: 0.26125em 0.5125em;
 }
