@@ -7,6 +7,7 @@
   --text-color-link-active: red;
   --text-color-link-visited: purple;
   --text-size-small: 0.85em;
+  --text-size-pre: var(--text-size-small);
   --border-radius-outline: 0.0125em;
   --border-radius-pre: 0.22em;
   --ul-li-indent-width: clamp(1.35em, 1.75em, 7vw);
@@ -14,7 +15,6 @@
   --paragraph-width: 40rem;
   --font-family: Helvetica, Arial, sans-serif;
   --rem-size: clamp(1.2rem, 2.2vw, 1.95rem);
-  --font-size-pre: calc(var(--rem-size) * 0.8125);
   --line-height: 1.75;
   --line-height-em: calc(var(--line-height) * 1em);
   --line-height-nav-inline: calc(var(--line-height) * 1.175);
@@ -29,17 +29,20 @@
   --underline-offset: 0.36125em;
   --underline-thickness-hover: 0.125em;
   --underline-offset-active-focus: calc(var(--underline-offset) - calc(var(--underline-thickness-hover) / 2));
+  --padding-button: 0.26125em 0.5125em;
+  --font-size-button: var(--text-size-small);
   --bg-color-text-selection: #00000080;
   --bg-color-tooltip: var(--text-color);
   --text-color-tooltip: var(--bg-color);
-  --padding-tooltip: 0.175em 0.5em;
+  --padding-tooltip: var(--padding-button);
   --border-radius-tooltip: 0.38125em;
   --border-tooltip: 0.1em solid var(--bg-color);
   --position-left-tooltip: 0;
   --position-top-tooltip: calc(1.25 * var(--line-height-em));
-  --font-size-tooltip: calc(var(--rem-size) * 0.8125);
+  --text-size-tooltip: var(--text-size-small);
   --position-tooltip: absolute;
   --width-tooltip: auto;
+  --font-family-tooltip: sans-serif;
   --font-weight-tooltip: normal;
   --font-style-tooltip: normal;
   --white-space-tooltip: nowrap;
@@ -203,7 +206,8 @@ abbr[title]:focus::after {
   border-radius: var(--border-radius-tooltip);
   border: var(--border-tooltip);
   padding: var(--padding-tooltip);
-  font-size: var(--font-size-tooltip);
+  font-family: var(--font-family-tooltip);
+  font-size: var(--text-size-tooltip);
   font-weight: var(--font-weight-tooltip);
   font-style: var(--font-style-tooltip);
   z-index: var(--z-index-tooltip);
@@ -426,7 +430,7 @@ ul.inline-list-spread li::before {
 
 pre,
 code {
-  font-size: var(--font-size-pre);
+  font-size: var(--text-size-pre);
 }
 
 pre {
@@ -508,6 +512,6 @@ small,
 }
 
 button {
-  font-size: calc(0.95 * var(--text-size-small));
-  padding: 0.26125em 0.5125em;
+  font-size: var(--font-size-button);
+  padding: var(--padding-button);
 }
