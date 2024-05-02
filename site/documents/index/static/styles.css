@@ -173,13 +173,11 @@ a[target='_blank']::after {
   height: var(--line-height-em);
   vertical-align: middle;
   margin-left: 0.175em;
-  opacity: 0.5;
 }
 
 @media print {
   a[target='_blank']::after {
     content: none;
-    opacity: initial;
   }
 }
 
@@ -398,9 +396,8 @@ ul.inline-list-sep li:not(:last-child)::after {
   width: 1em;
   height: var(--line-height-em);
   vertical-align: middle;
-  margin-right: 0.26125em;
-  margin-left: 0.26125em;
-  opacity: 0.5;
+  margin-right: 0.25em;
+  margin-left: 0.25em;
 }
 
 @media print {
