@@ -2,7 +2,7 @@
   --bg-color: #dbdbdb;
   --bg-color-pre: #00000009;
   --border-color-hr: #00000011;
-  --text-color: #000000;
+  --text-color: #1b1b1b;
   --text-color-link: blue;
   --text-color-link-active: red;
   --text-color-link-visited: purple;
@@ -74,7 +74,11 @@
     --ol-ul-grid-gap: calc(0.25 * var(--grid-gap));
     --li-grid-gap: calc(0.15 * var(--grid-gap));
     --underline-offset: 0.275em;
+    --text-color: #000000;
     --bg-color: #ffffff;
+    --url-icon-new-tab: url('./new_tab_print.svg');
+    --url-icon-bullet: url('./bullet_print.svg');
+    --url-icon-dot: url('./dot_print.svg');
   }
 }
 
