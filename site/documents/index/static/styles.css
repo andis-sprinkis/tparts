@@ -26,9 +26,7 @@
   --url-icon-dot: url('./dot_light.svg');
   --color-focus-outline: #00000080;
   --underline-thickness: 0.04em;
-  --underline-offset: 0.36125em;
-  --underline-thickness-hover: 0.125em;
-  --underline-offset-active-focus: calc(var(--underline-offset) - calc(var(--underline-thickness-hover) / 2));
+  --underline-offset: 0.2125em;
   --padding-button: 0.26125em 0.5125em;
   --font-size-button: var(--text-size-small);
   --bg-color-text-selection: #00000080;
@@ -73,7 +71,6 @@
     --paragraph-width: 70vw;
     --ol-ul-grid-gap: calc(0.25 * var(--grid-gap));
     --li-grid-gap: calc(0.15 * var(--grid-gap));
-    --underline-offset: 0.275em;
     --text-color: #000000;
     --bg-color: #ffffff;
     --url-icon-new-tab: url('./new_tab_print.svg');
@@ -162,12 +159,6 @@ a:visited {
 a:active,
 a:visited:active {
   color: var(--text-color-link-active);
-}
-
-a:hover,
-a:focus {
-  text-decoration-thickness: var(--underline-thickness-hover);
-  text-underline-offset: var(--underline-offset-active-focus);
 }
 
 a[target='_blank']::after {
