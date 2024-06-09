@@ -7,7 +7,7 @@
   "name": "<!-- _inline_site_name -->",
   "orientation": "<!-- _inline_orientation -->",
   "short_name": "<!-- _inline_site_short_name -->",
-  "start_url": "<!-- _inline_site_url -->",
+  "start_url": "<!-- _inline_site_url -->/",
   "theme_color": "<!-- _inline_theme_color -->",
   "icons": [
     {
