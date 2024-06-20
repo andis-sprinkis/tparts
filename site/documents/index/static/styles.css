@@ -83,7 +83,8 @@
   outline: none;
 }
 
-*:focus-visible, abbr:focus {
+*:focus-visible,
+abbr:focus {
   outline: var(--color-focus-outline) solid 0.2rem;
   outline-offset: 0.3275em;
 }
@@ -466,6 +467,7 @@ pre code {
   }
 }
 
+.nav-top > ul.inline-list-sep,
 .nav-bottom > ul.inline-list-sep {
   justify-content: center;
 }
