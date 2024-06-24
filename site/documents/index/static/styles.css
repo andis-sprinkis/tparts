@@ -9,7 +9,7 @@
   --text-size-small: 0.85em;
   --text-size-pre: var(--text-size-small);
   --border-radius-outline: 0.0125em;
-  --border-radius-pre: 0.22em;
+  --border-radius-pre: 0.19em;
   --ul-li-indent-width: clamp(1.35em, 1.75em, 7vw);
   --ol-li-indent-width: clamp(2.8em, 2.75em, 7vw);
   --paragraph-width: 40rem;
@@ -445,7 +445,7 @@ pre.text-wrap {
 }
 
 code {
-  padding: 0.175em 0.3125em;
+  padding: 0.175em 0.25em;
   background-color: var(--bg-color-pre);
   border-radius: var(--border-radius-pre);
 }
