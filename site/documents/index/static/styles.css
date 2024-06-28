@@ -27,7 +27,7 @@
   --color-focus-outline: #00000080;
   --underline-thickness: 0.04em;
   --underline-offset: 0.2125em;
-  --padding-button: 0.26125em 0.5125em;
+  --padding-button: 0.26125em 0.575em;
   --font-size-button: var(--text-size-small);
   --bg-color-text-selection: #00000080;
   --bg-color-tooltip: var(--text-color);
@@ -102,14 +102,10 @@ body {
   font-size: var(--rem-size);
   font-family: var(--font-family);
   margin: 0;
-  padding: calc(2 * var(--grid-gap)) 0.75em calc(4 * var(--grid-gap)) 0.75em;
+  padding: calc(2 * var(--grid-gap)) 0.75em calc(3 * var(--grid-gap)) 0.75em;
   line-height: var(--line-height);
   color: var(--text-color);
   background-color: var(--bg-color);
-}
-
-body > *:first-child {
-  margin-top: 0;
 }
 
 body > *:last-child {
@@ -129,7 +125,7 @@ body > *:last-child {
 
 main {
   margin-top: 0;
-  margin-bottom: calc(2 * var(--grid-gap));
+  margin-bottom: calc(3 * var(--grid-gap));
 }
 
 @media print {
@@ -223,6 +219,11 @@ article {
   grid-row-gap: var(--grid-gap);
 }
 
+section > *:last-child,
+article > *:last-child {
+  margin-bottom: 0;
+}
+
 ul,
 ol {
   display: grid;
@@ -265,6 +266,12 @@ ul.inline-list-spread {
   max-width: var(--paragraph-width);
 }
 
+address {
+  font-style: normal;
+}
+
+address .inline-list-sep,
+address .inline-list-spread,
 nav .inline-list-sep,
 nav .inline-list-spread {
   line-height: var(--line-height-nav-inline);
@@ -279,9 +286,19 @@ hr {
   margin-top: calc(calc(0.5 * var(--grid-gap)) - 0.05em);
 }
 
+header {
+  margin-bottom: var(--grid-gap);
+}
+
+@media print {
+  header {
+    margin-bottom: 0;
+  }
+}
+
 h1 {
-  margin-top: var(--grid-gap);
-  margin-bottom: calc(0.75 * var(--grid-gap));
+  margin-top: calc(2 * var(--grid-gap));
+  margin-bottom: 0;
 }
 
 @media print {
@@ -391,8 +408,8 @@ ul.inline-list-sep li:not(:last-child)::after {
   width: 1em;
   height: var(--line-height-em);
   vertical-align: middle;
-  margin-right: 0.25em;
-  margin-left: 0.25em;
+  margin-right: 0.2125em;
+  margin-left: 0.2125em;
 }
 
 @media print {
