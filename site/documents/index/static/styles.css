@@ -42,7 +42,7 @@
   --width-tooltip: auto;
   --font-family-tooltip: sans-serif;
   --font-weight-tooltip: normal;
-  --font-style-tooltip: normal;
+  --font-style-tooltip: italic;
   --white-space-tooltip: nowrap;
   --max-width-tooltip: 100vw;
   --z-index-tooltip: 1;
