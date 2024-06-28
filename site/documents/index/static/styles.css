@@ -270,11 +270,13 @@ address {
   font-style: normal;
 }
 
-address .inline-list-sep,
-address .inline-list-spread,
-nav .inline-list-sep,
-nav .inline-list-spread {
-  line-height: var(--line-height-nav-inline);
+@media not print {
+  address .inline-list-sep,
+  address .inline-list-spread,
+  nav .inline-list-sep,
+  nav .inline-list-spread {
+    line-height: var(--line-height-nav-inline);
+  }
 }
 
 hr {
