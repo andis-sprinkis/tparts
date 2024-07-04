@@ -54,12 +54,12 @@
     --bg-color: #131313;
     --bg-color-pre: #ffffff09;
     --border-color-hr: #ffffff11;
-    --text-color: #a8a8a8;
+    --text-color: #cccccc;
     --text-color-link: #2f81f7;
     --text-color-link-active: #f43939;
     --text-color-link-visited: #ab50d5;
-    --bg-color-text-selection: #a8a8a880;
-    --color-focus-outline: #a8a8a880;
+    --bg-color-text-selection: #cccccc80;
+    --color-focus-outline: #cccccc80;
     --url-icon-new-tab: url('./new_tab_dark.svg');
     --url-icon-bullet: url('./bullet_dark.svg');
     --url-icon-dot: url('./dot_dark.svg');
