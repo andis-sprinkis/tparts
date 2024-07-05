@@ -125,7 +125,7 @@ body > *:last-child {
 
 main {
   margin-top: 0;
-  margin-bottom: calc(3 * var(--grid-gap));
+  margin-bottom: calc(2 * var(--grid-gap));
 }
 
 @media print {
