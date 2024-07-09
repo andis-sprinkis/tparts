@@ -17,6 +17,7 @@
   --rem-size: clamp(1.2rem, 2.2vw, 1.95rem);
   --line-height: 1.75;
   --line-height-em: calc(var(--line-height) * 1em);
+  --line-height-pre: 1.5;
   --line-height-nav-inline: calc(var(--line-height) * 1.175);
   --grid-gap: var(--line-height-em);
   --ol-ul-grid-gap: calc(0.4 * var(--grid-gap));
@@ -442,6 +443,7 @@ ul.inline-list-spread li::before {
 pre,
 code {
   font-size: var(--text-size-pre);
+  line-height: var(--line-height-pre);
 }
 
 pre {
