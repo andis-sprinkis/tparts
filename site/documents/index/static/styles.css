@@ -523,7 +523,7 @@ pre code {
 }
 
 .nav-document-actions {
-  margin-top: calc(2 * var(--grid-gap));
+  margin-top: calc(1 * var(--grid-gap));
 }
 
 .nav-document-actions > ul.inline-list-spread {
