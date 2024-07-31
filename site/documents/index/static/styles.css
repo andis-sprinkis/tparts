@@ -1,5 +1,5 @@
 :root {
-  --bg-color: #dbdbdb;
+  --bg-color: #e0e0e0;
   --bg-color-pre: #00000009;
   --border-color-hr: #00000011;
   --text-color: #000;
@@ -22,6 +22,7 @@
   --grid-gap: var(--line-height-em);
   --ol-ul-grid-gap: calc(0.4 * var(--grid-gap));
   --li-grid-gap: calc(0.3 * var(--grid-gap));
+  --padding-hor-body: 0.8rem;
   --url-icon-new-tab: url('./new_tab_light.svg');
   --url-icon-bullet: url('./bullet_light.svg');
   --url-icon-dot: url('./dot_light.svg');
@@ -61,6 +62,7 @@
     --text-color-link-visited: #ab50d5;
     --bg-color-text-selection: #cccccc80;
     --color-focus-outline: #cccccc80;
+    --border-page-section: 1px solid #ffffff51;
     --url-icon-new-tab: url('./new_tab_dark.svg');
     --url-icon-bullet: url('./bullet_dark.svg');
     --url-icon-dot: url('./dot_dark.svg');
@@ -103,10 +105,18 @@ body {
   font-size: var(--rem-size);
   font-family: var(--font-family);
   margin: 0;
-  padding: calc(2 * var(--grid-gap)) 0.75em calc(3 * var(--grid-gap)) 0.75em;
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: calc(4 * var(--grid-gap));
+  padding-top: calc(2 * var(--grid-gap));
   line-height: var(--line-height);
   color: var(--text-color);
   background-color: var(--bg-color);
+}
+
+body > * {
+  padding-left: var(--padding-hor-body);
+  padding-right: var(--padding-hor-body);
 }
 
 body > *:last-child {
@@ -126,7 +136,7 @@ body > *:last-child {
 
 main {
   margin-top: 0;
-  margin-bottom: calc(3 * var(--grid-gap));
+  margin-bottom: calc(4 * var(--grid-gap));
 }
 
 @media print {
@@ -303,7 +313,7 @@ header {
 }
 
 h1 {
-  margin-top: calc(2 * var(--grid-gap));
+  margin-top: calc(1 * var(--grid-gap));
   margin-bottom: 0;
 }
 
@@ -349,8 +359,8 @@ ol {
 ol > li::before {
   content: counter(item) '.';
   counter-increment: item;
-  width: calc(var(--ol-li-indent-width) - 0.75em);
-  margin-right: 0.75em;
+  width: calc(var(--ol-li-indent-width) - var(--padding-hor-body));
+  margin-right: var(--padding-hor-body);
   left: calc(-1 * var(--ol-li-indent-width));
   text-align: right;
 }
@@ -488,6 +498,23 @@ pre code {
     border-radius: 0;
     font-size: 1em;
   }
+}
+
+.nav-top,
+.nav-bottom,
+.nav-top > hr,
+.nav-bottom > hr {
+  max-width: 100%;
+}
+
+.nav-top {
+  border-bottom: 0.1em solid var(--border-color-hr);
+  padding-bottom: var(--line-height-em);
+}
+
+.nav-bottom {
+  border-top: 0.1em solid var(--border-color-hr);
+  padding-top: var(--line-height-em);
 }
 
 .nav-top > ul.inline-list-sep,
