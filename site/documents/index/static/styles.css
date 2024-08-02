@@ -1,5 +1,5 @@
 :root {
-  --bg-color: #e0e0e0;
+  --bg-color: #f0f0f0;
   --bg-color-pre: #00000009;
   --border-color-hr: #00000011;
   --text-color: #000;
@@ -136,7 +136,7 @@ body > *:last-child {
 
 main {
   margin-top: 0;
-  margin-bottom: calc(4 * var(--grid-gap));
+  margin-bottom: calc(5 * var(--grid-gap));
 }
 
 @media print {
