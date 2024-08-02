@@ -30,12 +30,12 @@ serve ./dist
     1. Generates static web documents, handling the repetative parts.
     1. A boilerplate for low-maintenance websites.
     1. No external dependencies I need to worry about or maintain.
-    1. Works _forever_, as I don't expect the GNU AWK to change a lot.
     1. Remains as rudamentary and concise as possible.
     1. The example web site project has a good UI accessibility.
+    1. Works _forever_, as I don't expect the GNU AWK to change a lot.
 -   Non-goals
     1. Separating the content from the document structure or presentation (e.g. a Markdown parser).
-    1. A complex to maintain document templating language (something comparable to Pug or Handlebars).
+    1. A complex to develop and maintain document templating language (something comparable to Pug or Handlebars).
 
 ## How does the script work?
 
