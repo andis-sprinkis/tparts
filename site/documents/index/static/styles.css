@@ -296,8 +296,7 @@ address {
 hr {
   position: relative;
   border: none;
-  border-bottom: 0.1em solid var(--border-color-hr);
-  max-width: calc(var(--paragraph-width) * 0.54);
+  border-bottom: 0.04em solid var(--border-color-hr);
   margin-bottom: calc(calc(0.5 * var(--grid-gap)) - 0.05em);
   margin-top: calc(calc(0.5 * var(--grid-gap)) - 0.05em);
 }
@@ -508,12 +507,12 @@ pre code {
 }
 
 .nav-top {
-  border-bottom: 0.1em solid var(--border-color-hr);
+  border-bottom: 0.04em solid var(--border-color-hr);
   padding-bottom: var(--line-height-em);
 }
 
 .nav-bottom {
-  border-top: 0.1em solid var(--border-color-hr);
+  border-top: 0.04em solid var(--border-color-hr);
   padding-top: var(--line-height-em);
 }
 
@@ -523,7 +522,7 @@ pre code {
 }
 
 .nav-document-actions {
-  margin-top: calc(2 * var(--grid-gap));
+  margin-top: var(--grid-gap);
 }
 
 .nav-document-actions > ul.inline-list-spread {
