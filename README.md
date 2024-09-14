@@ -1,6 +1,6 @@
 # `tparts`
 
-A static site generator script written in GNU AWK.
+A static website generator script written in GNU AWK.
 
 Requires `gawk`, `find` in a typical \*nix shell environment.
 
