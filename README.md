@@ -37,7 +37,7 @@ serve ./dist
     1. Separating the content from the document structure or presentation (e.g. a Markdown parser).
     1. A complex to develop and maintain document templating language (something comparable to Pug or Handlebars).
 
-## How does the script work?
+## How the script works
 
 The tparts script is for building a set of plain text files – the documents, in their target directories, from reusable, inheritant parts – the template value files, with their file names prefixed by `_inline_`, `_block_`, `_pre_`.
 
