@@ -31,7 +31,6 @@
   --underline-offset: 0.2125em;
   --padding-button: 0.26125em 0.575em;
   --font-size-button: var(--text-size-small);
-  --font-style-button: italic;
   --bg-color-text-selection: #00000080;
   --bg-color-tooltip: var(--text-color);
   --text-color-tooltip: var(--bg-color);
@@ -561,7 +560,6 @@ small,
 
 button {
   font-size: var(--font-size-button);
-  font-style: var(--font-style-button);
   padding: var(--padding-button);
   cursor: pointer;
 }
