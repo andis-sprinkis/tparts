@@ -567,4 +567,5 @@ button {
   font-size: var(--font-size-button);
   font-style: var(--font-style-button);
   padding: var(--padding-button);
+  cursor: pointer;
 }
