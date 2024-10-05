@@ -26,6 +26,7 @@
   --url-icon-new-tab: url('./new_tab_light.svg');
   --url-icon-bullet: url('./bullet_light.svg');
   --url-icon-dot: url('./dot_light.svg');
+  --url-icon-dash: url('./dash_light.svg');
   --color-focus-outline: #00000080;
   --underline-thickness: 0.04em;
   --underline-offset: 0.2125em;
@@ -66,6 +67,7 @@
     --url-icon-new-tab: url('./new_tab_dark.svg');
     --url-icon-bullet: url('./bullet_dark.svg');
     --url-icon-dot: url('./dot_dark.svg');
+    --url-icon-dash: url('./dash_dark.svg');
   }
 }
 
@@ -79,6 +81,7 @@
     --url-icon-new-tab: url('./new_tab_print.svg');
     --url-icon-bullet: url('./bullet_print.svg');
     --url-icon-dot: url('./dot_print.svg');
+    --url-icon-dash: url('./dash_print.svg');
   }
 }
 
@@ -381,6 +384,14 @@ ul > li::before {
   width: 1em;
   height: var(--line-height-em);
   left: calc(-1 * var(--ul-li-indent-width));
+}
+
+ul.dash > li::before {
+  content: var(--url-icon-dash);
+}
+
+ul.dot > li::before {
+  content: var(--url-icon-dot);
 }
 
 @media screen and (max-width: calc(40rem + calc(2 * 7vw))) {
