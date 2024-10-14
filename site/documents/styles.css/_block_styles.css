@@ -23,10 +23,10 @@
   --ol-ul-grid-gap: calc(0.4 * var(--grid-gap));
   --li-grid-gap: calc(0.3 * var(--grid-gap));
   --padding-hor-body: 0.8rem;
-  --url-icon-new-tab: url('./new_tab_light.svg');
-  --url-icon-bullet: url('./bullet_light.svg');
-  --url-icon-dot: url('./dot_light.svg');
-  --url-icon-dash: url('./dash_light.svg');
+  --url-icon-new-tab: url('./new_tab_light.svg?<!-- _inline_static_asset_caching_id -->');
+  --url-icon-bullet: url('./bullet_light.svg?<!-- _inline_static_asset_caching_id -->');
+  --url-icon-dot: url('./dot_light.svg?<!-- _inline_static_asset_caching_id -->');
+  --url-icon-dash: url('./dash_light.svg?<!-- _inline_static_asset_caching_id -->');
   --color-focus-outline: #00000080;
   --underline-thickness: 0.04em;
   --underline-offset: 0.2125em;
@@ -64,10 +64,10 @@
     --bg-color-text-selection: #cccccc80;
     --color-focus-outline: #cccccc80;
     --border-page-section: 1px solid #ffffff51;
-    --url-icon-new-tab: url('./new_tab_dark.svg');
-    --url-icon-bullet: url('./bullet_dark.svg');
-    --url-icon-dot: url('./dot_dark.svg');
-    --url-icon-dash: url('./dash_dark.svg');
+    --url-icon-new-tab: url('./new_tab_dark.svg?<!-- _inline_static_asset_caching_id -->');
+    --url-icon-bullet: url('./bullet_dark.svg?<!-- _inline_static_asset_caching_id -->');
+    --url-icon-dot: url('./dot_dark.svg?<!-- _inline_static_asset_caching_id -->');
+    --url-icon-dash: url('./dash_dark.svg?<!-- _inline_static_asset_caching_id -->');
   }
 }
 
@@ -78,10 +78,10 @@
     --li-grid-gap: calc(0.15 * var(--grid-gap));
     --text-color: #000000;
     --bg-color: #ffffff;
-    --url-icon-new-tab: url('./new_tab_print.svg');
-    --url-icon-bullet: url('./bullet_print.svg');
-    --url-icon-dot: url('./dot_print.svg');
-    --url-icon-dash: url('./dash_print.svg');
+    --url-icon-new-tab: url('./new_tab_print.svg?<!-- _inline_static_asset_caching_id -->');
+    --url-icon-bullet: url('./bullet_print.svg?<!-- _inline_static_asset_caching_id -->');
+    --url-icon-dot: url('./dot_print.svg?<!-- _inline_static_asset_caching_id -->');
+    --url-icon-dash: url('./dash_print.svg?<!-- _inline_static_asset_caching_id -->');
   }
 }
 

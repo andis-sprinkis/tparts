@@ -320,7 +320,8 @@ BEGIN {
   print "\nBuilding sitemap document entries for generic documents"
 
   for (_i in _generic_documents) {
-    if (match(_generic_documents[_i]["values_index"]["_inline_filename"]["value"], /(403\.html$|404\.html$|manifest\.webmanifest$|robots\.txt$)/)) {
+    # TODO: add _cfg_sitemap_skip: "0"|"1" (?) document property
+    if (match(_generic_documents[_i]["values_index"]["_inline_filename"]["value"], /(403\.html$|404\.html$|styles\.css$|manifest\.webmanifest$|robots\.txt$)/)) {
       print "    Skipped building sitemap document entry for generic document " _generic_documents[_i]["path_src"]
       continue
     }
