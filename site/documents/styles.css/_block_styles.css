@@ -135,6 +135,12 @@ body > *:last-child {
     padding: 0;
     font-size: 1em;
   }
+
+  p,
+  ul > li,
+  ol > li {
+    break-inside: avoid;
+  }
 }
 
 main {
