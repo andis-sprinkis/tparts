@@ -56,8 +56,8 @@ Template value file name prefixes determine value placeholder substitution type 
 
 Template value files values can be defined in a hierarchy of inheritance scopes, e.g. in the example project, where we get 2 scopes, the value files under paths
 
-1.   `./site/*` are the project scope values
-1.   `./site/(documents|sitemap)/<document label>/*` are the document local scope values, where the document local scope value files overwrite the project scope values
+1.  `./site/*` are the project scope values
+1.  `./site/(documents|sitemap)/<document label>/*` are the document local scope values, where the document local scope value files overwrite the project scope values
 
 Some notable value files and their contents:
 
@@ -66,6 +66,7 @@ Some notable value files and their contents:
 -   `_inline_filename` – the filename of a document in the project build.
 -   `_inline_lastmod` – the document last modified date, used in the example site sitemap entries.
 -   `_inline_static_asset_caching_id` – build-time generated ID string, used in the example site document static asset URLs for cache busting.
+-   `_inline_sitemap_skip` – boolean property value (`0` or `1`) for omitting documents from being added to `sitemap.xml`.
 
 ### Runtime data structures
 
