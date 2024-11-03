@@ -484,6 +484,7 @@ pre {
   overflow-x: scroll;
   padding: 0.75em 1em;
   background-color: var(--bg-color-pre);
+  border: var(--border-thickness-hr) solid var(--border-color-hr);
 }
 
 pre.text-wrap {
