@@ -4,7 +4,7 @@
   --border-color-hr: #00000011;
   --border-thickness-hr: 0.04em;
   --text-color: #000;
-  --text-color-link: blue;
+  --text-color-link: #0047b7;
   --text-color-link-active: red;
   --text-color-link-visited: purple;
   --text-size-small: 0.85em;
@@ -54,13 +54,13 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-color: #0a0a0a;
+    --bg-color: #090909;
     --bg-color-pre: #ffffff09;
     --border-color-hr: #ffffff11;
     --text-color: #cccccc;
-    --text-color-link: #2f81f7;
-    --text-color-link-active: #e97979;
-    --text-color-link-visited: #b07df7;
+    --text-color-link: #539be9;
+    --text-color-link-active: #d98c8c;
+    --text-color-link-visited: #bc85d4;
     --bg-color-text-selection: #cccccc80;
     --color-focus-outline: #cccccc80;
     --border-page-section: 1px solid #ffffff51;
