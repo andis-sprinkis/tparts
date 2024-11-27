@@ -328,8 +328,13 @@ h1 {
   margin-bottom: 0;
 }
 
+h2 {
+  border-bottom: var(--border-thickness-hr) solid var(--border-color-hr);
+  padding-bottom: calc(var(--grid-gap) * 0.069125);
+}
+
 @media print {
-  h1 {
+  h1, h2 {
     margin-top: 0;
     padding-bottom: 0;
     border-bottom: none;
