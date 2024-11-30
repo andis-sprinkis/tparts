@@ -117,12 +117,12 @@ body {
   background-color: var(--bg-color);
 }
 
-body>* {
+body > * {
   padding-left: var(--padding-hor-body);
   padding-right: var(--padding-hor-body);
 }
 
-body>*:last-child {
+body > *:last-child {
   margin-bottom: 0;
 }
 
@@ -137,8 +137,8 @@ body>*:last-child {
   }
 
   p,
-  ul>li,
-  ol>li {
+  ul > li,
+  ol > li {
     break-inside: avoid;
   }
 }
@@ -239,8 +239,8 @@ article {
   grid-row-gap: var(--grid-gap);
 }
 
-section>*:last-child,
-article>*:last-child {
+section > *:last-child,
+article > *:last-child {
   margin-bottom: 0;
 }
 
@@ -270,21 +270,29 @@ h6 {
   line-height: 1.21825;
 }
 
-h2>a,
-h3>a,
-h4>a,
-h5>a,
-h6>a {
+h2 > a,
+h3 > a,
+h4 > a,
+h5 > a,
+h6 > a {
   color: var(--text-color);
   text-decoration: none;
 }
 
-h2>a:hover,
-h3>a:hover,
-h4>a:hover,
-h5>a:hover,
-h6>a:hover {
+h2 > a:hover,
+h3 > a:hover,
+h4 > a:hover,
+h5 > a:hover,
+h6 > a:hover {
   text-decoration: underline;
+}
+
+h2 > a:visited,
+h3 > a:visited,
+h4 > a:visited,
+h5 > a:visited,
+h6 > a:visited {
+  color: var(--text-color);
 }
 
 h1,
@@ -312,7 +320,6 @@ address {
 }
 
 @media not print {
-
   address .inline-list-sep,
   address .inline-list-spread,
   nav .inline-list-sep,
@@ -352,7 +359,6 @@ h2 {
 }
 
 @media print {
-
   h1,
   h2 {
     margin-top: 0;
@@ -368,23 +374,23 @@ ol {
   position: relative;
 }
 
-ul>li,
-ol>li {
+ul > li,
+ol > li {
   position: relative;
 }
 
-ul>li ul>li,
-ol>li ul>li {
+ul > li ul > li,
+ol > li ul > li {
   padding-left: var(--ul-li-indent-width);
 }
 
-ol>li ol>li,
-ul>li ol>li {
+ol > li ol > li,
+ul > li ol > li {
   padding-left: var(--ol-li-indent-width);
 }
 
-ol>li::before,
-ul>li::before {
+ol > li::before,
+ul > li::before {
   position: absolute;
   display: inline-block;
   top: 0;
@@ -394,7 +400,7 @@ ol {
   counter-reset: item;
 }
 
-ol>li::before {
+ol > li::before {
   content: counter(item) '.';
   counter-increment: item;
   width: calc(var(--ol-li-indent-width) - var(--padding-hor-body));
@@ -403,45 +409,45 @@ ol>li::before {
   text-align: right;
 }
 
-ol>li ol>li::before,
-ul>li ol>li::before,
-ul>li ul>li::before,
-ol>li ul>li::before {
+ol > li ol > li::before,
+ul > li ol > li::before,
+ul > li ul > li::before,
+ol > li ul > li::before {
   left: 0;
 }
 
-ul>li::before {
+ul > li::before {
   content: var(--url-icon-bullet);
   width: 1em;
   height: var(--line-height-em);
   left: calc(-1 * var(--ul-li-indent-width));
 }
 
-ul.dash>li::before {
+ul.dash > li::before {
   content: var(--url-icon-dash);
 }
 
-ul.dot>li::before {
+ul.dot > li::before {
   content: var(--url-icon-dot);
 }
 
 @media screen and (max-width: calc(40rem + calc(2 * 7vw))) {
-  ol>li {
+  ol > li {
     padding-left: var(--ol-li-indent-width);
   }
 
-  ul>li {
+  ul > li {
     padding-left: var(--ul-li-indent-width);
   }
 
-  ol>li::before,
-  ul>li::before {
+  ol > li::before,
+  ul > li::before {
     left: 0;
   }
 }
 
 @media print {
-  ul>li::before {
+  ul > li::before {
     print-color-adjust: exact;
   }
 }
@@ -535,7 +541,6 @@ pre code {
 }
 
 @media print {
-
   pre,
   code {
     padding: 0;
@@ -547,8 +552,8 @@ pre code {
 
 .nav-top,
 .nav-bottom,
-.nav-top>hr,
-.nav-bottom>hr {
+.nav-top > hr,
+.nav-bottom > hr {
   max-width: 100%;
 }
 
@@ -562,8 +567,8 @@ pre code {
   padding-top: var(--line-height-em);
 }
 
-.nav-top>ul.inline-list-sep,
-.nav-bottom>ul.inline-list-sep {
+.nav-top > ul.inline-list-sep,
+.nav-bottom > ul.inline-list-sep {
   justify-content: center;
 }
 
@@ -573,12 +578,11 @@ pre code {
   margin-top: calc(var(--grid-gap) * 2);
 }
 
-.nav-document-actions>ul.inline-list-spread {
+.nav-document-actions > ul.inline-list-spread {
   justify-content: center;
 }
 
 @media print {
-
   .nav-top,
   .nav-bottom,
   .nav-document-actions {
