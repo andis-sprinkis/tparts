@@ -4,6 +4,7 @@
   --border-color-hr: #00000011;
   --border-thickness-hr: 0.04em;
   --text-color: #000;
+  --text-color-muted: #707070;
   --text-color-link: #0047b7;
   --text-color-link-active: red;
   --text-color-link-visited: purple;
@@ -258,7 +259,7 @@ li {
 }
 
 h1 {
-  font-size: 1.16125em;
+  font-size: 1em;
 }
 
 h2,
@@ -266,7 +267,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-size: 1.6125em;
+  font-size: 1.9125em;
   line-height: 1.21825;
 }
 
@@ -287,11 +288,29 @@ h6 > a:hover {
   text-decoration: underline;
 }
 
-h2 > a:visited,
 h3 > a:visited,
 h4 > a:visited,
 h5 > a:visited,
 h6 > a:visited {
+  color: var(--text-color);
+}
+
+h2,
+h2 > a {
+  color: var(--text-color-muted);
+}
+
+h2 > a:hover,
+h2 > a:visited:hover {
+  color: var(--text-color-muted);
+}
+
+h2 > a:visited {
+  color: var(--text-color-muted);
+}
+
+h2 > a:active,
+h2 > a:visited:active {
   color: var(--text-color);
 }
 
@@ -348,14 +367,7 @@ header {
 
 h1 {
   margin-top: calc(2 * var(--grid-gap));
-  border-bottom: var(--border-thickness-hr) solid var(--border-color-hr);
-  padding-bottom: calc(var(--grid-gap) * 2);
   margin-bottom: 0;
-}
-
-h2 {
-  border-bottom: var(--border-thickness-hr) solid var(--border-color-hr);
-  padding-bottom: calc(var(--grid-gap) * 0.069125);
 }
 
 @media print {
