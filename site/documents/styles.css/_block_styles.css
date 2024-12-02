@@ -269,6 +269,7 @@ h5,
 h6 {
   font-size: 1.9125em;
   line-height: 1.21825;
+  letter-spacing: -0.02275em;
 }
 
 h2 > a,
@@ -557,6 +558,7 @@ pre code {
   code {
     padding: 0;
     background-color: initial;
+    border: none;
     border-radius: 0;
     font-size: 1em;
   }
