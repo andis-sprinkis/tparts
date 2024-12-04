@@ -41,9 +41,9 @@ serve ./dist
 
 The tparts script is for building a set of plain text files – the documents, in their target directories, from reusable, inheritant parts – the template value files, with their file names prefixed by `_inline_`, `_block_`, `_pre_`.
 
-In the example Web site project it means creating the HTML documents and the supplementary files, like `manifest.webmanifest`, `robots.txt`, `sitemap.xml`, from the globally defined and the document specific values in the available template value files, prefixed with `_`. And also copying the static assets files, like style-sheets and images, to their respective document directories.
+In the example website project it means creating the HTML documents and the metadata files, like `manifest.webmanifest`, `robots.txt`, `sitemap.xml`, from the globally scoped and the document specific values in the available template value files, prefixed with `_`. Also copying the static assets files, like style-sheets and images, to their respective document directories.
 
-In value files, the template value placeholders to be subsituted are the other value file names wrapped in the HTML comment syntax, e.g. `<-- _inline_lastmod -->` is to be subsituted in place with contents of the file `_inline_lastmod`. The substitution process is iterative, exhausiting the names of known value files.
+In value files, the template value placeholders to be subsituted are the other value file names wrapped in the HTML comment syntax, e.g. the `<-- _inline_lastmod -->` is subsituted in place with contents of the file `_inline_lastmod`. The substitution is iterative, filling in the documents, exhausiting the names of known value files.
 
 Template value file name prefixes determine value placeholder substitution type – how the value file text content will be inserted in the output:
 
