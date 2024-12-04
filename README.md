@@ -70,7 +70,7 @@ Some notable value files and their contents:
 
 ### Runtime data structures
 
-This section describes how the tparts script indexes the value files during building the project.
+This section describes how the tparts script indexes the value files in memory during building the project.
 
 #### Template values files index
 
