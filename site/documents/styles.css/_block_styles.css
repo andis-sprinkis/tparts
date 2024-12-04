@@ -258,18 +258,18 @@ li {
   grid-row-gap: var(--li-grid-gap);
 }
 
-h1 {
-  font-size: 1em;
+h2 {
+  font-size: 1.9125em;
+  line-height: 1.21825;
+  letter-spacing: -0.02275em;
 }
 
-h2,
+h1,
 h3,
 h4,
 h5,
 h6 {
-  font-size: 1.9125em;
-  line-height: 1.21825;
-  letter-spacing: -0.02275em;
+  font-size: 1em;
 }
 
 h2 > a,
