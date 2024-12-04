@@ -4,7 +4,7 @@ A static website generator script.
 
 Requires `gawk`, `find` in a typical \*nix shell environment.
 
-## The example project
+## The example website
 
 To build the example website project (hosted [on github.io](https://andis-sprinkis.github.io/tparts/), [on gitlab.io](https://andis-sprinkis.gitlab.io/tparts)) from source files found in `./site` into the output directory `./dist`, run:
 
