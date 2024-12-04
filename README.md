@@ -39,7 +39,7 @@ serve ./dist
 
 ## How the script works
 
-The tparts script is for building a set of plain text files – the documents, in their target directories, from reusable, inheritant parts – the template value files, with their file names prefixed by `_inline_`, `_block_`, `_pre_`.
+The tparts script is for building a set of plain text files – the documents, in their target directories, from reusable, hierarchical parts – the template value files, with their file names prefixed by `_inline_`, `_block_`, `_pre_`.
 
 In the example website project it means creating the HTML documents and the metadata files, like `manifest.webmanifest`, `robots.txt`, `sitemap.xml`, from the globally scoped and the document specific values in the available template value files, prefixed with `_`. Also copying the static assets files, like style-sheets and images, to their respective document directories.
 
@@ -54,10 +54,10 @@ Template value file name prefixes determine value placeholder substitution type 
 -   `_block_` – to be inserted as a block of one or multiple new lines
 -   `_pre_` – to be inserted as preformatted text (HTML `<pre>`)
 
-Template value files values can be defined in a hierarchy of inheritance scopes, e.g. in the example project, where we get 2 scopes, the value files under paths
+Template value files values can be defined in a hierarchy of scopes, e.g. in the example project, where we get 2 scopes, the value files under paths
 
 1.  `./site/*` are the project scope values
-1.  `./site/(documents|sitemap)/<document label>/*` are the document local scope values, where the document local scope value files overwrite the project scope values
+1.  `./site/(documents|sitemap)/<document label>/*` are the document local scope values, where the document local scope value files overwrite the above project scope values
 
 Some notable value files and their contents:
 
