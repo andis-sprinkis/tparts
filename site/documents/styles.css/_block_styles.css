@@ -5,9 +5,11 @@
   --border-thickness-hr: 0.04em;
   --text-color: #000;
   --text-color-muted: #6d6d6d;
-  --text-color-link: #0047b7;
-  --text-color-link-active: red;
+  --text-color-link: #0f56c8;
+  --text-color-link-hover: #003e9f;
+  --text-color-link-active: #fe1818;
   --text-color-link-visited: purple;
+  --text-color-link-visited-hover: purple;
   --text-size-small: 0.85em;
   --text-size-pre: var(--text-size-small);
   --border-radius-outline: 0.0125em;
@@ -60,8 +62,10 @@
     --border-color-hr: #ffffff11;
     --text-color: #cccccc;
     --text-color-link: #4796ec;
+    --text-color-link-hover: #80bbff;
     --text-color-link-active: #e48080;
     --text-color-link-visited: #bc85d4;
+    --text-color-link-visited-hover: #bc85d4;
     --text-color-muted: #7d7d7d;
     --bg-color-text-selection: #cccccc80;
     --color-focus-outline: #cccccc80;
@@ -165,8 +169,16 @@ a {
   font-weight: bold;
 }
 
+a:hover {
+  color: var(--text-color-link-hover);
+}
+
 a:visited {
   color: var(--text-color-link-visited);
+}
+
+a:visited:hover {
+  color: var(--text-color-link-visited-hover);
 }
 
 @media print {
