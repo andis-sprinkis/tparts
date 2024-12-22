@@ -13,6 +13,7 @@
   --text-size-small: 0.85em;
   --text-size-pre: var(--text-size-small);
   --border-radius-outline: 0.0125em;
+  --heading-anchor-indent-width: clamp(1.35em, 1.75em, 7vw);
   --ul-li-indent-width: clamp(1.35em, 1.75em, 7vw);
   --ol-li-indent-width: clamp(2.8em, 2.75em, 7vw);
   --paragraph-width: 40rem;
@@ -30,6 +31,8 @@
   --url-icon-bullet: url('./bullet_light.svg?<!-- _inline_static_asset_caching_id -->');
   --url-icon-dot: url('./dot_light.svg?<!-- _inline_static_asset_caching_id -->');
   --url-icon-dash: url('./dash_light.svg?<!-- _inline_static_asset_caching_id -->');
+  --url-icon-heading-anchor: url('./heading_anchor_light.svg?<!-- _inline_static_asset_caching_id -->');
+  --url-icon-heading-lg-anchor: url('./heading_lg_anchor_light.svg?<!-- _inline_static_asset_caching_id -->');
   --color-focus-outline: #00000080;
   --underline-thickness: 0.04em;
   --underline-offset: 0.2125em;
@@ -74,6 +77,8 @@
     --url-icon-bullet: url('./bullet_dark.svg?<!-- _inline_static_asset_caching_id -->');
     --url-icon-dot: url('./dot_dark.svg?<!-- _inline_static_asset_caching_id -->');
     --url-icon-dash: url('./dash_dark.svg?<!-- _inline_static_asset_caching_id -->');
+    --url-icon-heading-anchor: url('./heading_anchor_dark.svg?<!-- _inline_static_asset_caching_id -->');
+    --url-icon-heading-lg-anchor: url('./heading_lg_anchor_dark.svg?<!-- _inline_static_asset_caching_id -->');
   }
 }
 
@@ -88,6 +93,8 @@
     --url-icon-bullet: url('./bullet_print.svg?<!-- _inline_static_asset_caching_id -->');
     --url-icon-dot: url('./dot_print.svg?<!-- _inline_static_asset_caching_id -->');
     --url-icon-dash: url('./dash_print.svg?<!-- _inline_static_asset_caching_id -->');
+    --url-icon-heading-anchor: url('./heading_anchor_print.svg?<!-- _inline_static_asset_caching_id -->');
+    --url-icon-heading-lg-anchor: url('./heading_lg_anchor_print.svg?<!-- _inline_static_asset_caching_id -->');
   }
 }
 
@@ -272,6 +279,7 @@ li {
 }
 
 h2 {
+  position: relative;
   font-size: 1.9125em;
   line-height: 1.21825;
   letter-spacing: -0.02275em;
@@ -282,6 +290,7 @@ h3,
 h4,
 h5,
 h6 {
+  position: relative;
   font-size: 1em;
 }
 
@@ -326,6 +335,29 @@ h2 > a:visited {
 h2 > a:active,
 h2 > a:visited:active {
   color: var(--text-color);
+}
+
+h1 > a:focus-visible::before,
+h2 > a:focus-visible::before,
+h3 > a:focus-visible::before,
+h4 > a:focus-visible::before,
+h5 > a:focus-visible::before,
+h6 > a:focus-visible::before,
+h1 > a:hover::before,
+h2 > a:hover::before,
+h3 > a:hover::before,
+h4 > a:hover::before,
+h5 > a:hover::before,
+h6 > a:hover::before {
+  position: absolute;
+  content: var(--url-icon-heading-anchor);
+  width: 1em;
+  height: var(--line-height-em);
+  left: calc(-1 * var(--heading-anchor-indent-width));
+}
+
+h2 > a:hover::before {
+  content: var(--url-icon-heading-lg-anchor);
 }
 
 h1,

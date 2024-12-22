@@ -1,6 +1,6 @@
 <!--
 Values "mix-x min-y width height" for attribute "viewBox" of element <svg> are calculated as:
--50 ceil((CSS line-height * 100) / 2) 100 (CSS line-height * 100)
+-50 -ceil(CSS line-height * 100) / 2) 100 (CSS line-height * 100)
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -83 100 165">
   <style>
@@ -11,6 +11,5 @@ Values "mix-x min-y width height" for attribute "viewBox" of element <svg> are c
       font-family: Helvetica, Arial, sans-serif;
     }
   </style>
-
   <text cx="50%" cy="50%" font-size="100" class="symbol">↗</text>
 </svg>
