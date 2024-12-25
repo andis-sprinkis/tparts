@@ -6,10 +6,10 @@
   --text-color: #000;
   --text-color-muted: #6d6d6d;
   --text-color-link: #0f56c8;
-  --text-color-link-hover: #003e9f;
+  --text-color-link-hover: #ee4f00;
   --text-color-link-active: #fe1818;
   --text-color-link-visited: purple;
-  --text-color-link-visited-hover: purple;
+  --text-color-link-visited-hover: #ee4f00;
   --text-size-small: 0.85em;
   --text-size-pre: var(--text-size-small);
   --border-radius-outline: 0.0125em;
@@ -65,10 +65,10 @@
     --border-color-hr: #ffffff11;
     --text-color: #cccccc;
     --text-color-link: #4796ec;
-    --text-color-link-hover: #80bbff;
-    --text-color-link-active: #e48080;
+    --text-color-link-hover: #ff792f;
+    --text-color-link-active: #ff4a42;
     --text-color-link-visited: #bc85d4;
-    --text-color-link-visited-hover: #bc85d4;
+    --text-color-link-visited-hover: #ff792f;
     --text-color-muted: #7d7d7d;
     --bg-color-text-selection: #cccccc80;
     --color-focus-outline: #cccccc80;
@@ -309,6 +309,7 @@ h4 > a:hover,
 h5 > a:hover,
 h6 > a:hover {
   text-decoration: underline;
+  text-decoration-color: var(--text-color)
 }
 
 h3 > a:visited,
