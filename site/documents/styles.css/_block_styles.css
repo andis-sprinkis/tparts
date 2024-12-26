@@ -1,7 +1,7 @@
 :root {
   --bg-color: #f0f0f0;
-  --bg-color-pre: #00000009;
-  --border-color-hr: #00000011;
+  --bg-color-pre: #00000005;
+  --border-color-hr: #00000036;
   --border-thickness-hr: 0.04em;
   --text-color: #000;
   --text-color-muted: #6d6d6d;
@@ -62,7 +62,7 @@
   :root {
     --bg-color: #090909;
     --bg-color-pre: #ffffff09;
-    --border-color-hr: #ffffff11;
+    --border-color-hr: #ffffff36;
     --text-color: #cccccc;
     --text-color-link: #4796ec;
     --text-color-link-hover: #ff8a44;
