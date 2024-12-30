@@ -42,7 +42,7 @@
   --bg-color-tooltip: var(--text-color);
   --text-color-tooltip: var(--bg-color);
   --padding-tooltip: var(--padding-button);
-  --border-radius-tooltip: 0.38125em;
+  --border-radius-tooltip: 0.28em;
   --border-tooltip: 0.1em solid var(--bg-color);
   --position-left-tooltip: 0;
   --position-top-tooltip: calc(1.25 * var(--line-height-em));
@@ -242,6 +242,10 @@ abbr[title]:focus::after {
   font-weight: var(--font-weight-tooltip);
   font-style: var(--font-style-tooltip);
   z-index: var(--z-index-tooltip);
+}
+
+abbr:hover {
+  color: var(--text-color-link-hover);
 }
 
 @media print {
