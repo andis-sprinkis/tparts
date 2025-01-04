@@ -11,6 +11,6 @@ Values "mix-x min-y width height" for attribute "viewBox" of element <svg> are c
       font-family: Helvetica, Arial, sans-serif;
     }
   </style>
-  <text cx="50%" cy="50%" font-size="100" class="symbol">→</text>
+  <text cx="50%" cy="50%" font-size="100" class="symbol">#</text>
 </svg>
 
