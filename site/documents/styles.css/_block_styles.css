@@ -1,15 +1,15 @@
 :root {
   --bg-color: #f0f0f0;
-  --bg-color-pre: #00000005;
-  --border-color-hr: #00000036;
+  --bg-color-pre: #0000000a;
+  --border-color-hr: #00000050;
   --border-thickness-hr: 0.04em;
   --text-color: #000;
   --text-color-muted: #6d6d6d;
   --text-color-link: #0f25d9;
-  --text-color-link-hover: #ee4f00;
+  --text-color-link-hover: #db5511;
   --text-color-link-active: #fe1818;
   --text-color-link-visited: purple;
-  --text-color-link-visited-hover: #ee4f00;
+  --text-color-link-visited-hover: #db5511;
   --text-size-small: 0.85em;
   --text-size-pre: var(--text-size-small);
   --border-radius-outline: 0.0125em;
@@ -60,7 +60,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-color: #090909;
+    --bg-color: #1a1a1a;
     --bg-color-pre: #ffffff09;
     --border-color-hr: #ffffff36;
     --text-color: #cccccc;
