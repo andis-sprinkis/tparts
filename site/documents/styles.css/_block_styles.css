@@ -158,7 +158,7 @@ body > *:last-child {
 
 main {
   margin-top: 0;
-  margin-bottom: calc(4 * var(--grid-gap));
+  margin-bottom: calc(2 * var(--grid-gap));
 }
 
 @media print {
@@ -637,8 +637,6 @@ pre code {
 }
 
 .nav-document-actions {
-  border-top: var(--border-thickness-hr) solid var(--border-color-hr);
-  padding-top: var(--grid-gap);
   margin-top: calc(var(--grid-gap) * 2);
 }
 
