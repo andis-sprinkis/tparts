@@ -674,3 +674,24 @@ button {
   padding: var(--padding-button);
   cursor: pointer;
 }
+
+a.skip-link {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  text-align: center;
+}
+
+a.skip-link:focus, a.skip-link:focus-within {
+  position: initial;
+  width: initial;
+  height: initial;
+  display: block;
+  padding: 0.25em 0.5em;
+  max-width: var(--paragraph-width);
+  margin-left: auto;
+  margin-right: auto;
+}
