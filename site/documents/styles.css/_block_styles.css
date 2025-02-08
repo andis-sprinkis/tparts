@@ -328,6 +328,10 @@ h2 > a {
   color: var(--text-color-muted);
 }
 
+h2 > a {
+  text-underline-offset: 0.175em;
+}
+
 h2 > a:hover,
 h2 > a:visited:hover {
   color: var(--text-color-muted);
