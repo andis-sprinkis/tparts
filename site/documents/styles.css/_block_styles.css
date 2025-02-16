@@ -1,6 +1,6 @@
 :root {
   --bg-color: #f0f0f0;
-  --bg-color-pre: #0000000a;
+  --bg-color-pre: #0000000d;
   --border-color-hr: #00000050;
   --border-thickness-hr: 0.04em;
   --text-color: #000;
@@ -61,7 +61,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --bg-color: #1a1a1a;
-    --bg-color-pre: #ffffff09;
+    --bg-color-pre: #ffffff0d;
     --border-color-hr: #ffffff36;
     --text-color: #cccccc;
     --text-color-link: #4796ec;
@@ -562,7 +562,6 @@ pre {
   overflow-x: scroll;
   padding: 0.75em 1em;
   background-color: var(--bg-color-pre);
-  border: var(--border-thickness-hr) solid var(--border-color-hr);
 }
 
 pre.text-wrap {
