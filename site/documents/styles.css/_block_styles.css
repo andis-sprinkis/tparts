@@ -34,8 +34,8 @@
   --url-icon-heading-anchor: url('./heading_anchor_light.svg?<!-- _inline_static_asset_caching_id -->');
   --url-icon-heading-lg-anchor: url('./heading_lg_anchor_light.svg?<!-- _inline_static_asset_caching_id -->');
   --color-focus-outline: #00000080;
-  --underline-thickness: 0.04em;
-  --underline-offset: 0.2125em;
+  --underline-thickness: 0.125rem;
+  --underline-offset: 0.2em;
   --padding-button: 0.26125em 0.575em;
   --font-size-button: var(--text-size-small);
   --bg-color-text-selection: #00000080;
@@ -51,7 +51,7 @@
   --width-tooltip: auto;
   --font-family-tooltip: sans-serif;
   --font-weight-tooltip: normal;
-  --font-style-tooltip: italic;
+  --font-style-tooltip: normal;
   --white-space-tooltip: nowrap;
   --max-width-tooltip: 100vw;
   --z-index-tooltip: 1;
@@ -84,7 +84,7 @@
 
 @media print {
   :root {
-    --paragraph-width: 70vw;
+    --paragraph-width: 76vw;
     --ol-ul-grid-gap: calc(0.25 * var(--grid-gap));
     --li-grid-gap: calc(0.15 * var(--grid-gap));
     --text-color: #000000;
@@ -284,7 +284,7 @@ li {
 
 h2 {
   position: relative;
-  font-size: 1.9125em;
+  font-size: 1.8125em;
   line-height: 1.21825;
   letter-spacing: -0.02275em;
 }
@@ -313,7 +313,6 @@ h4 > a:hover,
 h5 > a:hover,
 h6 > a:hover {
   text-decoration: underline;
-  text-decoration-color: var(--text-color)
 }
 
 h3 > a:visited,
@@ -323,27 +322,8 @@ h6 > a:visited {
   color: var(--text-color);
 }
 
-h2,
-h2 > a {
-  color: var(--text-color-muted);
-}
-
-h2 > a {
-  text-underline-offset: 0.175em;
-}
-
-h2 > a:hover,
-h2 > a:visited:hover {
-  color: var(--text-color-muted);
-}
-
 h2 > a:visited {
   color: var(--text-color-muted);
-}
-
-h2 > a:active,
-h2 > a:visited:active {
-  color: var(--text-color);
 }
 
 h1 > a:focus-visible::before,
