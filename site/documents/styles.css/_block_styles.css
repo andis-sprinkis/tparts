@@ -6,10 +6,13 @@
   --text-color: #000;
   --text-color-muted: #6d6d6d;
   --text-color-link: #0f25d9;
-  --text-color-link-hover: #db5511;
+  --text-color-link-hover: #db630d;
   --text-color-link-active: #fe1818;
-  --text-color-link-visited: purple;
-  --text-color-link-visited-hover: #db5511;
+  --text-color-link-visited: #800080;
+  --text-color-link-visited-hover: #db630d;
+  --text-decoration-color-link: #0f25d988;
+  --text-decoration-color-link-visited: #80008088;
+  --text-decoration-color-abbr: #f0f0f088;
   --text-size-small: 0.85em;
   --text-size-pre: var(--text-size-small);
   --border-radius-outline: 0.0125em;
@@ -34,8 +37,8 @@
   --url-icon-heading-anchor: url('./heading_anchor_light.svg?<!-- _inline_static_asset_caching_id -->');
   --url-icon-heading-lg-anchor: url('./heading_lg_anchor_light.svg?<!-- _inline_static_asset_caching_id -->');
   --color-focus-outline: #00000080;
-  --underline-thickness: 0.125rem;
-  --underline-offset: 0.2em;
+  --underline-thickness: 0.175rem;
+  --underline-offset: 0.15em;
   --padding-button: 0.26125em 0.575em;
   --font-size-button: var(--text-size-small);
   --bg-color-text-selection: #00000080;
@@ -69,6 +72,9 @@
     --text-color-link-active: #ff4a42;
     --text-color-link-visited: #a359a4;
     --text-color-link-visited-hover: #ff8a44;
+    --text-decoration-color-link: #4796ec88;
+    --text-decoration-color-link-visited: #a359a488;
+    --text-decoration-color-abbr: #cccccc88;
     --text-color-muted: #7d7d7d;
     --bg-color-text-selection: #cccccc80;
     --color-focus-outline: #cccccc80;
@@ -172,20 +178,24 @@ a {
   color: var(--text-color-link);
   text-decoration-thickness: var(--underline-thickness);
   text-underline-offset: var(--underline-offset);
+  text-decoration-color: var(--text-decoration-color-link);
   border-radius: var(--border-radius-outline);
   font-weight: bold;
 }
 
 a:hover {
   color: var(--text-color-link-hover);
+  text-decoration-color: var(--text-color-link-hover);
 }
 
 a:visited {
   color: var(--text-color-link-visited);
+  text-decoration-color: var(--text-decoration-color-link-visited);
 }
 
 a:visited:hover {
   color: var(--text-color-link-visited-hover);
+  text-decoration-color: var(--text-color-link-visited-hover);
 }
 
 @media print {
@@ -197,6 +207,7 @@ a:visited:hover {
 a:active,
 a:visited:active {
   color: var(--text-color-link-active);
+  text-decoration-color: var(--text-color-link-active);
 }
 
 a[target='_blank']::after {
@@ -219,6 +230,7 @@ abbr {
   text-decoration-style: dotted;
   text-decoration-thickness: var(--underline-thickness);
   text-underline-offset: var(--underline-offset);
+  text-decoration-color: var(--text-decoration-color-abbr);
   border-radius: var(--border-radius-outline);
   cursor: help;
 }
@@ -246,6 +258,7 @@ abbr[title]:focus::after {
 
 abbr:hover {
   color: var(--text-color-link-hover);
+  text-decoration-color: var(--text-color-link-hover);
 }
 
 @media print {
