@@ -334,6 +334,7 @@ h4 > a:hover,
 h5 > a:hover,
 h6 > a:hover {
   text-decoration: underline;
+  text-decoration-thickness: var(--underline-thickness);
 }
 
 h3 > a:visited,
@@ -344,7 +345,7 @@ h6 > a:visited {
 }
 
 h2 > a:visited {
-  color: var(--text-color-muted);
+  color: var(--text-color);
 }
 
 h1 > a:focus-visible::before,
