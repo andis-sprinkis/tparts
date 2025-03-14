@@ -1,7 +1,7 @@
 :root {
   --bg-color: #f0f0f0;
   --bg-color-pre: #0000000d;
-  --border-color-hr: #00000050;
+  --border-color-hr: #00000065;
   --border-thickness-hr: 0.04em;
   --text-color: #000;
   --text-color-muted: #6d6d6d;
@@ -65,7 +65,7 @@
   :root {
     --bg-color: #1a1a1a;
     --bg-color-pre: #ffffff0d;
-    --border-color-hr: #ffffff36;
+    --border-color-hr: #ffffff50;
     --text-color: #cccccc;
     --text-color-link: #4796ec;
     --text-color-link-hover: #ff8a44;
@@ -407,7 +407,7 @@ address {
 hr {
   position: relative;
   border: none;
-  border-bottom: var(--border-thickness-hr) solid var(--border-color-hr);
+  border-bottom: var(--border-thickness-hr) dotted var(--border-color-hr);
   margin-bottom: calc(calc(0.5 * var(--grid-gap)) - 0.05em);
   margin-top: calc(calc(0.5 * var(--grid-gap)) - 0.05em);
 }
@@ -627,12 +627,12 @@ pre code {
 }
 
 .nav-top {
-  border-bottom: var(--border-thickness-hr) solid var(--border-color-hr);
+  border-bottom: var(--border-thickness-hr) dotted var(--border-color-hr);
   padding-bottom: var(--line-height-em);
 }
 
 .nav-bottom {
-  border-top: var(--border-thickness-hr) solid var(--border-color-hr);
+  border-top: var(--border-thickness-hr) dotted var(--border-color-hr);
   padding-top: var(--line-height-em);
 }
 
