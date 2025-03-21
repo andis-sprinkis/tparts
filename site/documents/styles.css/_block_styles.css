@@ -12,7 +12,7 @@
   --text-color-link-visited-hover: #db630d;
   --text-decoration-color-link: #0f25d988;
   --text-decoration-color-link-visited: #80008088;
-  --text-decoration-color-abbr: #f0f0f088;
+  --text-decoration-color-abbr: #00000088;
   --text-size-small: 0.85em;
   --text-size-pre: var(--text-size-small);
   --border-radius-outline: 0.0125em;
@@ -38,6 +38,7 @@
   --url-icon-heading-lg-anchor: url('./heading_lg_anchor_light.svg?<!-- _inline_static_asset_caching_id -->');
   --color-focus-outline: #00000080;
   --underline-thickness: 0.175rem;
+  --underline-thickness-heading-lg: 0.333rem;
   --underline-offset: 0.15em;
   --padding-button: 0.26125em 0.575em;
   --font-size-button: var(--text-size-small);
@@ -328,13 +329,17 @@ h6 > a {
   text-decoration: none;
 }
 
-h2 > a:hover,
 h3 > a:hover,
 h4 > a:hover,
 h5 > a:hover,
 h6 > a:hover {
   text-decoration: underline;
   text-decoration-thickness: var(--underline-thickness);
+}
+
+h2 > a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: var(--underline-thickness-heading-lg);
 }
 
 h3 > a:visited,
