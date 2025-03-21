@@ -320,6 +320,7 @@ h6 {
   font-size: 1em;
 }
 
+h1 > a,
 h2 > a,
 h3 > a,
 h4 > a,
@@ -329,6 +330,7 @@ h6 > a {
   text-decoration: none;
 }
 
+h1 > a:hover,
 h3 > a:hover,
 h4 > a:hover,
 h5 > a:hover,
@@ -342,6 +344,7 @@ h2 > a:hover {
   text-decoration-thickness: var(--underline-thickness-heading-lg);
 }
 
+h1 > a:visited,
 h3 > a:visited,
 h4 > a:visited,
 h5 > a:visited,
