@@ -19,7 +19,7 @@
   --heading-anchor-indent-width: clamp(1.35em, 1.75em, 7vw);
   --ul-li-indent-width: clamp(1.35em, 1.75em, 7vw);
   --ol-li-indent-width: clamp(2.8em, 2.75em, 7vw);
-  --paragraph-width: 40rem;
+  --paragraph-width: 47rem;
   --font-family: Helvetica, Arial, sans-serif;
   --rem-size: clamp(1.2rem, 2.2vw, 1.95rem);
   --line-height: 1.65;
@@ -79,7 +79,6 @@
     --text-color-muted: #7d7d7d;
     --bg-color-text-selection: #cccccc80;
     --color-focus-outline: #cccccc80;
-    --border-page-section: 1px solid #ffffff51;
     --url-icon-new-tab: url('./new_tab_dark.svg?<!-- _inline_static_asset_caching_id -->');
     --url-icon-bullet: url('./bullet_dark.svg?<!-- _inline_static_asset_caching_id -->');
     --url-icon-dot: url('./dot_dark.svg?<!-- _inline_static_asset_caching_id -->');
