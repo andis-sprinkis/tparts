@@ -589,7 +589,7 @@ code {
 
 pre {
   overflow-x: scroll;
-  padding: 0.75em 1em;
+  padding: 0.55em 0.3em;
   background-color: var(--bg-color-pre);
 }
 
