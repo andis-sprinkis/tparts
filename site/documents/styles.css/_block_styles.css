@@ -507,7 +507,7 @@ ul.dot > li::before {
   content: var(--url-icon-dot);
 }
 
-@media screen and (max-width: calc(40rem + calc(2 * 7vw))) {
+@media screen and (max-width: calc(47rem + calc(2 * 7vw))) {
   ol > li {
     padding-left: var(--ol-li-indent-width);
   }
