@@ -7,7 +7,7 @@
   --text-color-link: #000;
   --text-color-link-hover: blue;
   --text-color-link-active: blue;
-  --text-color-link-visited: var(--text-color);
+  --text-color-link-visited: var(--text-color-link);
   --text-color-link-visited-hover: var(--text-color-link-hover);
   --text-decoration-color-link: #00000075;
   --text-decoration-color-link-visited: var(--text-color-link);
@@ -68,6 +68,7 @@
     --border-color-hr: #ffffff50;
     --text-color: #cccccc;
     --text-color-link: #fff;
+    --text-color-link-visited: var(--text-color-link);
     --text-color-link-hover: #4796ec;
     --text-color-link-active: #4796ec;
     --text-decoration-color-link: #cccccc88;
