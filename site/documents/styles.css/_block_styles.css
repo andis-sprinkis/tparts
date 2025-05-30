@@ -4,12 +4,12 @@
   --border-color-hr: #00000065;
   --border-thickness-hr: 0.04em;
   --text-color: #000;
-  --text-color-link: var(--text-color);
+  --text-color-link: #000;
   --text-color-link-hover: blue;
   --text-color-link-active: blue;
   --text-color-link-visited: var(--text-color);
   --text-color-link-visited-hover: var(--text-color-link-hover);
-  --text-decoration-color-link: #00000070;
+  --text-decoration-color-link: #00000075;
   --text-decoration-color-link-visited: var(--text-color-link);
   --text-decoration-color-abbr: #00000088;
   --text-size-small: 0.85em;
@@ -19,7 +19,7 @@
   --ul-li-indent-width: clamp(1.35em, 1.75em, 7vw);
   --ol-li-indent-width: clamp(2.8em, 2.75em, 7vw);
   --paragraph-width: 47rem;
-  --font-family: Helvetica, Arial, sans-serif;
+  --font-family: sans-serif;
   --rem-size: clamp(1.2rem, 2.2vw, 1.95rem);
   --line-height: 1.675;
   --line-height-em: calc(var(--line-height) * 1em);
@@ -67,9 +67,10 @@
     --bg-color-pre: #ffffff0d;
     --border-color-hr: #ffffff50;
     --text-color: #cccccc;
+    --text-color-link: #fff;
     --text-color-link-hover: #4796ec;
     --text-color-link-active: #4796ec;
-    --text-decoration-color-link: #cccccc80;
+    --text-decoration-color-link: #cccccc88;
     --text-decoration-color-abbr: #cccccc88;
     --bg-color-text-selection: #cccccc80;
     --color-focus-outline: #cccccc80;
