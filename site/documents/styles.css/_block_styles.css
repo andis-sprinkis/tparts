@@ -21,7 +21,7 @@
   --paragraph-width: 47rem;
   --font-family: sans-serif;
   --rem-size: clamp(1.2rem, 2.2vw, 1.95rem);
-  --line-height: 1.675;
+  --line-height: 1.75;
   --line-height-em: calc(var(--line-height) * 1em);
   --line-height-pre: 1.5;
   --line-height-nav-inline: calc(var(--line-height) * 1.175);
