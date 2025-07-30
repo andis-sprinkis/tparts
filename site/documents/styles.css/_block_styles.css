@@ -9,7 +9,7 @@
   --text-color-link-active: blue;
   --text-color-link-visited: var(--text-color-link);
   --text-color-link-visited-hover: var(--text-color-link-hover);
-  --text-decoration-color-link: #00000075;
+  --text-decoration-color-link: #00000070;
   --text-decoration-color-link-visited: var(--text-color-link);
   --text-decoration-color-abbr: #00000088;
   --text-size-small: 0.85em;
@@ -71,7 +71,7 @@
     --text-color-link-visited: var(--text-color-link);
     --text-color-link-hover: #4796ec;
     --text-color-link-active: #4796ec;
-    --text-decoration-color-link: #cccccc88;
+    --text-decoration-color-link: #cccccc42;
     --text-decoration-color-abbr: #cccccc88;
     --bg-color-text-selection: #cccccc80;
     --color-focus-outline: #cccccc80;
