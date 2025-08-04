@@ -552,8 +552,8 @@ ul.inline-list-sep li:not(:last-child)::after {
   width: 1em;
   height: var(--line-height-em);
   vertical-align: middle;
-  margin-right: 0.095em;
-  margin-left: 0.095em;
+  margin-right: 0.18em;
+  margin-left: 0.18em;
 }
 
 @media print {
