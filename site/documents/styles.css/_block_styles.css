@@ -21,7 +21,7 @@
   --paragraph-width: 47rem;
   --font-family: sans-serif;
   --rem-size: clamp(1.2rem, 2.2vw, 1.95rem);
-  --line-height: 1.75;
+  --line-height: 1.8;
   --line-height-em: calc(var(--line-height) * 1em);
   --line-height-pre: 1.5;
   --line-height-nav-inline: calc(var(--line-height) * 1.175);
@@ -87,6 +87,7 @@
 @media print {
   :root {
     --paragraph-width: 76vw;
+    --line-height: 1.65;
     --ol-ul-grid-gap: calc(0.25 * var(--grid-gap));
     --li-grid-gap: calc(0.15 * var(--grid-gap));
     --text-color: #000000;
@@ -302,7 +303,7 @@ li {
 h2 {
   position: relative;
   font-weight: normal;
-  font-size: 1.8125em;
+  font-size: 1.9em;
   line-height: 1.21825;
   letter-spacing: -0.02275em;
 }
@@ -590,7 +591,7 @@ code {
 
 pre {
   overflow-x: scroll;
-  padding: 0.85em 0em;
+  padding: 0.85em 1.35em;
   background-color: var(--bg-color-pre);
   line-height: 2;
 }
