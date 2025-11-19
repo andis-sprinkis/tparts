@@ -19,7 +19,7 @@
   --ul-li-indent-width: clamp(1.35em, 1.75em, 7vw);
   --ol-li-indent-width: clamp(2.8em, 2.75em, 7vw);
   --paragraph-width: 47rem;
-  --font-family: sans-serif;
+  --font-family: system-ui, sans-serif;
   --rem-size: clamp(1.2rem, 2.2vw, 1.95rem);
   --line-height: 1.8;
   --line-height-em: calc(var(--line-height) * 1em);
@@ -52,7 +52,7 @@
   --text-size-tooltip: var(--text-size-small);
   --position-tooltip: absolute;
   --width-tooltip: auto;
-  --font-family-tooltip: sans-serif;
+  --font-family-tooltip: system-ui, sans-serif;
   --font-weight-tooltip: normal;
   --font-style-tooltip: normal;
   --white-space-tooltip: nowrap;
