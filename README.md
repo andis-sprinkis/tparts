@@ -2,7 +2,7 @@
 
 A static website generator script.
 
-Requires `gawk`, `find` in a typical \*nix shell environment.
+Requires GNU `awk`, GNU `find` in a typical \*nix shell environment.
 
 ## The example website
 
