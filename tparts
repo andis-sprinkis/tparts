@@ -7,7 +7,7 @@ function readlink( \
   path, \
   _cmd, _dir \
 ) {
-  _cmd = "readlink -f " path
+  _cmd = "readlink -f \"" path "\""
   _cmd | getline _dir
   close(_cmd)
 
@@ -64,7 +64,7 @@ function populate_values_files_index( \
 ) {
   for (_i in paths_values_dirs_arr) {
     if (! paths_values_dirs_arr[_i] in _values_files_index) {
-      _cmd_find = "find " paths_values_dirs_arr[_i] "/_* -maxdepth 0 -type f"
+      _cmd_find = "find \"" paths_values_dirs_arr[_i] "\" ! -path \"" paths_values_dirs_arr[_i] "\" -prune -type f -name '_*'"
 
       while ((_cmd_find | getline _find_path_result) > 0) {
         match(_find_path_result, /[^\/]*$/, _basename_match)
@@ -207,7 +207,7 @@ function document_write( \
   _path_dir_document_out = _dir_dist "/" document["values_index"]["_inline_path"]["value"]
   _path_file_document_out = _path_dir_document_out "/" document["values_index"]["_inline_filename"]["value"]
 
-  if (! system("mkdir -p " _path_dir_document_out)) {
+  if (! system("mkdir -p \"" _path_dir_document_out "\"")) {
     print document["fragment"] >> _path_file_document_out
     close(_path_file_document_out)
   }
@@ -221,7 +221,7 @@ function document_copy_static( \
   _path_dir_src_static = document["path_src"] "/static"
   _path_dir_dist_static = _dir_dist "/" document["values_index"]["_inline_path"]["value"] "/"
 
-  if (! system("test -d " _path_dir_src_static)) system("cp -r " _path_dir_src_static "/* " _path_dir_dist_static)
+  if (! system("test -d \"" _path_dir_src_static "\"")) system("cp -r \"" _path_dir_src_static "/\"* \"" _path_dir_dist_static "\"")
 }
 
 # ------------------------------------------------------------------------------
@@ -250,13 +250,13 @@ BEGIN {
 
   print "\nCreating site build destination and build temporary files directories and subdirectories " _dir_tmp "/sitemap"
 
-  system("rm -rf " _dir_dist " && mkdir -p " _dir_tmp "/sitemap" " && mkdir -p " _dir_tmp "/build_info")
+  system("rm -rf \"" _dir_dist "\" && mkdir -p \"" _dir_tmp "/sitemap\"" " && mkdir -p \"" _dir_tmp "/build_info\"")
 
   print "Created site build destination and build temporary files directories and subdirectories " _dir_tmp "/sitemap"
 
   # ----------------------------------------------------------------------------
 
-  print "\nWriting build info site values in " _dir_tmp "/build_info"
+  print "\nCreating build info site values in " _dir_tmp "/build_info"
 
   _path_file_static_asset_caching_id = _dir_tmp "/build_info/_inline_static_asset_caching_id"
   print _static_asset_caching_id >> _path_file_static_asset_caching_id
@@ -268,7 +268,7 @@ BEGIN {
 
   print "\nIndexing generic document paths"
 
-  _cmd_find_documents = "find " _dir_site "/documents/* -maxdepth 0 -type d"
+  _cmd_find_documents = "find \"" _dir_site "/documents\" ! -path \"" _dir_site "/documents\" -prune -type d"
   _i = 0
   while ((_cmd_find_documents | getline _path_dir_src_document ) > 0) {
     print "    Indexed path for document " _path_dir_src_document
@@ -364,7 +364,7 @@ BEGIN {
 
   print "\nRemoving site temporary files directory " _dir_tmp
 
-  system("rm -rf " _dir_tmp)
+  system("rm -rf \"" _dir_tmp "\"")
 
   print "Removed site temporary files directory " _dir_tmp
 
