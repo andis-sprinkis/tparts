@@ -26,14 +26,14 @@ serve ./dist
 
 ## Goals and non-goals
 
--   Goals
+- Goals
     1. Generates static web documents, handling the repetative parts.
     1. A boilerplate for low-maintenance websites.
     1. No external dependencies I need to worry about or maintain.
     1. Remains as rudamentary and concise as possible.
     1. The example web site project has a good UI accessibility.
     1. Works _forever_, as I don't expect the GNU AWK to change a lot.
--   Non-goals
+- Non-goals
     1. Separating the content from the document structure or presentation (e.g. a Markdown parser).
     1. A complex to develop and maintain document templating language (something comparable to Pug or Handlebars).
 
@@ -47,12 +47,12 @@ In value files, the template value placeholders to be subsituted are the other v
 
 Template value file name prefixes determine value placeholder substitution type – how the value file text content will be inserted in the output:
 
--   `_inline_` – to be inserted inline
+- `_inline_` – to be inserted inline
 
     (The configuration values, which don't get directly inserted into the documents also use this prefix.)
 
--   `_block_` – to be inserted as a block of one or multiple new lines
--   `_pre_` – to be inserted as preformatted text (HTML `<pre>`)
+- `_block_` – to be inserted as a block of one or multiple new lines
+- `_pre_` – to be inserted as preformatted text (HTML `<pre>`)
 
 Template value files values can be defined in a hierarchy of scopes, e.g. in the example project, where we get 2 scopes, the value files under paths
 
@@ -61,12 +61,12 @@ Template value files values can be defined in a hierarchy of scopes, e.g. in the
 
 Some notable value files and their contents:
 
--   `_inline_build_entrypoint` – the name of the root level template value file for a document.
--   `_inline_path` – the document nested directory path in the project build.
--   `_inline_filename` – the filename of a document in the project build.
--   `_inline_lastmod` – the document last modified date, used in the example site sitemap entries.
--   `_inline_static_asset_caching_id` – build-time generated ID string, used in the example site document static asset URLs for cache busting.
--   `_inline_sitemap_skip` – boolean property value (`0` or `1`) for omitting documents from being added to `sitemap.xml`.
+- `_inline_build_entrypoint` – the name of the root level template value file for a document.
+- `_inline_path` – the document nested directory path in the project build.
+- `_inline_filename` – the filename of a document in the project build.
+- `_inline_lastmod` – the document last modified date, used in the example site sitemap entries.
+- `_inline_static_asset_caching_id` – build-time generated ID string, used in the example site document static asset URLs for cache busting.
+- `_inline_sitemap_skip` – boolean property value (`0` or `1`) for omitting documents from being added to `sitemap.xml`.
 
 ### Runtime data structures
 
