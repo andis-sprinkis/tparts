@@ -2,7 +2,7 @@
 
 # The function arguments prefixed with an underscore character, e.g. '_cmd', imitate the function local scope.
 
-# Takes file or directory path string. Returns symbolic links or canonical file name of the given path.
+# Takes string of file or directory path. Returns string of absolute path with resolved symlinks.
 function readlink( \
   path, \
   _cmd, _dir \
