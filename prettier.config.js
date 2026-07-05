@@ -1,12 +1,12 @@
-const editorconfigOverrides = {
+const editorconfigDefaults = {
   endOfLine: 'lf',
   useTabs: false,
   tabWidth: 2,
   printWidth: 80,
-}
+} // Do not edit
 
 const config = {
-  ...editorconfigOverrides,
+  ...editorconfigDefaults,
   semi: false,
   singleQuote: true,
   quoteProps: 'consistent',
