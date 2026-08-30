@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
-#
+set -euf
+
 # Running this script builds the example site in ./dist
-#
-set -e
+
 dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 
 "${dir}/tparts" "${dir}/site" "${dir}/dist"
